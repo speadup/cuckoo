@@ -1,0 +1,13 @@
+Index: feeds/luci/modules/luci-base/luasrc/controller/admin/servicectl.lua
+===================================================================
+---feeds/luci/modules/luci-base/luasrc/controller/admin/servicectl.lua	
++++feeds/luci/modules/luci-base/luasrc/controller/admin/servicectl.lua	
+@@ -4,7 +4,7 @@
+ module("luci.controller.admin.servicectl", package.seeall)
+ 
+ function index()
+-	entry({"servicectl"}, alias("servicectl", "status")).sysauth = "root"
++	entry({"servicectl"}, alias("servicectl", "status")).sysauth = {"root","debug","admin","user"}
+ 	entry({"servicectl", "status"}, call("action_status")).leaf = true
+ 	entry({"servicectl", "restart"}, call("action_restart")).leaf = true
+ end

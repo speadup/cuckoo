@@ -1,0 +1,16 @@
+Index: feeds/packages/utils/smstools3/patches/003-sendsms.patch
+===================================================================
+---feeds/packages/utils/smstools3/patches/003-sendsms.patch	
++++feeds/packages/utils/smstools3/patches/003-sendsms.patch	
+@@ -0,0 +1,11 @@
++--- a/scripts/sendsms
+++++ b/scripts/sendsms
++@@ -104,7 +104,7 @@
++   if [ -z "$ALPHABET" ]; then
++     $ECHO -n "$TEXT" >> $TMPFILE
++   else
++-    $ECHO -n "$TEXT" | iconv -t UNICODEBIG >> $TMPFILE
+++    $ECHO -n "$TEXT" | iconv -f UTF-8 -t UNICODEBIG >> $TMPFILE
++   fi
++ 
++   if [ "x$owner" != x ]; then

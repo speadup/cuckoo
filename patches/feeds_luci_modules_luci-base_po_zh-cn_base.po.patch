@@ -1,0 +1,14 @@
+Index: feeds/luci/modules/luci-base/po/zh-cn/base.po
+===================================================================
+---feeds/luci/modules/luci-base/po/zh-cn/base.po	
++++feeds/luci/modules/luci-base/po/zh-cn/base.po	
+@@ -2790,6 +2790,9 @@
+ msgid "Use routing table"
+ msgstr "使用路由表"
+ 
++msgid "Enable authentication portal"
++msgstr "启用Portal认证"
++
+ msgid ""
+ "Use the <em>Add</em> Button to add a new lease entry. The <em>MAC-Address</"
+ "em> indentifies the host, the <em>IPv4-Address</em> specifies to the fixed "

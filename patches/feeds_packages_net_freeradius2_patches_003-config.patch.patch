@@ -1,0 +1,287 @@
+Index: feeds/packages/net/freeradius2/patches/003-config.patch
+===================================================================
+---feeds/packages/net/freeradius2/patches/003-config.patch	
++++feeds/packages/net/freeradius2/patches/003-config.patch	
+@@ -0,0 +1,282 @@
++diff -Nur a/raddb/modules/cui b/raddb/modules/cui
++--- a/raddb/modules/cui
+++++ b/raddb/modules/cui
++@@ -12,14 +12,14 @@
++ 	database = "mysql"
++ 	driver = "rlm_sql_${database}"
++ 	server = "localhost"
++-	login = "db_login_name"
++-	password = "db_password"
++-	radius_db = "db_name"
++-#	sqltrace = yes
++-#	sqltracefile = ${logdir}/cuitrace.sql
+++	login = "radius"
+++	password = "radpass"
+++	radius_db = "radius"
+++	sqltrace = no
+++	sqltracefile = ${logdir}/cuitrace.sql
++ 	num_sql_socks = 5
++ 	connect_failure_retry_delay = 60
++ 	cui_table = "cui"
++ 	sql_user_name = "%{User-Name}"
++-#$INCLUDE sql/${database}/cui.conf
+++$INCLUDE sql/${database}/cui.conf
++ }
++diff -Nur a/raddb/radiusd.conf.in b/raddb/radiusd.conf.in
++--- a/raddb/radiusd.conf.in
+++++ b/raddb/radiusd.conf.in
++@@ -323,7 +323,7 @@
++ 	#  If your system does not support this feature, you will
++ 	#  get an error if you try to use it.
++ 	#
++-	interface = br-lan
+++#	interface = br-lan
++ 
++ 	#  Per-socket lists of clients.  This is a very useful feature.
++ 	#
++@@ -350,7 +350,7 @@
++ #	ipv6addr = ::
++ 	port = 0
++ 	type = acct
++-	interface = br-lan
+++#	interface = br-lan
++ #	clients = per_socket_clients
++ }
++ 
++@@ -740,7 +740,7 @@
++ 	#  Include another file that has the SQL-related configuration.
++ 	#  This is another file only because it tends to be big.
++ 	#
++-#	$INCLUDE sql.conf
+++	$INCLUDE sql.conf
++ 
++ 	#
++ 	#  This module is an SQL enabled version of the counter module.
++@@ -752,7 +752,7 @@
++ 	#  totally dependent on the SQL module to process Accounting
++ 	#  packets.
++ 	#
++-#	$INCLUDE sql/mysql/counter.conf
+++	$INCLUDE sql/mysql/counter.conf
++ 
++ 	#
++ 	#  IP addresses managed in an SQL table.
++@@ -799,7 +799,7 @@
++ 	#  other xlat functions such as md5, sha1 and lc.
++ 	#
++ 	#  We do not recommend removing it's listing here.
++-#	expr
+++	expr
++ 
++ 	#
++ 	# We add the counter module here so that it registers
++@@ -831,7 +831,7 @@
++ #	to multiple times.
++ #
++ ######################################################################
++-#$INCLUDE policy.conf
+++$INCLUDE policy.conf
++ 
++ ######################################################################
++ #
++diff -Nur a/raddb/sites-available/default b/raddb/sites-available/default
++--- a/raddb/sites-available/default
+++++ b/raddb/sites-available/default
++@@ -43,7 +43,7 @@
++ #	authenticate users.
++ #
++ ######################################################################
++-
+++cui_hash_key = "change-me"
++ #
++ #	In 1.x, the "authorize", etc. sections were global in
++ #	radiusd.conf.  As of 2.0, they SHOULD be in a server section.
++@@ -96,7 +96,7 @@
++ 	#
++ 	#  The chap module will set 'Auth-Type := CHAP' if we are
++ 	#  handling a CHAP request and Auth-Type has not already been set
++-#	chap
+++	chap
++ 
++ 	#
++ 	#  If the users are logging in with an MS-CHAP-Challenge
++@@ -167,14 +167,14 @@
++ 
++ 	#
++ 	#  Read the 'users' file
++-	files
+++#	files
++ 
++ 	#
++ 	#  Look in an SQL database.  The schema of the database
++ 	#  is meant to mirror the "users" file.
++ 	#
++ 	#  See "Authorization Queries" in sql.conf
++-#	sql
+++	sql
++ 
++ 	#
++ 	#  If you are using /etc/smbpasswd, and are also doing
++@@ -209,7 +209,7 @@
++ 	#  This module should be listed last, so that the other modules
++ 	#  get a chance to set Auth-Type for themselves.
++ 	#
++-	pap
+++#	pap
++ 
++ 	#
++ 	#  If "status_server = yes", then Status-Server messages are passed
++@@ -220,6 +220,7 @@
++ #	Autz-Type Status-Server {
++ #
++ #	}
+++	cui_authorize
++ }
++ 
++ 
++@@ -254,9 +255,9 @@
++ 	#  PAP authentication, when a back-end database listed
++ 	#  in the 'authorize' section supplies a password.  The
++ 	#  password can be clear-text, or encrypted.
++-	Auth-Type PAP {
++-		pap
++-	}
+++#	Auth-Type PAP {
+++#		pap
+++#	}
++ 
++ 	#
++ 	#  Most people want CHAP authentication
++@@ -269,9 +270,9 @@
++ 
++ 	#
++ 	#  MSCHAP authentication.
++-	Auth-Type MS-CHAP {
++-		mschap
++-	}
+++#	Auth-Type MS-CHAP {
+++#		mschap
+++#	}
++ 
++ 	#
++ 	#  If you have a Cisco SIP server authenticating against
++@@ -330,7 +331,7 @@
++ #
++ #  Pre-accounting.  Decide which accounting type to use.
++ #
++-#preacct {
+++preacct {
++ #	preprocess
++ 
++ 	#
++@@ -346,15 +347,15 @@
++ 	#  The start time is: NOW - delay - session_length
++ 	#
++ 
++-#	  update request {
++-#	  	FreeRADIUS-Acct-Session-Start-Time = "%{expr: %l - %{%{Acct-Session-Time}:-0} - %{%{Acct-Delay-Time}:-0}}"
++-#	}
+++	update request {
+++	  	FreeRADIUS-Acct-Session-Start-Time = "%{expr: %l - %{%{Acct-Session-Time}:-0} - %{%{Acct-Delay-Time}:-0}}"
+++	}
++ 
++ 
++ 	#
++ 	#  Ensure that we have a semi-unique identifier for every
++ 	#  request, and many NAS boxes are broken.
++-#	acct_unique
+++	acct_unique
++ 
++ 	#
++ 	#  Look for IPASS-style 'realm/', and if not found, look for
++@@ -370,7 +371,7 @@
++ 	#
++ 	#  Read the 'acct_users' file
++ #	files
++-#}
+++}
++ 
++ #
++ #  Accounting.  Log the accounting data.
++@@ -403,7 +404,7 @@
++ 	#  Log traffic to an SQL database.
++ 	#
++ 	#  See "Accounting queries" in sql.conf
++-#	sql
+++	sql
++ 
++ 	#
++ 	#  If you receive stop packets with zero session length,
++@@ -440,6 +441,8 @@
++ #	Acct-Type Status-Server {
++ #
++ #	}
+++	cui_accounting
+++	cui
++ }
++ 
++ 
++@@ -447,18 +450,18 @@
++ #  or rlm_sql module can handle this.
++ #  The rlm_sql module is *much* faster
++ session {
++-	radutmp
+++#	radutmp
++ 
++ 	#
++ 	#  See "Simultaneous Use Checking Queries" in sql.conf
++-#	sql
+++	sql
++ }
++ 
++ 
++ #  Post-Authentication
++ #  Once we KNOW that the user has been authenticated, there are
++ #  additional steps we can take.
++-#post-auth {
+++post-auth {
++ 	#  Get an address from the IP Pool.
++ #	main_pool
++ 
++@@ -472,7 +475,7 @@
++ 	#  After authenticating the user, do another SQL query.
++ 	#
++ 	#  See "Authentication Logging Queries" in sql.conf
++-#	sql
+++	sql
++ 
++ 	#
++ 	#  Instead of sending the query to the SQL server,
++@@ -577,7 +580,10 @@
++ #		sql
++ #		attr_filter.access_reject
++ #	}
++-#}
+++	cui_postauth
+++	cui_updatedb
+++	cui
+++}
++ 
++ #
++ #  When the server decides to proxy a request to a home server,
++diff -Nur a/raddb/sql.conf b/raddb/sql.conf
++--- a/raddb/sql.conf
+++++ b/raddb/sql.conf
++@@ -64,7 +64,7 @@
++ 
++ 	# If set to 'yes' (default) we read the group tables
++ 	# If set to 'no' the user MUST have Fall-Through = Yes in the radreply table
++-	# read_groups = yes
+++	read_groups = yes
++ 
++ 	# Remove stale session if checkrad does not see a double login
++ 	deletestalesessions = yes
++@@ -105,7 +105,7 @@
++ 	# and security reasons, finding clients via SQL queries CANNOT
++ 	# be done "live" while the server is running.
++ 	# 
++-	#readclients = yes
+++	readclients = yes
++ 
++ 	# Table to keep radius client info
++ 	nas_table = "nas"

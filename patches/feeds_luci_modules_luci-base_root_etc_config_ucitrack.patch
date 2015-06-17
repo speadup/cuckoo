@@ -1,0 +1,26 @@
+Index: feeds/luci/modules/luci-base/root/etc/config/ucitrack
+===================================================================
+---feeds/luci/modules/luci-base/root/etc/config/ucitrack	
++++feeds/luci/modules/luci-base/root/etc/config/ucitrack	
+@@ -2,9 +2,11 @@
+ 	option init network
+ 	list affects dhcp
+ 	list affects radvd
++	list affects chilli
+ 
+ config wireless
+ 	list affects network
++	list affects wifimonitor
+ 
+ config firewall
+ 	option init firewall
+@@ -55,3 +57,9 @@
+ 
+ config 6relayd
+ 	option init 6relayd
++
++config chilli
++	option init chilli
++
++config wifimonitor
++	option init wifimonitor

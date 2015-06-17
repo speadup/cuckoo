@@ -1,0 +1,64 @@
+Index: feeds/packages/net/coova-chilli/Makefile
+===================================================================
+---feeds/packages/net/coova-chilli/Makefile	
++++feeds/packages/net/coova-chilli/Makefile	
+@@ -8,7 +8,7 @@
+ include $(TOPDIR)/rules.mk
+ 
+ PKG_NAME:=coova-chilli
+-PKG_VERSION:=1.3.0+20141128
++PKG_VERSION:=1.3.1+20150505
+ PKG_MAINTAINER:=Imre Kaloz <kaloz@openwrt.org>
+ PKG_LICENSE:=GPL-2.0+
+ PKG_LICENSE_FILES:=COPYING
+@@ -17,9 +17,9 @@
+ PKG_SOURCE_PROTO:=git
+ PKG_SOURCE_URL:=git://github.com/coova/coova-chilli
+ PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+-PKG_SOURCE_VERSION:=b93de20a288c01c2ba28e96e31ad6da01627f45f
++PKG_SOURCE_VERSION:=7fdc5783b56b9bfa8a7aeb33d8d1777d30d2579b
+ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+-PKG_MD5SUM:=2adb27ec56172b18c5beee359dd7898d
++#PKG_MD5SUM:=2adb27ec56172b18c5beee359dd7898d
+ 
+ PKG_INSTALL:=1
+ 
+@@ -116,6 +116,13 @@
+ 	$(if $(CONFIG_COOVACHILLI_CYASSL),--with,--without)-cyassl \
+ 	$(if $(CONFIG_COOVACHILLI_OPENSSL),--with,--without)-openssl \
+ 	$(if $(CONFIG_PACKAGE_kmod-ipt-coova),--with-nfcoova) \
++	--with-mmap \
++	--with-poll \
++	--disable-uamuiport \
++	--enable-debug2 \
++	--enable-ipwhitelist \
++	--enable-netbios \
++	--enable-ieee8023 \
+ 	)
+ endef
+ 
+@@ -134,17 +141,20 @@
+ 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/chilli* $(1)/usr/sbin/
+ 	$(INSTALL_DIR) $(1)/usr/lib/
+ 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib*.so.* $(1)/usr/lib/
+-	$(if $(CONFIG_PACKAGE_kmod-ipt-coova), \
+-		$(INSTALL_DIR) $(1)/usr/lib/iptables; \
+-		$(CP) $(PKG_INSTALL_DIR)/usr/lib/iptables/lib*.so $(1)/usr/lib/iptables/ \
+-	)
+ 	$(INSTALL_DIR) $(1)/etc/init.d
+ 	$(INSTALL_BIN) files/chilli.init $(1)/etc/init.d/chilli
+ 	$(INSTALL_DIR) $(1)/etc/config
+ 	$(INSTALL_DATA) files/chilli.config $(1)/etc/config/chilli
+ 	$(INSTALL_DIR) $(1)/lib/firewall
+ 	$(CP) files/chilli.firewall $(1)/lib/firewall/chilli.sh
++	$(INSTALL_BIN) files/ipup.sh $(1)/etc/chilli/up.sh
++	$(INSTALL_BIN) files/ipdown.sh $(1)/etc/chilli/down.sh
+ endef
+ 
++define KernelPackage/ipt-coova/install
++	$(INSTALL_DIR) $(1)/usr/lib/iptables
++	$(CP) $(PKG_INSTALL_DIR)/usr/lib/iptables/lib*.so $(1)/usr/lib/iptables/
++endef
++
+ $(eval $(call BuildPackage,coova-chilli))
+ $(eval $(call KernelPackage,ipt-coova))

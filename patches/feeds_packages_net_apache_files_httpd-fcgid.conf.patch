@@ -1,0 +1,24 @@
+Index: feeds/packages/net/apache/files/httpd-fcgid.conf
+===================================================================
+---feeds/packages/net/apache/files/httpd-fcgid.conf	
++++feeds/packages/net/apache/files/httpd-fcgid.conf	
+@@ -0,0 +1,19 @@
++<IfModule mod_fcgid.c>
++    AddHandler fcgid-script .fcgi .php
++    FcgidInitialEnv PHPRC /etc/
++    FcgidInitialEnv PHP_FCGI_MAX_REQUESTS 1000
++    FcgidMaxRequestsPerProcess 1000
++    FcgidMaxProcesses 5
++    FcgidIOTimeout 120
++    FcgidIdleTimeout 120
++    FcgidWrapper /usr/bin/php-cgi .php
++    AddType application/x-httpd-php .php
++</IfModule>
++
++<Location />
++Options +EXECCGI
++Order allow,deny
++Allow from all
++</Location>
++
++DirectoryIndex index.php

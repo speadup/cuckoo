@@ -1,0 +1,36 @@
+Index: feeds/packages/net/apache/patches/001-Makefile_in.patch
+===================================================================
+---feeds/packages/net/apache/patches/001-Makefile_in.patch	
++++feeds/packages/net/apache/patches/001-Makefile_in.patch	
+@@ -12,3 +12,31 @@
+  
+  util.lo: test_char.h
+  
++--- a/Makefile.in
+++++ b/Makefile.in
++@@ -45,14 +45,14 @@
++ 	    	( \
++ 	    		n_lm=`awk 'BEGIN {n=0} /@@LoadModule@@/ {n+=1} END {print n}' < $$i`; \
++ 	    		if test $$n_lm -eq 0 -o "x$(DSO_MODULES)" = "x"; then \
++-	    			sed -e 's#@@ServerRoot@@#$(prefix)#g' \
+++	    			sed -e 's#@@ServerRoot@@#$(sysconfdir)#g' \
++ 	    				-e 's#@@Port@@#$(PORT)#g' \
++ 	    				-e 's#@@SSLPort@@#$(SSLPORT)#g' \
++ 	    				-e '/@@LoadModule@@/d' \
++ 	    				< $$i; \
++ 	    		else \
++ 	    			sed -n -e '/@@LoadModule@@/q' \
++-	    				-e 's#@@ServerRoot@@#$(prefix)#g' \
+++	    				-e 's#@@ServerRoot@@#$(sysconfdir)#g' \
++ 	    				-e 's#@@Port@@#$(PORT)#g' \
++ 	    				-e 's#@@SSLPort@@#$(SSLPORT)#g' \
++ 	    				-e 'p' \
++@@ -64,7 +64,7 @@
++ 	    			done; \
++ 	    			sed -e '1,/@@LoadModule@@/d' \
++ 	    				-e '/@@LoadModule@@/d' \
++-	    				-e 's#@@ServerRoot@@#$(prefix)#g' \
+++	    				-e 's#@@ServerRoot@@#$(sysconfdir)#g' \
++ 	    				-e 's#@@Port@@#$(PORT)#g' \
++ 	    				-e 's#@@SSLPort@@#$(SSLPORT)#g' \
++ 	    				< $$i; \

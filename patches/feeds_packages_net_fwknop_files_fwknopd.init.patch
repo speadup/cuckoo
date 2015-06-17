@@ -1,0 +1,12 @@
+Index: feeds/packages/net/fwknop/files/fwknopd.init
+===================================================================
+---feeds/packages/net/fwknop/files/fwknopd.init	
++++feeds/packages/net/fwknop/files/fwknopd.init	
+@@ -4,7 +4,6 @@
+ # Copyright (C) 2009-2014 fwknop developers and contributors. For a full
+ # list of contributors, see the file 'CREDITS'.
+ #
+-. /lib/functions.sh
+ START=95
+ 
+ FWKNOPD_BIN=/usr/sbin/fwknopd

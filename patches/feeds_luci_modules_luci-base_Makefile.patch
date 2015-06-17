@@ -1,0 +1,22 @@
+Index: feeds/luci/modules/luci-base/Makefile
+===================================================================
+---feeds/luci/modules/luci-base/Makefile	
++++feeds/luci/modules/luci-base/Makefile	
+@@ -28,13 +28,15 @@
+ endef
+ 
+ define Host/Compile
+-	$(MAKE) -C src/ clean po2lmo
++	$(RM) -r $(HOST_BUILD_DIR)/po2lmo
++	$(CP) src $(HOST_BUILD_DIR)/po2lmo
++	$(MAKE) -C $(HOST_BUILD_DIR)/po2lmo clean po2lmo
+ 	$(MAKE) -C $(HOST_BUILD_DIR) bin/LuaSrcDiet.lua
+ endef
+ 
+ define Host/Install
+ 	$(INSTALL_DIR) $(STAGING_DIR_HOST)/bin
+-	$(INSTALL_BIN) src/po2lmo $(STAGING_DIR_HOST)/bin/po2lmo
++	$(INSTALL_BIN) $(HOST_BUILD_DIR)/po2lmo/po2lmo $(STAGING_DIR_HOST)/bin/po2lmo
+ 	$(INSTALL_BIN) $(HOST_BUILD_DIR)/bin/LuaSrcDiet.lua $(STAGING_DIR_HOST)/bin/LuaSrcDiet
+ endef
+ 

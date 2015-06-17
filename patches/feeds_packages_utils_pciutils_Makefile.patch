@@ -1,0 +1,13 @@
+Index: feeds/packages/utils/pciutils/Makefile
+===================================================================
+---feeds/packages/utils/pciutils/Makefile	
++++feeds/packages/utils/pciutils/Makefile	
+@@ -40,7 +40,7 @@
+ define Package/pciutils/postinst
+ #!/bin/sh
+ [ -z "$${IPKG_INSTROOT}" ] || \
+-(cd $${PKG_ROOT}/usr/share; $${PKG_ROOT}/usr/sbin/update-pciids; rm pci.ids.gz.old)
++(cd $${IPKG_INSTROOT}/usr/share; $${IPKG_INSTROOT}/usr/sbin/update-pciids; rm pci.ids.gz.old)
+ exit 0
+ endef
+ 

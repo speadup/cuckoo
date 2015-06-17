@@ -1,0 +1,41 @@
+Index: feeds/packages/utils/vim/files/vimrc.full
+===================================================================
+---feeds/packages/utils/vim/files/vimrc.full	
++++feeds/packages/utils/vim/files/vimrc.full	
+@@ -1,3 +1,8 @@
++set fileencodings=utf-8,gb2312,gbk,gb18030
++set termencoding=utf-8
++set fileformats=unix
++set encoding=utf-8
++
+ set showcmd			" show (partial) command in status line
+ set showmatch			" show matching brackets
+ set incsearch			" incremental search
+@@ -8,6 +13,17 @@
+ set linebreak			" don't wrap words by default
+ set textwidth=0			" don't wrap lines by default
+ set ruler			" show the cursor position all the time
++set shiftwidth=4
++set tabstop=4
++set hid 
++set ignorecase
++set smartcase
++set noswapfile
++set showmatch
++set nobackup
++set laststatus=2
++set showcmd
++set si
+ 
+ set backupskip+=/etc/crontabs.*	" fix crontab -e
+ 
+@@ -26,5 +42,8 @@
+ endif
+ 
+ " Uncomment out for line and/or relative numberig
+-" set number
++set number
+ " set rnu
++nnoremap <silent> <F3> :bp<CR>
++nnoremap <silent> <F4> :bn<CR>
++set pastetoggle=<F9>

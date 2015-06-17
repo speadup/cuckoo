@@ -1,0 +1,33 @@
+Index: feeds/packages/net/git/Makefile
+===================================================================
+---feeds/packages/net/git/Makefile	
++++feeds/packages/net/git/Makefile	
+@@ -33,7 +33,7 @@
+ 
+ define Package/git
+ $(call Package/git/Default)
+-  DEPENDS:=+libopenssl +libpthread +librt
++  DEPENDS:=+libopenssl +libpthread +librt $(if $(CONFIG_PACKAGE_git-http),+libcurl)
+   TITLE:=The fast version control system
+ endef
+ 
+@@ -55,6 +55,10 @@
+  This package allows git push/fetch over http(s) and ftp(s)
+ endef
+ 
++ifneq ($(CONFIG_PACKAGE_git-http),)
++TARGET_LDFLAGS += -lcurl
++endif
++
+ MAKE_FLAGS := \
+ 	CC="$(TARGET_CC)" \
+ 	CFLAGS="$(TARGET_CFLAGS)" \
+@@ -108,6 +112,8 @@
+ 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/git-core/git-remote-ftps $(1)/usr/lib/git-core
+ 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/git-core/git-remote-http $(1)/usr/lib/git-core
+ 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/git-core/git-remote-https $(1)/usr/lib/git-core
++	$(INSTALL_DIR) $(1)/etc/httpd/conf.d
++	$(INSTALL_CONF) ./files/httpd-git.conf $(1)/etc/httpd/conf.d
+ endef
+ 
+ $(eval $(call BuildPackage,git))

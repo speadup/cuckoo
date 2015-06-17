@@ -1,0 +1,13 @@
+Index: feeds/packages/utils/smstools3/Makefile
+===================================================================
+---feeds/packages/utils/smstools3/Makefile	
++++feeds/packages/utils/smstools3/Makefile	
+@@ -47,7 +47,7 @@
+ 
+ TARGET_LDFLAGS += -liconv
+ 
+-BINDIR=/usr/local/bin
++BINDIR=/usr/bin
+ 
+ define Build/Compile
+ 	$(MAKE) -C "$(PKG_BUILD_DIR)"/src \

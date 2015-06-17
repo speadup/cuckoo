@@ -1,0 +1,15 @@
+Index: feeds/packages/net/coova-chilli/patches/201-json-cors-support.patch
+===================================================================
+---feeds/packages/net/coova-chilli/patches/201-json-cors-support.patch	
++++feeds/packages/net/coova-chilli/patches/201-json-cors-support.patch	
+@@ -0,0 +1,10 @@
++--- a/src/redir.c
+++++ b/src/redir.c
++@@ -198,6 +198,7 @@
++   bcatcstr(s, 
++ 	   "Connection: close\r\n"
++ 	   "Pragma: no-cache\r\n"
+++	   "Access-Control-Allow-Origin: *\r\n"
++ 	   "Expires: Fri, 01 Jan 1971 00:00:00 GMT\r\n"
++ 	   "Cache-Control: no-cache, must-revalidate\r\n");
++   bcatcstr(s, "P3P: CP=\"IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT\"\r\n");

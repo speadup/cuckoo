@@ -34,13 +34,13 @@ EOF
 }
 
 update_delete openwrt
-update_delete plus/luci
-update_delete plus/packages
-update_delete plus/routing
-update_delete plus/oldpackages
+update_delete feeds/luci
+update_delete feeds/packages
+update_delete feeds/routing
+update_delete feeds/oldpackages
 cp -a $src/version.txt $dest/
 update_copy openwrt
-update_copy plus/luci
-update_copy plus/packages
-update_copy plus/routing
-update_copy plus/oldpackages
+update_copy feeds/luci
+update_copy feeds/packages
+update_copy feeds/routing
+update_copy feeds/oldpackages

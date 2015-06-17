@@ -1,7 +1,7 @@
 #!/bin/sh
 url=http://192.168.18.24/svn/openwrt/trunk
 cfg=feeds.conf
-plus=plus
+feeds=feeds
 temp=temp
 repo=repo
 export LANG=en_US.UTF-8
@@ -47,12 +47,12 @@ do
     rm -f ${temp}/${name}-${ver}.tar.gz
     gzip -9 ${temp}/${name}-${ver}.tar
     (cd ${temp}; tar zxf ${name}-${ver}.tar.gz)
-    [ -d ${temp}/${plus} ] || mkdir -p ${temp}/${plus}
-    rm -rf ${temp}/${plus}/${name}
-    mv ${temp}/${name}-${ver} ${temp}/${plus}/${name}
+    [ -d ${temp}/${feeds} ] || mkdir -p ${temp}/${feeds}
+    rm -rf ${temp}/${feeds}/${name}
+    mv ${temp}/${name}-${ver} ${temp}/${feeds}/${name}
     echo "%${name}@${ver}" >> ${temp}/version.txt
     [ ${name} = "luci" ] && continue
-    find ${temp}/${plus}/${name} -name 'Makefile' | sed -e '/\/files\/\|\/src\//d' -e 's/\/Makefile$//' | sort >${temp}/path.txt
+    find ${temp}/${feeds}/${name} -name 'Makefile' | sed -e '/\/files\/\|\/src\//d' -e 's/\/Makefile$//' | sort >${temp}/path.txt
     sed -e 's/.*\///' ${temp}/path.txt >>${temp}/list.txt
     sort ${temp}/list.txt > ${temp}/list.txt.tmp
     sort -u ${temp}/list.txt.tmp >${temp}/list.txt

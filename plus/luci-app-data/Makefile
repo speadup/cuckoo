@@ -9,6 +9,6 @@ include $(TOPDIR)/rules.mk
 LUCI_TITLE:=LuCI Support for View Data 
 #LUCI_DEPENDS:=
 
-include ../../plus/luci/luci.mk
+include ../../feeds/luci/luci.mk
 
 # call BuildPackage - OpenWrt buildroot signature

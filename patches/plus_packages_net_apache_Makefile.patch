@@ -1,0 +1,159 @@
+Index: plus/packages/net/apache/Makefile
+===================================================================
+---plus/packages/net/apache/Makefile	
++++plus/packages/net/apache/Makefile	
+@@ -61,20 +61,20 @@
+ endef
+ 
+ define Package/apache/conffiles
+-/etc/apache/httpd.conf
+-/etc/apache/extra/httpd-autoindex.conf
+-/etc/apache/extra/httpd-dav.conf
+-/etc/apache/extra/httpd-default.conf
+-/etc/apache/extra/httpd-info.conf
+-/etc/apache/extra/httpd-languages.conf
+-/etc/apache/extra/httpd-manual.conf
+-/etc/apache/extra/httpd-mpm.conf
+-/etc/apache/extra/httpd-multilang-errordoc.conf
+-/etc/apache/extra/httpd-ssl.conf
+-/etc/apache/extra/httpd-userdir.conf
+-/etc/apache/extra/httpd-vhosts.conf
+-/etc/apache/magic
+-/etc/apache/mime.types
++/etc/httpd/httpd.conf
++/etc/httpd/conf.d/httpd-autoindex.conf
++/etc/httpd/conf.d/httpd-dav.conf
++/etc/httpd/conf.d/httpd-default.conf
++/etc/httpd/conf.d/httpd-info.conf
++/etc/httpd/conf.d/httpd-languages.conf
++/etc/httpd/conf.d/httpd-manual.conf
++/etc/httpd/conf.d/httpd-mpm.conf
++/etc/httpd/conf.d/httpd-multilang-errordoc.conf
++/etc/httpd/conf.d/httpd-ssl.conf
++/etc/httpd/conf.d/httpd-userdir.conf
++/etc/httpd/conf.d/httpd-vhosts.conf
++/etc/httpd/magic
++/etc/httpd/mime.types
+ endef
+ 
+ define Package/apache-icons
+@@ -94,6 +94,7 @@
+ 
+ define Build/Configure
+ 	$(call Build/Configure/Default, \
++		--libexecdir=/usr/lib/httpd \
+ 		--with-apr="$(STAGING_DIR)/usr/bin/apr-1-config" \
+ 		--with-apr-util="$(STAGING_DIR)/usr/bin/apu-1-config" \
+ 		--with-pcre="$(STAGING_DIR)/usr/bin/pcre-config" \
+@@ -104,7 +105,20 @@
+ 		--enable-maintainer-mode \
+ 		--enable-mime-magic \
+ 		--without-suexec-bin \
+-		--sysconfdir=/etc/apache \
++		--sysconfdir=/etc/httpd \
++		--enable-dav \
++		--disable-dav-fs \
++		--enable-fcgid \
++		--enable-headers \
++		--enable-vhost-alias \
++		--enable-expires \
++		--enable-deflate \
++		--enable-logio \
++		--disable-userdir \
++		--disable-actions \
++		--disable-asis \
++		--disable-status \
++		--disable-filter \
+ 		ap_cv_void_ptr_lt_long=no \
+ 		logfiledir="/var/log" \
+ 		runtimedir="/var/run" \
+@@ -121,38 +135,46 @@
+ 	$(INSTALL_DIR) $(1)/usr/include/apache
+ 	$(CP)	$(PKG_INSTALL_DIR)/usr/include/* \
+ 		$(1)/usr/include/apache
+-	$(INSTALL_DIR) $(1)/usr/lib
+-	$(CP)   $(PKG_INSTALL_DIR)/usr/lib/httpd.exp \
+-		$(1)/usr/lib
++	$(INSTALL_DIR) $(1)/usr/lib/httpd
++	$(CP)   $(PKG_INSTALL_DIR)/usr/lib/httpd/httpd.exp \
++		$(1)/usr/lib/httpd
+ 	$(INSTALL_DIR) $(1)/usr/sbin
+ 	$(CP)   $(PKG_INSTALL_DIR)/usr/sbin/* \
+ 		$(1)/usr/sbin
+ 	$(INSTALL_DIR) $(1)/usr/share
+ 	$(CP)   $(PKG_INSTALL_DIR)/usr/share/* \
+ 		$(1)/usr/share
++	$(SED) 's@$$destdir *=.*@$$destdir = "$(STAGING_DIR)";@' $(1)/usr/sbin/apxs
+ endef
+ 
+ define Package/apache/preinst
+-	rm /usr/sbin/httpd
++#!/bin/sh
++if [ -e $${IPKG_INSTROOT}/usr/sbin/httpd ]; then
++	rm $${IPKG_INSTROOT}/usr/sbin/httpd
+ 	echo -e "You should take a look in the initscripts, busybox's httpd \n\
+ 	uses some parameters which are maybe unsupported by apache."
++fi
+ endef
+ 
+ define Package/apache/install
+ 	$(INSTALL_DIR) $(1)/usr/sbin
+ 	# we don't need apxs on the router, it's just for building apache modules.
+ 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/{ab,apachectl,checkgid,dbmmanage,envvars,envvars-std,htcacheclean,htdbm,htdigest,htpasswd,httpd,httxt2dbm,logresolve,rotatelogs} $(1)/usr/sbin/
+-	$(INSTALL_DIR) $(1)/usr/lib
+-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/httpd.exp $(1)/usr/lib/
+-	$(INSTALL_DIR) $(1)/usr/share
+-	$(CP) $(PKG_INSTALL_DIR)/usr/share/{error,htdocs,cgi-bin,build} $(1)/usr/share/
+-	$(INSTALL_DIR) $(1)/etc/apache
+-	$(CP) $(PKG_INSTALL_DIR)/etc/apache/{httpd.conf,magic,mime.types,extra} $(1)/etc/apache/
++	$(INSTALL_DIR) $(1)/usr/lib/
++	$(CP) $(PKG_INSTALL_DIR)/usr/lib/httpd $(1)/usr/lib
++	$(INSTALL_DIR) $(1)/etc/httpd
++	$(CP) $(PKG_INSTALL_DIR)/etc/httpd/{httpd.conf,magic,mime.types} $(1)/etc/httpd/
++	$(INSTALL_DIR) $(1)/etc/httpd/conf.d
++	$(CP) $(PKG_INSTALL_DIR)/etc/httpd/extra/httpd-{autoindex,default,mpm,ssl,vhosts}.conf $(1)/etc/httpd/conf.d
++	$(LN) ../../usr/lib/httpd $(1)/etc/httpd/modules
++	$(INSTALL_DIR)  $(1)/etc/init.d
++	$(INSTALL_BIN)  ./files/httpd.init       $(1)/etc/init.d/httpd
++	$(INSTALL_CONF) ./files/httpd-fcgid.conf $(1)/etc/httpd/conf.d
+ endef
+ 
+ define Package/apache/postrm
+-	rm -rf /usr/sbin/httpd
+-	ln -s /bin/busybox /usr/sbin/httpd
++	rm -rf $${IPKG_INSTROOT}/usr/sbin/httpd
++	ln -s ../../bin/busybox $${IPKG_INSTROOT}/usr/sbin/httpd
+ 	echo -e "You may need to change your initscripts back for the use \n\
+ 		with busybox's httpd."
+ endef
+@@ -162,5 +184,30 @@
+ 	$(CP) $(PKG_INSTALL_DIR)/usr/share/icons $(1)/usr/share/
+ endef
+ 
++PKG_MOD_FCGID_NAME:=mod_fcgid
++PKG_MOD_FCGID_VERSION:=2.3.9
++PKG_MOD_FCGID_SOURCE:=$(PKG_MOD_FCGID_NAME)-$(PKG_MOD_FCGID_VERSION).tar.bz2
++PKG_MOD_FCGID_SOURCE_URL:=$(addsuffix mod_fcgid,$(PKG_SOURCE_URL))
++PKG_MOD_FCGID_MIRROR_MD5SUM:=
++define Download/mod_fcgid
++  FILE:=$(PKG_MOD_FCGID_SOURCE)
++  URL:=$(PKG_MOD_FCGID_SOURCE_URL)
++  MD5SUM:=$(PKG_MOD_FCGID_MD5SUM)
++  MIRROR_MD5SUM:=$(PKG_MOD_FCGID_MIRROR_MD5SUM)
++endef
++
++$(eval $(call Download,mod_fcgid))
++
++define Build/Prepare
++	$(RM) -r $(PKG_BUILD_DIR)
++	mkdir -p $(PKG_BUILD_DIR)
++	$(PKG_UNPACK)
++	$(Build/Patch)
++	$(TAR) -C $(PKG_BUILD_DIR) -xjf $(DL_DIR)/$(PKG_MOD_FCGID_SOURCE)
++	$(CP) $(PKG_BUILD_DIR)/$(PKG_MOD_FCGID_NAME)-$(PKG_MOD_FCGID_VERSION)/* $(PKG_BUILD_DIR)
++	$(RM) -r $(PKG_BUILD_DIR)/$(PKG_MOD_FCGID_NAME)-$(PKG_MOD_FCGID_VERSION)
++	cd $(PKG_BUILD_DIR);./buildconf
++endef
++
+ $(eval $(call BuildPackage,apache))
+ $(eval $(call BuildPackage,apache-icons))

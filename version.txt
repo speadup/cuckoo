@@ -1,0 +1,5 @@
+%openwrt@trunk:45952
+%packages@1ff278f98c683bde4c1fad3e4c246f57d627fe56
+%luci@3bcbfb38236a3f8eb0eda698350b5712117db9a9
+%routing@aca8cb6ee36812f05aacba48602666abbd02d0d6
+%oldpackages@b676d5ea265bddcebc78ad9eba19d3a497d0d1ff

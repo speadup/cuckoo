@@ -1,0 +1,16 @@
+Index: openwrt/package/utils/usbutils/patches/100-relative-path-ids.patch
+===================================================================
+---openwrt/package/utils/usbutils/patches/100-relative-path-ids.patch	
++++openwrt/package/utils/usbutils/patches/100-relative-path-ids.patch	
+@@ -0,0 +1,11 @@
++--- a/Makefile.in
+++++ b/Makefile.in
++@@ -1226,7 +1226,7 @@
++ @INSTALL_USBIDS_TRUE@	gzip -c -9 $< > $@
++ 
++ @INSTALL_USBIDS_TRUE@update-usbids.sh: $(srcdir)/update-usbids.sh.in
++-@INSTALL_USBIDS_TRUE@	sed 's|@usbids@|$(datadir)/usb.ids|g' $< >$@
+++@INSTALL_USBIDS_TRUE@	sed <$< >$@ "s@^USB_COMPRESSED_IDS=.*@USB_COMPRESSED_IDS=1@"
++ @INSTALL_USBIDS_TRUE@	chmod 755 $@
++ 
++ lsusb.8: $(srcdir)/lsusb.8.in

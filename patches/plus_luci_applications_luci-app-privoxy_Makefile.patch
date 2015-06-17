@@ -1,0 +1,12 @@
+Index: plus/luci/applications/luci-app-privoxy/Makefile
+===================================================================
+---plus/luci/applications/luci-app-privoxy/Makefile	
++++plus/luci/applications/luci-app-privoxy/Makefile	
+@@ -33,6 +33,6 @@
+ 	$(PKG_MAINTAINER)
+ endef
+ 
+-include $(TOPDIR)/feeds/luci/luci.mk
++include ../../luci.mk
+ 
+ # call BuildPackage - OpenWrt buildroot signature

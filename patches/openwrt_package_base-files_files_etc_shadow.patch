@@ -1,0 +1,12 @@
+Index: openwrt/package/base-files/files/etc/shadow
+===================================================================
+---openwrt/package/base-files/files/etc/shadow	
++++openwrt/package/base-files/files/etc/shadow	
+@@ -1,4 +1,7 @@
+ root::0:0:99999:7:::
++debug::0:0:99999:7:::
++admin::0:0:99999:7:::
++user::0:0:99999:7:::
+ daemon:*:0:0:99999:7:::
+ ftp:*:0:0:99999:7:::
+ network:*:0:0:99999:7:::

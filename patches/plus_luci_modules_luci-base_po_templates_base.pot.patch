@@ -1,0 +1,14 @@
+Index: plus/luci/modules/luci-base/po/templates/base.pot
+===================================================================
+---plus/luci/modules/luci-base/po/templates/base.pot	
++++plus/luci/modules/luci-base/po/templates/base.pot	
+@@ -2713,6 +2713,9 @@
+ msgid "Use routing table"
+ msgstr ""
+ 
++msgid "Enable authentication portal"
++msgstr ""
++
+ msgid ""
+ "Use the <em>Add</em> Button to add a new lease entry. The <em>MAC-Address</"
+ "em> indentifies the host, the <em>IPv4-Address</em> specifies to the fixed "

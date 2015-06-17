@@ -1,0 +1,16 @@
+Index: openwrt/target/linux/ramips/base-files/etc/board.d/01_leds
+===================================================================
+---openwrt/target/linux/ramips/base-files/etc/board.d/01_leds	
++++openwrt/target/linux/ramips/base-files/etc/board.d/01_leds	
+@@ -230,6 +230,11 @@
+ 		set_usb_led "wr8305rt:usb"
+ 		set_wifi_led "wr8305rt:wifi"
+ 		;;
++	hiwifi-hc5761)
++		ucidef_set_led_default "system" "system" "HC5761:green:system" "1"
++		ucidef_set_led_netdev "internet" "internet" "HC5761:green:internet" "eth0.2"
++		set_wifi_led "HC5761:green:wlan-2p4"
++		;;
+ 	wt1520)
+ 		set_wifi_led "rt2800pci-phy0::radio"
+ 		;;

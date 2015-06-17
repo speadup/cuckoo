@@ -1,0 +1,181 @@
+Index: openwrt/package/utils/busybox/Config-defaults.in
+===================================================================
+---openwrt/package/utils/busybox/Config-defaults.in	
++++openwrt/package/utils/busybox/Config-defaults.in	
+@@ -228,7 +228,7 @@
+ 	default n
+ config BUSYBOX_DEFAULT_FEATURE_USE_TERMIOS
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_FEATURE_EDITING
+ 	bool
+ 	default y
+@@ -285,13 +285,13 @@
+ 	default n
+ config BUSYBOX_DEFAULT_FEATURE_SEAMLESS_XZ
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_FEATURE_SEAMLESS_LZMA
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_FEATURE_SEAMLESS_BZ2
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_FEATURE_SEAMLESS_GZ
+ 	bool
+ 	default y
+@@ -318,22 +318,22 @@
+ 	default y
+ config BUSYBOX_DEFAULT_UNLZMA
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_FEATURE_LZMA_FAST
+ 	bool
+ 	default n
+ config BUSYBOX_DEFAULT_LZMA
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_UNXZ
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_XZ
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_BZIP2
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_CPIO
+ 	bool
+ 	default n
+@@ -381,7 +381,7 @@
+ 	default y
+ config BUSYBOX_DEFAULT_FEATURE_TAR_AUTODETECT
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_FEATURE_TAR_FROM
+ 	bool
+ 	default y
+@@ -471,7 +471,7 @@
+ 	default n
+ config BUSYBOX_DEFAULT_BASE64
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_WHO
+ 	bool
+ 	default n
+@@ -1194,10 +1194,10 @@
+ 	default n
+ config BUSYBOX_DEFAULT_GETTY
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_LOGIN
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_LOGIN_SESSION_AS_CHILD
+ 	bool
+ 	default n
+@@ -1221,13 +1221,13 @@
+ 	default n
+ config BUSYBOX_DEFAULT_CHPASSWD
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_FEATURE_DEFAULT_PASSWD_ALGO
+ 	string
+ 	default "md5"
+ config BUSYBOX_DEFAULT_SU
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_FEATURE_SU_SYSLOG
+ 	bool
+ 	default n
+@@ -1236,7 +1236,7 @@
+ 	default n
+ config BUSYBOX_DEFAULT_SULOGIN
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_VLOCK
+ 	bool
+ 	default n
+@@ -1992,7 +1992,7 @@
+ 	default n
+ config BUSYBOX_DEFAULT_HOSTNAME
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_HTTPD
+ 	bool
+ 	default n
+@@ -2370,7 +2370,7 @@
+ 	default n
+ config BUSYBOX_DEFAULT_PSTREE
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_PWDX
+ 	bool
+ 	default n
+@@ -2388,7 +2388,7 @@
+ 	default y
+ config BUSYBOX_DEFAULT_FEATURE_TOP_SMP_CPU
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_FEATURE_TOP_DECIMALS
+ 	bool
+ 	default n
+@@ -2397,7 +2397,7 @@
+ 	default n
+ config BUSYBOX_DEFAULT_FEATURE_TOPMEM
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_UPTIME
+ 	bool
+ 	default y
+@@ -2409,7 +2409,7 @@
+ 	default y
+ config BUSYBOX_DEFAULT_FUSER
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_KILL
+ 	bool
+ 	default y
+@@ -2433,7 +2433,7 @@
+ 	default n
+ config BUSYBOX_DEFAULT_PKILL
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_PS
+ 	bool
+ 	default y
+@@ -2460,10 +2460,10 @@
+ 	default y
+ config BUSYBOX_DEFAULT_FEATURE_SHOW_THREADS
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_WATCH
+ 	bool
+-	default n
++	default y
+ config BUSYBOX_DEFAULT_RUNSV
+ 	bool
+ 	default n

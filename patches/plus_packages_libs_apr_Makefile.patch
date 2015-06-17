@@ -1,0 +1,21 @@
+Index: plus/packages/libs/apr/Makefile
+===================================================================
+---plus/packages/libs/apr/Makefile	
++++plus/packages/libs/apr/Makefile	
+@@ -37,14 +37,14 @@
+ 
+ CONFIGURE_ARGS += \
+ 	--with-devrandom=/dev/urandom \
+-	--disable-dso \
++	--enable-dso \
+ 	$(call autoconf_bool,CONFIG_IPV6,ipv6)
+ 
+ # XXX: ac_cv_sizeof_struct_iovec=1 is just to trick configure
+ CONFIGURE_VARS += \
+ 	ac_cv_sizeof_struct_iovec=1 \
+ 	ac_cv_struct_rlimit=yes \
+-	apr_cv_process_shared_works=no \
++	apr_cv_process_shared_works=yes \
+ 	apr_cv_mutex_robust_shared=no \
+ 	apr_cv_tcp_nodelay_with_cork=yes \
+ 	apr_cv_use_lfs64=yes \

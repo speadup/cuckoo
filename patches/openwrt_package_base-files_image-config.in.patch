@@ -1,0 +1,50 @@
+Index: openwrt/package/base-files/image-config.in
+===================================================================
+---openwrt/package/base-files/image-config.in	
++++openwrt/package/base-files/image-config.in	
+@@ -282,3 +282,45 @@
+ 		  Path to a file containing the passphrase for the signing key.
+                   If the signing key is not encrypted and does not require a passphrase,
+                   this option may be left blank.
++
++menuconfig PASSWORDOPT
++    bool "Preset initial password" if IMAGEOPT
++    default n
++    help
++        These options allow to override the password embedded in
++        the /etc/shadow files. Usually there is no need to set these, but
++        they're useful for release builds or custom redistributions
++        that should carry custom version tags.
++
++    config PASSWORD_ROOT
++        string
++        prompt "Password for root" if PASSWORDOPT
++        default "welcome"
++        help
++            This is the preset initial password for the root user.
++            If unspecified, it defaults to welcome.
++
++    config PASSWORD_DEBUG
++        string
++        prompt "Password for debug" if PASSWORDOPT
++        default "welcome"
++        help
++            This is the preset initial password for the debug user.
++            If unspecified, it defaults to welcome.
++
++    config PASSWORD_ADMIN
++        string
++        prompt "Password for admin" if PASSWORDOPT
++        default "welcome"
++        help
++            This is the preset initial password for the admin user.
++            If unspecified, it defaults to welcome.
++
++    config PASSWORD_USER
++        string
++        prompt "Password for user" if PASSWORDOPT
++        default "welcome"
++        help
++            This is the preset initial password for the user user.
++            If unspecified, it defaults to welcome.
++

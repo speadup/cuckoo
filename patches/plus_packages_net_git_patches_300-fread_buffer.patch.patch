@@ -1,0 +1,17 @@
+Index: plus/packages/net/git/patches/300-fread_buffer.patch
+===================================================================
+---plus/packages/net/git/patches/300-fread_buffer.patch	
++++plus/packages/net/git/patches/300-fread_buffer.patch	
+@@ -0,0 +1,12 @@
++--- a/Makefile
+++++ b/Makefile
++@@ -1639,7 +1639,7 @@
++ 	'-DGIT_INFO_PATH="$(infodir_relative_SQ)"'
++ 
++-git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
+++git$X: git.o http.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
++-	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) git.o \
+++	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) git.o http.o \
++ 		$(BUILTIN_OBJS) $(LIBS)
++ 
++ help.sp help.s help.o: common-cmds.h

@@ -1,0 +1,19 @@
+Index: openwrt/include/package.mk
+===================================================================
+---openwrt/include/package.mk	
++++openwrt/include/package.mk	
+@@ -256,10 +256,13 @@
+ 	touch $$@
+ 
+   ifdef Build/InstallDev
+-    compile: $(STAMP_INSTALLED)
++    $(if $(CONFIG_PACKAGE_$(1)),compile: $(STAMP_INSTALLED))
+   endif
+ 
+   define Build/DefaultTargets
++    ifdef Build/InstallDev
++      $$(if $$(CONFIG_PACKAGE_$$(1)),compile: $$(STAMP_INSTALLED))
++    endif
+   endef
+ 
+   prepare: $(STAMP_PREPARED)

@@ -1,0 +1,43 @@
+Index: plus/packages/net/apache/patches/007-config_layout.patch
+===================================================================
+---plus/packages/net/apache/patches/007-config_layout.patch	
++++plus/packages/net/apache/patches/007-config_layout.patch	
+@@ -0,0 +1,38 @@
++--- a/config.layout
+++++ a/config.layout
++@@ -23,7 +23,7 @@
++     installbuilddir: ${datadir}/build
++     errordir:      ${datadir}/error
++     iconsdir:      ${datadir}/icons
++-    htdocsdir:     ${datadir}/htdocs
+++    htdocsdir:     /work/wwwroot/www
++     manualdir:     ${datadir}/manual
++     cgidir:        ${datadir}/cgi-bin
++     includedir:    ${prefix}/include
++@@ -48,7 +48,7 @@
++     installbuilddir: ${datadir}/build
++     errordir:      ${datadir}/error
++     iconsdir:      ${datadir}/icons
++-    htdocsdir:     ${datadir}/htdocs
+++    htdocsdir:     /work/wwwroot/www
++     manualdir:     ${datadir}/manual
++     cgidir:        ${datadir}/cgi-bin
++     includedir:    ${prefix}/include+
++@@ -120,7 +120,7 @@
++     installbuilddir: ${datadir}/build
++     errordir:      ${datadir}/error
++     iconsdir:      ${datadir}/icons
++-    htdocsdir:     ${datadir}/html
+++    htdocsdir:     /work/wwwroot/www
++     manualdir:     ${datadir}/manual
++     cgidir:        ${datadir}/cgi-bin
++     includedir:    ${prefix}/include/apache
++@@ -144,7 +144,7 @@
++     installbuilddir: ${datadir}/build
++     errordir:      ${datadir}/error
++     iconsdir:      ${datadir}/icons
++-    htdocsdir:     ${datadir}/htdocs
+++    htdocsdir:     /work/wwwroot/www
++     manualdir:     ${datadir}/manual
++     cgidir:        ${datadir}/cgi-bin
++     includedir:    ${prefix}/include

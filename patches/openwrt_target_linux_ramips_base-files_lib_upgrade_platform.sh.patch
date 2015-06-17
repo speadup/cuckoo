@@ -1,0 +1,12 @@
+Index: openwrt/target/linux/ramips/base-files/lib/upgrade/platform.sh
+===================================================================
+---openwrt/target/linux/ramips/base-files/lib/upgrade/platform.sh	
++++openwrt/target/linux/ramips/base-files/lib/upgrade/platform.sh	
+@@ -120,6 +120,7 @@
+ 	xiaomi-miwifi-mini |\
+ 	y1 |\
+ 	y1s |\
++	hiwifi-hc5761 |\
+ 	zte-q7 |\
+ 	zbt-wa05)
+ 		[ "$magic" != "27051956" ] && {

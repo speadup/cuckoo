@@ -1,0 +1,12 @@
+Index: openwrt/package/boot/uboot-sunxi/uEnv.txt
+===================================================================
+---openwrt/package/boot/uboot-sunxi/uEnv.txt	
++++openwrt/package/boot/uboot-sunxi/uEnv.txt	
+@@ -1,6 +1,6 @@
+ setenv fdt_high ffffffff
+ setenv loadkernel fatload mmc 0 \$kernel_addr_r uImage
+ setenv loaddtb fatload mmc 0 \$fdt_addr_r dtb
+-setenv bootargs console=ttyS0,115200 earlyprintk root=/dev/mmcblk0p2 rootwait
++setenv bootargs console=ttyS0,115200 earlyprintk root=/dev/mtdblock0 rootwait block2mtd.block2mtd=/dev/mmcblk0p2,65536,rootfs,5 rootfstype=squashfs
+ setenv uenvcmd run loadkernel \&\& run loaddtb \&\& bootm \$kernel_addr_r - \$fdt_addr_r
+ run uenvcmd

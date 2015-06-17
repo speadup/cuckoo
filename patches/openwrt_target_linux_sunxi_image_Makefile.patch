@@ -1,0 +1,22 @@
+Index: openwrt/target/linux/sunxi/image/Makefile
+===================================================================
+---openwrt/target/linux/sunxi/image/Makefile	
++++openwrt/target/linux/sunxi/image/Makefile	
+@@ -52,7 +52,7 @@
+ 	rm -f $(KDIR)/boot.img
+ 	mkdosfs $(KDIR)/boot.img -C $(FAT32_BLOCKS)
+ 	
+-	mcopy -i $(KDIR)/boot.img $(BIN_DIR)/uboot-sunxi-$(PROFILE)/$(IMG_PREFIX)-$(PROFILE)-boot.scr ::boot.scr
++	mcopy -i $(KDIR)/boot.img $(BIN_DIR)/uboot-$(BOARD)-$(PROFILE)/openwrt-$(BOARD)-$(PROFILE)-boot.scr ::boot.scr
+ 	mcopy -i $(KDIR)/boot.img $(BIN_DIR)/$(2).dtb ::dtb
+ 	mcopy -i $(KDIR)/boot.img $(BIN_DIR)/$(IMG_PREFIX)-uImage ::uImage
+ 	
+@@ -62,7 +62,7 @@
+ 		$(KDIR)/root.$(1) \
+ 		$(CONFIG_SUNXI_SD_BOOT_PARTSIZE) \
+ 		$(CONFIG_TARGET_ROOTFS_PARTSIZE) \
+-		$(BIN_DIR)/uboot-sunxi-$(PROFILE)/$(IMG_PREFIX)-$(PROFILE)-u-boot-with-spl.bin
++		$(BIN_DIR)/uboot-$(BOARD)-$(PROFILE)/openwrt-$(BOARD)-$(PROFILE)-u-boot-with-spl.bin
+ endef
+ 
+ define Image/Build/Profile/A10-OLinuXino-Lime

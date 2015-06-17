@@ -1,0 +1,85 @@
+Index: openwrt/package/network/config/netifd/patches/002-chilli_firewall_device_fix.patch
+===================================================================
+---openwrt/package/network/config/netifd/patches/002-chilli_firewall_device_fix.patch	
++++openwrt/package/network/config/netifd/patches/002-chilli_firewall_device_fix.patch	
+@@ -0,0 +1,80 @@
++diff -Nur a/interface.c b/interface.c
++--- a/interface.c	2014-12-11 14:31:58.000000000 +0800
+++++ b/interface.c	2014-12-18 14:35:07.230410128 +0800
++@@ -45,6 +45,7 @@
++ 	IFACE_ATTR_IP6CLASS,
++ 	IFACE_ATTR_DELEGATE,
++ 	IFACE_ATTR_FORCE_LINK,
+++	IFACE_ATTR_PORTAL,
++ 	IFACE_ATTR_MAX
++ };
++ 
++@@ -66,6 +66,7 @@
++ 	[IFACE_ATTR_IP6CLASS] = { .name = "ip6class", .type = BLOBMSG_TYPE_ARRAY },
++ 	[IFACE_ATTR_DELEGATE] = { .name = "delegate", .type = BLOBMSG_TYPE_BOOL },
++ 	[IFACE_ATTR_FORCE_LINK] = { .name = "force_link", .type = BLOBMSG_TYPE_BOOL },
+++	[IFACE_ATTR_PORTAL] = { .name = "portal", .type = BLOBMSG_TYPE_BOOL },
++ };
++ 
++ static const struct uci_blob_param_info iface_attr_info[IFACE_ATTR_MAX] = {
++@@ -759,6 +759,10 @@
++ 
++ 	iface->proto_ip.no_delegation = !blobmsg_get_bool_default(tb[IFACE_ATTR_DELEGATE], true);
++ 
+++    if ((cur = tb[IFACE_ATTR_PORTAL])) {
+++        iface->portal = blobmsg_get_u8(cur);
+++    }
+++
++ 	iface->config_autostart = iface->autostart;
++ 	return iface;
++ }
++@@ -1064,6 +1064,7 @@
++ 	if_old->parent_ifname = if_new->parent_ifname;
++ 	if_old->proto_handler = if_new->proto_handler;
++ 	if_old->force_link = if_new->force_link;
+++	if_old->portal = if_new->portal;
++ 
++ 	if_old->proto_ip.no_dns = if_new->proto_ip.no_dns;
++ 	interface_replace_dns(&if_old->config_ip, &if_new->config_ip);
++diff -Nur a/interface.h b/interface.h
++--- a/interface.h	2014-12-11 14:31:58.000000000 +0800
+++++ b/interface.h	2014-12-18 14:35:07.230410128 +0800
++@@ -159,6 +159,7 @@
++ 
++ 	struct uloop_timeout remove_timer;
++ 	struct ubus_object ubus;
+++    bool portal;
++ };
++ 
++ 
++diff -Nur a/ubus.c b/ubus.c
++--- a/ubus.c	2014-12-11 14:31:58.000000000 +0800
+++++ b/ubus.c	2014-12-18 14:36:34.168703780 +0800
++@@ -670,17 +670,25 @@
++ 	struct interface_data *data;
++ 	struct device *dev;
++ 	void *a, *inactive;
+++    char ifname[IFNAMSIZ + 1]; 
++ 
++ 	blobmsg_add_u8(&b, "up", iface->state == IFS_UP);
++ 	blobmsg_add_u8(&b, "pending", iface->state == IFS_SETUP);
++ 	blobmsg_add_u8(&b, "available", iface->available);
++ 	blobmsg_add_u8(&b, "autostart", iface->autostart);
+++    blobmsg_add_u8(&b, "portal", iface->portal);
++ 
++ 	if (iface->state == IFS_UP) {
++ 		time_t cur = system_get_rtime();
++ 		blobmsg_add_u32(&b, "uptime", cur - iface->start_time);
++-		if (iface->l3_dev.dev)
++-			blobmsg_add_string(&b, "l3_device", iface->l3_dev.dev->ifname);
+++		if (iface->l3_dev.dev) {
+++            if (iface->portal) {
+++                snprintf(ifname, IFNAMSIZ, "tun-%s", iface->name);
+++                blobmsg_add_string(&b, "l3_device", ifname);
+++            } else {
+++                blobmsg_add_string(&b, "l3_device", iface->l3_dev.dev->ifname);
+++            }
+++        }
++ 	}
++ 
++ 	if (iface->proto_handler)

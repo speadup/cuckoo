@@ -1,0 +1,12 @@
+Index: openwrt/package/utils/busybox/files/telnet
+===================================================================
+---openwrt/package/utils/busybox/files/telnet	
++++openwrt/package/utils/busybox/files/telnet	
+@@ -1,6 +1,6 @@
+ #!/bin/sh /etc/rc.common
+ # Copyright (C) 2006-2011 OpenWrt.org
+-
++IPKG_IGNORE=1
+ START=50
+ 
+ USE_PROCD=1

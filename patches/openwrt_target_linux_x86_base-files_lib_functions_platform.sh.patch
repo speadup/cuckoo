@@ -1,0 +1,45 @@
+Index: openwrt/target/linux/x86/base-files/lib/functions/platform.sh
+===================================================================
+---openwrt/target/linux/x86/base-files/lib/functions/platform.sh	
++++openwrt/target/linux/x86/base-files/lib/functions/platform.sh	
+@@ -0,0 +1,40 @@
++platform_get_rootfs() {
++	local rootfsdev
++	local rootfstype
++	
++	rootfstype="$(awk 'BEGIN { RS=" "; FS="="; } ($1 == "rootfstype") { print $2 }' < /proc/cmdline)"
++	case "$rootfstype" in
++		squashfs|jffs2)
++			rootfsdev="$(awk 'BEGIN { RS=" "; FS="="; } ($1 == "block2mtd.block2mtd") { print substr($2,1,index($2, ",")-1) }' < /proc/cmdline)";;
++		ext4)
++			rootfsdev="$(awk 'BEGIN { RS=" "; FS="="; } ($1 == "root") { print $2 }' < /proc/cmdline)";;
++	esac
++		
++	echo "$rootfstype:$rootfsdev"
++}
++
++platform_get_datafs() {
++	local rootfsdev=$(platform_get_rootfs | cut -d: -f2)
++	echo ${rootfsdev%%?}$(echo $rootfsdev | awk '{print substr($0, length($0)) +1}')
++}
++
++platform_set_datafs() {
++    local datafsdev=$(platform_get_datafs)
++    local mkfs=/usr/sbin/mkfs.ext4
++    [ "${datafsdev%%?}" = "/dev/mtdblock" ] && return 2
++    blkid $datafsdev >/dev/null || ([ $? = 2 ] && $mkfs $datafsdev)
++    sed -i "s@${datafsdev/dev/mnt}@/work@" $1
++    sed -i "/\/work/,/enabled/s/enabled\t'0'/enabled\t'1'/" $1
++}
++
++platform_mount_datafs() {
++	local mkfs=/usr/sbin/mkfs.ext4
++	local datadir=/work
++	local datafsdev=$(platform_get_datafs)
++	[ -x $mkfs ] || return 2
++	[ -n "$datafsdev" ] || return 2
++	grep "on $datadir " /proc/mounts >/dev/null 2>&1 && return 0
++	blkid $datafsdev >/dev/null || ([ $? = 2 ] && $mkfs $datafsdev)
++	mkdir -p $datadir
++	mount $datafsdev $datadir
++}

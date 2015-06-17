@@ -1,0 +1,16 @@
+Index: openwrt/target/linux/sunxi/image/Config.in
+===================================================================
+---openwrt/target/linux/sunxi/image/Config.in	
++++openwrt/target/linux/sunxi/image/Config.in	
+@@ -1,5 +1,10 @@
+ config SUNXI_SD_BOOT_PARTSIZE
+ 	int "Boot (SD Card) filesystem partition size (in MB)"
+ 	depends on TARGET_sunxi
+-	default 20
++	default 16
+ 
++config TARGET_ROOTFS_PARTSIZE
++	int "Root (SD Card) filesystem partition size (in MB)"
++	depends on TARGET_sunxi
++	default 96
++

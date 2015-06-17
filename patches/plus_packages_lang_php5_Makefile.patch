@@ -1,0 +1,46 @@
+Index: plus/packages/lang/php5/Makefile
+===================================================================
+---plus/packages/lang/php5/Makefile	
++++plus/packages/lang/php5/Makefile	
+@@ -265,13 +265,13 @@
+ endif
+ 
+ ifneq ($(SDK)$(CONFIG_PACKAGE_php5-mod-mysql),)
+-  CONFIGURE_ARGS+= --with-mysql=shared,"$(STAGING_DIR)/usr"
++  CONFIGURE_ARGS+= --with-mysql=shared,mysqlnd
+ else
+   CONFIGURE_ARGS+= --without-mysql
+ endif
+ 
+ ifneq ($(SDK)$(CONFIG_PACKAGE_php5-mod-mysqli),)
+-  CONFIGURE_ARGS+= --with-mysqli=shared,"$(STAGING_DIR)/usr/bin/mysql_config"
++  CONFIGURE_ARGS+= --with-mysqli=shared,mysqlnd
+ else
+   CONFIGURE_ARGS+= --without-mysqli
+ endif
+@@ -300,7 +300,7 @@
+ ifneq ($(SDK)$(CONFIG_PACKAGE_php5-mod-pdo),)
+   CONFIGURE_ARGS+= --enable-pdo=shared
+   ifneq ($(SDK)$(CONFIG_PACKAGE_php5-mod-pdo-mysql),)
+-    CONFIGURE_ARGS+= --with-pdo-mysql=shared,"$(STAGING_DIR)/usr"
++    CONFIGURE_ARGS+= --with-pdo-mysql=shared,mysqlnd
+   else
+     CONFIGURE_ARGS+= --without-pdo-mysql
+   endif
+@@ -548,13 +548,13 @@
+ $(eval $(call BuildModule,ldap,LDAP,+PACKAGE_php5-mod-ldap:libopenldap +PACKAGE_php5-mod-ldap:libsasl2))
+ $(eval $(call BuildModule,mbstring,MBString))
+ $(eval $(call BuildModule,mcrypt,Mcrypt,+PACKAGE_php5-mod-mcrypt:libmcrypt +PACKAGE_php5-mod-mcrypt:libltdl))
+-$(eval $(call BuildModule,mysql,MySQL,+PACKAGE_php5-mod-mysql:libmysqlclient))
+-$(eval $(call BuildModule,mysqli,MySQL Improved Extension,+PACKAGE_php5-mod-mysqli:libmysqlclient))
++$(eval $(call BuildModule,mysql,MySQL))
++$(eval $(call BuildModule,mysqli,MySQL Improved Extension))
+ $(eval $(call BuildModule,opcache,OPcache,,zend))
+ $(eval $(call BuildModule,openssl,OpenSSL,+PACKAGE_php5-mod-openssl:libopenssl))
+ $(eval $(call BuildModule,pcntl,PCNTL))
+ $(eval $(call BuildModule,pdo,PHP Data Objects))
+-$(eval $(call BuildModule,pdo-mysql,PDO driver for MySQL,+php5-mod-pdo +PACKAGE_php5-mod-pdo-mysql:libmysqlclient))
++$(eval $(call BuildModule,pdo-mysql,PDO driver for MySQL,+php5-mod-pdo))
+ $(eval $(call BuildModule,pdo-pgsql,PDO driver for PostgreSQL,+php5-mod-pdo +PACKAGE_php5-mod-pdo-pgsql:libpq))
+ $(eval $(call BuildModule,pdo-sqlite,PDO driver for SQLite 3.x,+php5-mod-pdo +PACKAGE_php5-mod-pdo-sqlite:libsqlite3 +PACKAGE_php5-mod-pdo-sqlite:librt))
+ $(eval $(call BuildModule,pgsql,PostgreSQL,+PACKAGE_php5-mod-pgsql:libpq))

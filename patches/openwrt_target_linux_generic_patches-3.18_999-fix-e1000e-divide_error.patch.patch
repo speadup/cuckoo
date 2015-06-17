@@ -1,0 +1,20 @@
+Index: openwrt/target/linux/generic/patches-3.18/999-fix-e1000e-divide_error.patch
+===================================================================
+---openwrt/target/linux/generic/patches-3.18/999-fix-e1000e-divide_error.patch	
++++openwrt/target/linux/generic/patches-3.18/999-fix-e1000e-divide_error.patch	
+@@ -0,0 +1,15 @@
++--- a/drivers/net/ethernet/intel/e1000e/netdev.c
+++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
++@@ -4151,7 +4151,11 @@
++ 
++ 			time_delta = systim_next - systim;
++ 			temp = time_delta;
++-			rem = do_div(temp, incvalue);
+++            if(incvalue) {
+++                rem = do_div(temp, incvalue);
+++            } else {
+++                rem = 0;
+++            }
++ 
++ 			systim = systim_next;
++ 

@@ -1,0 +1,12 @@
+Index: openwrt/package/base-files/files/etc/init.d/done
+===================================================================
+---openwrt/package/base-files/files/etc/init.d/done	
++++openwrt/package/base-files/files/etc/init.d/done	
+@@ -4,6 +4,7 @@
+ START=95
+ boot() {
+ 	mount_root done
++    [ -x /sbin/block ] && block mount
+ 	rm -f /sysupgrade.tgz
+ 
+ 	# process user commands

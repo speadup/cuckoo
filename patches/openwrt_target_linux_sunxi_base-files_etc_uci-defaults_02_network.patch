@@ -1,0 +1,13 @@
+Index: openwrt/target/linux/sunxi/base-files/etc/uci-defaults/02_network
+===================================================================
+---openwrt/target/linux/sunxi/base-files/etc/uci-defaults/02_network	
++++openwrt/target/linux/sunxi/base-files/etc/uci-defaults/02_network	
+@@ -23,7 +23,7 @@
+ 	ucidef_add_switch_vlan "switch0" "2" "3 8t"
+ 	;;
+ *)
+-	ucidef_set_interface_lan 'eth0'
++	ucidef_set_interface_wan 'eth0'
+ 	;;
+ esac
+ 

@@ -1,0 +1,20 @@
+Index: openwrt/package/kernel/broadcom-wl/files/lib/wifi/broadcom.sh
+===================================================================
+---openwrt/package/kernel/broadcom-wl/files/lib/wifi/broadcom.sh	
++++openwrt/package/kernel/broadcom-wl/files/lib/wifi/broadcom.sh	
+@@ -462,13 +462,13 @@
+ 	option txantenna 3
+ 	option rxantenna 3
+ 	# REMOVE THIS LINE TO ENABLE WIFI:
+-	option disabled 1
++	option disabled 0
+ 
+ config wifi-iface
+ 	option device   wl${i}
+ 	option network	lan
+ 	option mode     ap
+-	option ssid     OpenWrt${i#0}
++	option ssid     OpenWrt-`wlc ifname wl${i} default_bssid | sed -e 's/://g' -e 's/^.\{6\}//g'`-${i#0}
+ 	option encryption none
+ 
+ EOF

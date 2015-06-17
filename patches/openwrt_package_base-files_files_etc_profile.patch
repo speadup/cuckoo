@@ -1,0 +1,12 @@
+Index: openwrt/package/base-files/files/etc/profile
+===================================================================
+---openwrt/package/base-files/files/etc/profile	
++++openwrt/package/base-files/files/etc/profile	
+@@ -2,6 +2,7 @@
+ [ -f /etc/banner ] && cat /etc/banner
+ [ -e /tmp/.failsafe ] && cat /etc/banner.failsafe
+ 
++export LANG=en_US.UTF-8
+ export PATH=/usr/bin:/usr/sbin:/bin:/sbin
+ export HOME=$(grep -e "^${USER:-root}:" /etc/passwd | cut -d ":" -f 6)
+ export HOME=${HOME:-/root}

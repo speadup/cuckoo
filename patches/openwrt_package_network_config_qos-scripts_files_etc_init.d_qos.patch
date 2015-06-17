@@ -1,0 +1,12 @@
+Index: openwrt/package/network/config/qos-scripts/files/etc/init.d/qos
+===================================================================
+---openwrt/package/network/config/qos-scripts/files/etc/init.d/qos	
++++openwrt/package/network/config/qos-scripts/files/etc/init.d/qos	
+@@ -1,6 +1,6 @@
+ #!/bin/sh /etc/rc.common
+ # Copyright (C) 2006 OpenWrt.org
+-
++IPKG_IGNORE=1
+ START=50
+ USE_PROCD=1
+ 

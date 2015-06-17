@@ -1,0 +1,38 @@
+Index: plus/packages/net/coova-chilli/patches/302-fix-nfqueue-type.patch
+===================================================================
+---plus/packages/net/coova-chilli/patches/302-fix-nfqueue-type.patch	
++++plus/packages/net/coova-chilli/patches/302-fix-nfqueue-type.patch	
+@@ -0,0 +1,33 @@
++diff -Nur a/src/dhcp.c b/src/dhcp.c
++--- a/src/dhcp.c
+++++ b/src/dhcp.c
++@@ -864,7 +864,7 @@
++   struct nfqnl_msg_packet_hdr *ph;
++   struct nfqnl_msg_packet_hw *hw;
++   u_int32_t id = 0;
++-  char *data;
+++  unsigned char *data;
++   int ret;
++ 
++   int result = NF_DROP;
++@@ -927,7 +927,7 @@
++ 		   struct nfq_data *nfa, void *cbdata) {
++   struct nfqnl_msg_packet_hdr *ph;
++   u_int32_t id = 0;
++-  char *data;
+++  unsigned char *data;
++   int ret;
++ 
++   int result = NF_DROP;
++diff -Nur a/src/queue.c b/src/queue.c
++--- a/src/queue.c
+++++ b/src/queue.c
++@@ -13,7 +13,7 @@
++   struct nfqnl_msg_packet_hdr *ph;
++   u_int32_t mark,ifi; 
++   int id = 0;
++-  char *data;
+++  unsigned char *data;
++   int ret;
++   
++   ph = nfq_get_msg_packet_hdr(tb);

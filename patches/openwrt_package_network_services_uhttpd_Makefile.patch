@@ -1,0 +1,18 @@
+Index: openwrt/package/network/services/uhttpd/Makefile
+===================================================================
+---openwrt/package/network/services/uhttpd/Makefile	
++++openwrt/package/network/services/uhttpd/Makefile	
+@@ -111,9 +111,12 @@
+   TARGET_CFLAGS += -D_DEFAULT_SOURCE
+ endif
+ 
++ifneq ($(CONFIG_PACKAGE_uhttpd-mod-tls),)
+ TARGET_LDFLAGS += -lcrypt
+-
+ CMAKE_OPTIONS = -DTLS_SUPPORT=on
++else
++CMAKE_OPTIONS = -DTLS_SUPPORT=off
++endif
+ 
+ define Package/uhttpd/install
+ 	$(INSTALL_DIR) $(1)/etc/init.d

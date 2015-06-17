@@ -1,0 +1,13 @@
+Index: openwrt/target/linux/x86/base-files/lib/preinit/79_move_config
+===================================================================
+---openwrt/target/linux/x86/base-files/lib/preinit/79_move_config	
++++openwrt/target/linux/x86/base-files/lib/preinit/79_move_config	
+@@ -6,7 +6,7 @@
+ 
+ 	if platform_export_bootpart; then
+ 		mount -t ext4 -o rw,noatime "$BOOTPART" /mnt
+-		mv -f /mnt/sysupgrade.tgz /
++		[ -f /mnt/sysupgrade.tgz ] && mv -f /mnt/sysupgrade.tgz /
+ 		umount /mnt
+ 	fi
+ }

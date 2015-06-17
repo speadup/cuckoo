@@ -1,0 +1,16 @@
+Index: openwrt/target/linux/ramips/mt7620/config-3.18
+===================================================================
+---openwrt/target/linux/ramips/mt7620/config-3.18	
++++openwrt/target/linux/ramips/mt7620/config-3.18	
+@@ -38,9 +38,9 @@
+ CONFIG_CSRC_R4K=y
+ CONFIG_DEBUG_PINCTRL=y
+ CONFIG_DMA_NONCOHERENT=y
+-# CONFIG_DTB_MT7620A_EVAL is not set
++CONFIG_DTB_MT7620A_EVAL=y
+ # CONFIG_DTB_MT7628AN_EVAL is not set
+-CONFIG_DTB_RT_NONE=y
++# CONFIG_DTB_RT_NONE is not set
+ CONFIG_DTC=y
+ CONFIG_EARLY_PRINTK=y
+ CONFIG_GENERIC_ATOMIC64=y

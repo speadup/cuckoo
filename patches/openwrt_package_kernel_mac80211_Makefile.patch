@@ -1,0 +1,17 @@
+Index: openwrt/package/kernel/mac80211/Makefile
+===================================================================
+---openwrt/package/kernel/mac80211/Makefile	
++++openwrt/package/kernel/mac80211/Makefile	
+@@ -2009,6 +2009,12 @@
+ 		$(PKG_BUILD_DIR)/$(PKG_LINUX_FIRMWARE_SUBDIR)/brcm/brcmfmac43143.bin \
+ 		$(1)/lib/firmware/brcm/
+ endif
++ifneq ($(CONFIG_BRCMFMAC_SDIO),)
++	$(INSTALL_DATA) \
++		$(PKG_BUILD_DIR)/$(PKG_LINUX_FIRMWARE_SUBDIR)/brcm/brcmfmac43362-sdio.bin \
++		$(1)/lib/firmware/brcm/
++	$(INSTALL_DATA) ./files/brcmfmac43362-sdio.txt $(1)/lib/firmware/brcm/
++endif
+ ifneq ($(CONFIG_BRCMFMAC_PCIE),)
+ 	$(INSTALL_DATA) \
+ 		$(PKG_BUILD_DIR)/$(PKG_LINUX_FIRMWARE_SUBDIR)/brcm/brcmfmac43602-pcie.ap.bin \

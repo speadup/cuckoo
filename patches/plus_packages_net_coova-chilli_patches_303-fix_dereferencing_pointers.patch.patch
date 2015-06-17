@@ -1,0 +1,37 @@
+Index: plus/packages/net/coova-chilli/patches/303-fix_dereferencing_pointers.patch
+===================================================================
+---plus/packages/net/coova-chilli/patches/303-fix_dereferencing_pointers.patch	
++++plus/packages/net/coova-chilli/patches/303-fix_dereferencing_pointers.patch	
+@@ -0,0 +1,32 @@
++diff -Nur a/src/linux/xt_coova.c b/src/linux/xt_coova.c
++--- a/src/linux/xt_coova.c	2015-06-09 20:29:23.000000000 +0800
+++++ b/src/linux/xt_coova.c	2015-06-11 13:40:12.783274342 +0800
++@@ -15,6 +15,7 @@
++  * published by the Free Software Foundation.
++  *
++  */
+++#include <linux/version.h>
++ #include <linux/init.h>
++ #include <linux/ip.h>
++ #include <linux/ipv6.h>
++@@ -334,9 +335,9 @@
++ 		ret = -ENOMEM;
++ 		goto out;
++ 	}
++-#ifdef LINUX_VERSION_CODE >= KERNEL_VERSION(3,10,0)
+++#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,10,0)
++ 	uid = make_kuid(&init_user_ns, ip_list_uid);
++-	gid = make_kgid(&init_user_nd, ip_list_gid);
+++	gid = make_kgid(&init_user_ns, ip_list_gid);
++ #else
++ 	pde->uid = ip_list_uid;
++ 	pde->gid = ip_list_gid;
++@@ -476,7 +477,7 @@
++ 		    size_t size, loff_t *loff)
++ {
++ #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,10,0)
++-	struct coova_table *t = PDE_DATA(inode);
+++	struct coova_table *t = PDE_DATA(file->f_path.dentry->d_inode);
++ #else
++ 	const struct proc_dir_entry *pde = PDE(file->f_path.dentry->d_inode);
++ 	struct coova_table *t = pde->data;

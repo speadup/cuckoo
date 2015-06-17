@@ -1,0 +1,6 @@
+#
+#Makefile for the data_transit
+#
+
+OUR_OBJS += udp.o
+

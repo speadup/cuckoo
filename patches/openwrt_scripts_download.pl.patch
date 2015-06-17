@@ -1,0 +1,54 @@
+Index: openwrt/scripts/download.pl
+===================================================================
+---openwrt/scripts/download.pl	
++++openwrt/scripts/download.pl	
+@@ -10,6 +10,7 @@
+ use warnings;
+ use File::Basename;
+ use File::Copy;
++use Fcntl qw(:flock);
+ 
+ @ARGV > 2 or die "Syntax: $0 <target dir> <filename> <md5sum> [<mirror> ...]\n";
+ 
+@@ -20,6 +21,10 @@
+ my @mirrors;
+ my $ok;
+ 
++open LOCK, "> $target/$filename.lock";
++flock(LOCK, LOCK_EX);
++-f "$target/$filename" and $ok = 1;
++
+ sub localmirrors {
+ 	my @mlist;
+ 	open LM, "$scriptdir/localmirrors" and do {
+@@ -146,6 +151,14 @@
+ 	unlink "$target/$filename.md5sum";
+ }
+ 
++sub quitcleanup
++{
++    cleanup();
++    flock(LOCK, LOCK_UN);
++    close LOCK;
++    unlink "$target/$filename.lock"
++}
++
+ @mirrors = localmirrors();
+ 
+ foreach my $mirror (@ARGV) {
+@@ -199,6 +212,8 @@
+ push @mirrors, 'http://mirror2.openwrt.org/sources';
+ push @mirrors, 'http://downloads.openwrt.org/sources';
+ 
++$SIG{__DIE__} = $SIG{INT} = \&quitcleanup;
++
+ while (!$ok) {
+ 	my $mirror = shift @mirrors;
+ 	$mirror or die "No more mirrors to try - giving up.\n";
+@@ -207,5 +222,4 @@
+ 	-f "$target/$filename" and $ok = 1;
+ }
+ 
+-$SIG{INT} = \&cleanup;
+-
++quitcleanup();

@@ -1,0 +1,144 @@
+Index: openwrt/package/network/config/firewall/files/firewall.config
+===================================================================
+---openwrt/package/network/config/firewall/files/firewall.config	
++++openwrt/package/network/config/firewall/files/firewall.config	
+@@ -2,16 +2,16 @@
+ 	option syn_flood	1
+ 	option input		ACCEPT
+ 	option output		ACCEPT
+-	option forward		REJECT
++	option forward		ACCEPT
+ # Uncomment this line to disable ipv6 rules
+ #	option disable_ipv6	1
+ 
+ config zone
+ 	option name		lan
+ 	list   network		'lan'
+-	option input		ACCEPT
++	option input		REJECT
+ 	option output		ACCEPT
+-	option forward		ACCEPT
++	option forward		REJECT
+ 
+ config zone
+ 	option name		wan
+@@ -31,16 +31,16 @@
+ # see https://dev.openwrt.org/ticket/4108
+ config rule
+ 	option name		Allow-DHCP-Renew
+-	option src		wan
++	option src		*
+ 	option proto		udp
+-	option dest_port	68
++	option dest_port	'67 68'
+ 	option target		ACCEPT
+ 	option family		ipv4
+ 
+ # Allow IPv4 ping
+ config rule
+ 	option name		Allow-Ping
+-	option src		wan
++	option src		*
+ 	option proto		icmp
+ 	option icmp_type	echo-request
+ 	option family		ipv4
+@@ -57,7 +57,7 @@
+ # see https://dev.openwrt.org/ticket/10381
+ config rule
+ 	option name		Allow-DHCPv6
+-	option src		wan
++	option src		*
+ 	option proto		udp
+ 	option src_ip		fe80::/10
+ 	option src_port		547
+@@ -81,7 +81,7 @@
+ # Allow essential incoming IPv6 ICMP traffic
+ config rule
+ 	option name		Allow-ICMPv6-Input
+-	option src		wan
++	option src		*
+ 	option proto	icmp
+ 	list icmp_type		echo-request
+ 	list icmp_type		echo-reply
+@@ -101,7 +101,7 @@
+ # Allow essential forwarded IPv6 ICMP traffic
+ config rule
+ 	option name		Allow-ICMPv6-Forward
+-	option src		wan
++	option src		*
+ 	option dest		*
+ 	option proto		icmp
+ 	list icmp_type		echo-request
+@@ -115,6 +115,72 @@
+ 	option family		ipv6
+ 	option target		ACCEPT
+ 
++config rule
++    option name     Allow-SSH-Access
++    option src      *   
++    option dest_port    8888
++    option proto        tcp 
++    option target       ACCEPT
++
++config rule
++    option name     Allow-Web-Access
++    option src      *   
++    option dest_port    '80 1080 4080 8080 443 1043'
++    option proto        tcp 
++    option target       ACCEPT
++
++config rule
++    option name     Allow-portal-Access
++    option src      *   
++    option dest_port    '3991 3992'
++    option proto        tcp 
++    option target       ACCEPT
++    option enabled      1
++
++config rule
++    option name     Allow-DNS-Access
++    option src      *   
++    option dest_port    53 
++    option target       ACCEPT
++
++config rule
++    option name     Allow-Aria2-Access
++    option src      *   
++    option dest_port    6800
++    option proto        tcp
++    option target       ACCEPT
++    option enabled      0
++
++config rule
++    option name     Allow-Samba-Access
++    option src      *   
++    option dest_port    '139 445'
++    option proto        tcp
++    option target       ACCEPT
++
++config rule
++    option name     Allow-Samba-Access2
++    option src      *   
++    option dest_port    '137 138'
++    option proto        udp
++    option target       ACCEPT
++
++config rule
++    option name     Allow-Ftp-Access
++    option src      *   
++    option dest_port    21
++    option proto        tcp 
++    option target       ACCEPT
++    option enabled      0
++
++config rule
++    option name     Allow-Mysql-Access
++    option src      *   
++    option dest_port    3306
++    option proto        tcp 
++    option target       ACCEPT
++    option enabled      0
++
+ # include a file with users custom iptables rules
+ config include
+ 	option path /etc/firewall.user

@@ -1,0 +1,10 @@
+Index: openwrt/package/base-files/files/etc/rc.common
+===================================================================
+---openwrt/package/base-files/files/etc/rc.common	
++++openwrt/package/base-files/files/etc/rc.common	
+@@ -140,4 +140,5 @@
+ ALL_COMMANDS="start stop reload restart boot shutdown enable disable enabled depends ${EXTRA_COMMANDS}"
+ list_contains ALL_COMMANDS "$action" || action=help
+ [ "$action" = "reload" ] && action='eval reload "$@" || restart "$@" && :'
++[ "$action" = "enable" -a -n "$IPKG_INSTROOT" -a "$IPKG_IGNORE" = "1" ] && exit 0
+ $action "$@"

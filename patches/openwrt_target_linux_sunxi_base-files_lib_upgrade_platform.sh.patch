@@ -1,0 +1,49 @@
+Index: openwrt/target/linux/sunxi/base-files/lib/upgrade/platform.sh
+===================================================================
+---openwrt/target/linux/sunxi/base-files/lib/upgrade/platform.sh	
++++openwrt/target/linux/sunxi/base-files/lib/upgrade/platform.sh	
+@@ -0,0 +1,44 @@
++platform_get_rootfs() {
++	local rootfsdev
++	local rootfstype
++	
++	rootfstype="$(awk 'BEGIN { RS=" "; FS="="; } ($1 == "rootfstype") { print $2 }' < /proc/cmdline)"
++	case "$rootfstype" in
++		squashfs|jffs2)
++			rootfsdev="$(awk 'BEGIN { RS=" "; FS="="; } ($1 == "block2mtd.block2mtd") { print substr($2,1,index($2, ",")-1) }' < /proc/cmdline)";;
++		ext4)
++			rootfsdev="$(awk 'BEGIN { RS=" "; FS="="; } ($1 == "root") { print $2 }' < /proc/cmdline)";;
++	esac
++		
++	echo "$rootfstype:$rootfsdev"
++}
++
++platform_check_image() {
++	[ "$#" -gt 1 ] && return 1
++
++	case "$(get_magic_long "$1")" in
++		00000000) return 0;;
++		*)
++			echo "Invalid image type"
++			return 1
++		;;
++	esac
++}
++
++platform_copy_config() {
++	local rootfs="$(platform_get_rootfs)"
++	local rootfsdev="${rootfs##*:}"
++	
++	mount -t vfat -o rw,noatime "${rootfsdev%[0-9]}1" /mnt
++	cp -af "$CONF_TAR" /mnt/
++	umount /mnt
++}
++
++platform_do_upgrade() {
++	local rootfs="$(platform_get_rootfs)"
++	local rootfsdev="${rootfs##*:}"
++
++	sync
++	[ -b ${rootfsdev%p[0-9]} ] && get_image "$@" | dd of=${rootfsdev%p[0-9]} bs=4096 conv=fsync
++	sleep 1
++}

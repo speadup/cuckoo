@@ -1,0 +1,24 @@
+Index: openwrt/package/base-files/Makefile
+===================================================================
+---openwrt/package/base-files/Makefile	
++++openwrt/package/base-files/Makefile	
+@@ -138,6 +138,19 @@
+ 		$(1)/etc/openwrt_release \
+ 		$(1)/etc/device_info
+ 
++	$(SED) \
++		's@^root:[^:]*:@root:$(shell perl -e 'if(!@ARGV[0]){exit(0)};@m[0]=crypt(@ARGV[0],"\x241\x248888");@m[0]=~ s/\x24/\\x24/g;print @m[0]' $(CONFIG_PASSWORD_ROOT)):@' \
++		$(1)/etc/shadow
++	$(SED) \
++		's@^debug:[^:]*:@root:$(shell perl -e 'if(!@ARGV[0]){exit(0)};@m[0]=crypt(@ARGV[0],"\x241\x248888");@m[0]=~ s/\x24/\\x24/g;print @m[0]' $(CONFIG_PASSWORD_DEBUG)):@' \
++		$(1)/etc/shadow
++	$(SED) \
++		's@^admin:[^:]*:@root:$(shell perl -e 'if(!@ARGV[0]){exit(0)};@m[0]=crypt(@ARGV[0],"\x241\x248888");@m[0]=~ s/\x24/\\x24/g;print @m[0]' $(CONFIG_PASSWORD_ADMIN)):@' \
++		$(1)/etc/shadow
++	$(SED) \
++		's@^user:[^:]*:@root:$(shell perl -e 'if(!@ARGV[0]){exit(0)};@m[0]=crypt(@ARGV[0],"\x241\x248888");@m[0]=~ s/\x24/\\x24/g;print @m[0]' $(CONFIG_PASSWORD_USER)):@' \
++		$(1)/etc/shadow
++
+ 	mkdir -p $(1)/CONTROL
+ 	mkdir -p $(1)/dev
+ 	mkdir -p $(1)/etc/crontabs

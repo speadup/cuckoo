@@ -1,0 +1,26 @@
+Index: openwrt/target/linux/ramips/base-files/etc/board.d/02_network
+===================================================================
+---openwrt/target/linux/ramips/base-files/etc/board.d/02_network	
++++openwrt/target/linux/ramips/base-files/etc/board.d/02_network	
+@@ -147,6 +147,13 @@
+ 		ucidef_add_switch_vlan "switch0" "2" "4 6t"
+ 		;;
+ 
++	hiwifi-hc5761)
++		ucidef_set_interfaces_lan_wan "eth0.1" "eth0.2"
++		ucidef_add_switch "switch0" "1" "1"
++		ucidef_add_switch_vlan "switch0" "1" "0 1 2 3 5 6t"
++		ucidef_add_switch_vlan "switch0" "2" "4 6t"
++		;;
++
+ 	whr-1166d)
+ 		ucidef_set_interfaces_lan_wan "eth0.1" "eth0.2"
+ 		ucidef_add_switch "switch0" "1" "1"
+@@ -318,6 +325,7 @@
+ 	psr-680w |\
+ 	sl-r7205 |\
+ 	y1 |\
++	hiwifi-hc5761 |\
+ 	y1s)
+ 		lan_mac=$(cat /sys/class/net/eth0/address)
+ 		lan_mac=$(macaddr_setbit_la "$lan_mac")

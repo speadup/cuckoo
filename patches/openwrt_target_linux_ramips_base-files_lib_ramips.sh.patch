@@ -1,0 +1,14 @@
+Index: openwrt/target/linux/ramips/base-files/lib/ramips.sh
+===================================================================
+---openwrt/target/linux/ramips/base-files/lib/ramips.sh	
++++openwrt/target/linux/ramips/base-files/lib/ramips.sh	
+@@ -397,6 +397,9 @@
+ 	*"ZTE Q7")
+ 		name="zte-q7"
+ 		;;
++	*"HiWiFi HC5761")
++		name="hiwifi-hc5761"
++		;;
+ 	*"Lenovo Y1")
+ 		name="y1"
+ 		;;

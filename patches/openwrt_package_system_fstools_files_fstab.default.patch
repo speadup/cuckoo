@@ -1,0 +1,10 @@
+Index: openwrt/package/system/fstools/files/fstab.default
+===================================================================
+---openwrt/package/system/fstools/files/fstab.default	
++++openwrt/package/system/fstools/files/fstab.default	
+@@ -1,2 +1,4 @@
+-[ ! -f /etc/config/fstab ] && ( block detect > /etc/config/fstab )
++platform_set_datafs() { :; }
++[ -f /lib/functions/platform.sh ] && . /lib/functions/platform.sh
++[ ! -f /etc/config/fstab ] && ( block detect > /etc/config/fstab ) && platform_set_datafs /etc/config/fstab
+ exit 0

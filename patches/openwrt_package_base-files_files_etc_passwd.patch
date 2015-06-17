@@ -1,0 +1,14 @@
+Index: openwrt/package/base-files/files/etc/passwd
+===================================================================
+---openwrt/package/base-files/files/etc/passwd	
++++openwrt/package/base-files/files/etc/passwd	
+@@ -1,5 +1,8 @@
+ root:x:0:0:root:/root:/bin/ash
++debug:x:1000:0:root:/home:/bin/ash
++admin:x:1001:0:root:/home:/bin/ash
++user:x:1002:0:root:/home:/bin/ash
+ daemon:*:1:1:daemon:/var:/bin/false
+-ftp:*:55:55:ftp:/home/ftp:/bin/false
++ftp:*:55:55:ftp:/home:/bin/false
+ network:*:101:101:network:/var:/bin/false
+ nobody:*:65534:65534:nobody:/var:/bin/false

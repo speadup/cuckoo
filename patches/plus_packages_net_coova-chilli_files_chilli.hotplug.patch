@@ -1,0 +1,11 @@
+Index: plus/packages/net/coova-chilli/files/chilli.hotplug
+===================================================================
+---plus/packages/net/coova-chilli/files/chilli.hotplug	
++++plus/packages/net/coova-chilli/files/chilli.hotplug	
+@@ -3,5 +3,5 @@
+ [ "$ACTION" == "ifup" ] || exit 0
+ 
+ [ "$INTERFACE" = "wan" ] && {
+-	/etc/init.d/chilli restart
++	/etc/init.d/chilli enabled && /etc/init.d/chilli restart
+ }

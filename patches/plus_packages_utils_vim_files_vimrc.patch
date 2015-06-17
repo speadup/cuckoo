@@ -1,0 +1,13 @@
+Index: plus/packages/utils/vim/files/vimrc
+===================================================================
+---plus/packages/utils/vim/files/vimrc	
++++plus/packages/utils/vim/files/vimrc	
+@@ -1,3 +1,8 @@
++set fileencodings=utf-8,gb2312,gbk,gb18030
++set termencoding=utf-8
++set fileformats=unix
++set encoding=utf-8
++
+ set showcmd			" show (partial) command in status line
+ set showmatch		" show matching brackets
+ set incsearch		" incremental search

@@ -1,0 +1,9 @@
+Index: openwrt/target/linux/sunxi/base-files.mk
+===================================================================
+---openwrt/target/linux/sunxi/base-files.mk	
++++openwrt/target/linux/sunxi/base-files.mk	
+@@ -1,3 +1,3 @@
+ define Package/base-files/install-target
+-	rm -f $(1)/etc/config/network
++	#rm -f $(1)/etc/config/network
+ endef

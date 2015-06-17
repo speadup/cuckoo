@@ -1,0 +1,13 @@
+Index: openwrt/include/download.mk
+===================================================================
+---openwrt/include/download.mk	
++++openwrt/include/download.mk	
+@@ -46,7 +46,7 @@
+ endef
+ 
+ define wrap_mirror
+-	$(if $(if $(MIRROR),$(filter-out x,$(MIRROR_MD5SUM))),@$(SCRIPT_DIR)/download.pl "$(DL_DIR)" "$(FILE)" "$(MIRROR_MD5SUM)" || ( $(1) ),$(1))
++	@$(SCRIPT_DIR)/download.pl "$(DL_DIR)" "$(FILE)" "$(MIRROR_MD5SUM)" || ( $(1) )
+ endef
+ 
+ define DownloadMethod/cvs

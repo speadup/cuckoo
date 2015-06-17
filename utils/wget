@@ -1,0 +1,6 @@
+#!/bin/sh
+echo -e "=`basename $0` $@" >>`dirname $0`/../../../tmp/debug-`basename $0`.txt
+/usr/bin/`basename $0` $@
+code=$?
+echo -e "+$?" >>`dirname $0`/../../../tmp/debug-`basename $0`.txt
+exit $code

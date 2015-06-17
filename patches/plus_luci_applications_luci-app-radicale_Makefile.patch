@@ -1,0 +1,12 @@
+Index: plus/luci/applications/luci-app-radicale/Makefile
+===================================================================
+---plus/luci/applications/luci-app-radicale/Makefile	
++++plus/luci/applications/luci-app-radicale/Makefile	
+@@ -36,6 +36,6 @@
+ 	$(PKG_MAINTAINER)
+ endef
+ 
+-include $(TOPDIR)/feeds/luci/luci.mk
++include ../../luci.mk
+ 
+ # call BuildPackage - OpenWrt buildroot signature

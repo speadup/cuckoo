@@ -1,0 +1,11 @@
+Index: openwrt/package/base-files/files/etc/sysctl.conf
+===================================================================
+---openwrt/package/base-files/files/etc/sysctl.conf	
++++openwrt/package/base-files/files/etc/sysctl.conf	
+@@ -1,4 +1,6 @@
+ kernel.panic=3
++vm.oom_kill_allocating_task = 1
++vm.panic_on_oom = 2
+ net.ipv4.conf.default.arp_ignore=1
+ net.ipv4.conf.all.arp_ignore=1
+ net.ipv4.ip_forward=1

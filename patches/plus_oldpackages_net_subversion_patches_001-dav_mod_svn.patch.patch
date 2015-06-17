@@ -1,0 +1,73 @@
+Index: plus/oldpackages/net/subversion/patches/001-dav_mod_svn.patch
+===================================================================
+---plus/oldpackages/net/subversion/patches/001-dav_mod_svn.patch	
++++plus/oldpackages/net/subversion/patches/001-dav_mod_svn.patch	
+@@ -0,0 +1,68 @@
++--- subversion-1.6.23/build/ac-macros/apache.m4	2015-02-06 21:47:36.895676586 +0800
+++++ subversion-1.6.23/build/ac-macros/apache.m4	2015-02-06 21:47:36.895676586 +0800
++@@ -41,7 +41,7 @@
++ fi
++ 
++ if test -n "$APXS" && test "$APXS" != "no"; then
++-    APXS_INCLUDE="`$APXS -q INCLUDEDIR`"
+++    APXS_INCLUDE="`dirname $APXS`/../include/apache"
++     if test -r $APXS_INCLUDE/mod_dav.h; then
++         AC_MSG_RESULT(found at $APXS)
++ 
++@@ -71,31 +71,31 @@
++     AC_MSG_RESULT(no)
++ fi
++ 
++-if test -n "$APXS" && test "$APXS" != "no"; then
++-  AC_MSG_CHECKING([whether Apache version is compatible with APR version])
++-  apr_major_version="${apr_version%%.*}"
++-  case "$apr_major_version" in
++-    0)
++-      apache_minor_version_wanted_regex="0"
++-      ;;
++-    1)
++-      apache_minor_version_wanted_regex=["[1-4]"]
++-      ;;
++-    *)
++-      AC_MSG_ERROR([unknown APR version])
++-      ;;
++-  esac
++-  old_CPPFLAGS="$CPPFLAGS"
++-  CPPFLAGS="$CPPFLAGS $SVN_APR_INCLUDES"
++-  AC_EGREP_CPP([[apache_minor_version= *"$apache_minor_version_wanted_regex"]],
++-               [
++-#include "$APXS_INCLUDE/ap_release.h"
++-apache_minor_version=AP_SERVER_MINORVERSION],
++-               [AC_MSG_RESULT([yes])],
++-               [AC_MSG_RESULT([no])
++-                AC_MSG_ERROR([Apache version incompatible with APR version])])
++-  CPPFLAGS="$old_CPPFLAGS"
++-fi
+++#if test -n "$APXS" && test "$APXS" != "no"; then
+++#  AC_MSG_CHECKING([whether Apache version is compatible with APR version])
+++#  apr_major_version="${apr_version%%.*}"
+++#  case "$apr_major_version" in
+++#    0)
+++#      apache_minor_version_wanted_regex="0"
+++#      ;;
+++#    1)
+++#      apache_minor_version_wanted_regex=["[1-4]"]
+++#      ;;
+++#    *)
+++#      AC_MSG_ERROR([unknown APR version])
+++#      ;;
+++#  esac
+++#  old_CPPFLAGS="$CPPFLAGS"
+++#  CPPFLAGS="$CPPFLAGS $SVN_APR_INCLUDES"
+++#  AC_EGREP_CPP([[apache_minor_version= *"$apache_minor_version_wanted_regex"]],
+++#               [
+++##include "$APXS_INCLUDE/ap_release.h"
+++#apache_minor_version=AP_SERVER_MINORVERSION],
+++#               [AC_MSG_RESULT([yes])],
+++#               [AC_MSG_RESULT([no])
+++#                AC_MSG_ERROR([Apache version incompatible with APR version])])
+++#  CPPFLAGS="$old_CPPFLAGS"
+++#fi
++ 
++ AC_ARG_WITH(apache-libexecdir,
++             [AS_HELP_STRING([[--with-apache-libexecdir[=PATH]]],

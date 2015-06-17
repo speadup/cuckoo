@@ -1,0 +1,16 @@
+Index: openwrt/package/network/services/ppp/patches/530-fix-restore_tty.patch
+===================================================================
+---openwrt/package/network/services/ppp/patches/530-fix-restore_tty.patch	
++++openwrt/package/network/services/ppp/patches/530-fix-restore_tty.patch	
+@@ -0,0 +1,11 @@
++--- a/pppd/sys-linux.c
+++++ b/pppd/sys-linux.c
++@@ -1071,7 +1071,7 @@
++ 	if (!default_device)
++ 	    inittermios.c_lflag &= ~(ECHO | ECHONL);
++ 
++-	if (tcsetattr(tty_fd, TCSAFLUSH, &inittermios) < 0) {
+++	if (tcsetattr(tty_fd, TCSANOW, &inittermios) < 0) {
++ 	    if (! ok_error (errno))
++ 		warn("tcsetattr: %m (line %d)", __LINE__);
++ 	}

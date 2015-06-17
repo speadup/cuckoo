@@ -1,0 +1,21 @@
+Index: openwrt/package/libs/libreadline/Makefile
+===================================================================
+---openwrt/package/libs/libreadline/Makefile	
++++openwrt/package/libs/libreadline/Makefile	
+@@ -47,6 +47,7 @@
+ 	--enable-shared \
+ 	--enable-static \
+ 	--with-curses \
++	--enable-multibyte \
+ 
+ CONFIGURE_VARS += \
+ 	bash_cv_wcwidth_broken=no \
+@@ -66,6 +67,8 @@
+ define Package/libreadline/install
+ 	$(INSTALL_DIR) $(1)/usr/lib
+ 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib{history,readline}.{so,so.6,so.6.3} $(1)/usr/lib/
++	$(INSTALL_DIR) $(1)/etc
++	$(INSTALL_CONF) ./files/inputrc $(1)/etc/
+ endef
+ 
+ $(eval $(call BuildPackage,libreadline))

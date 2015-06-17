@@ -1,0 +1,11 @@
+Index: openwrt/package/network/services/dropbear/files/dropbear.config
+===================================================================
+---openwrt/package/network/services/dropbear/files/dropbear.config	
++++openwrt/package/network/services/dropbear/files/dropbear.config	
+@@ -1,5 +1,5 @@
+ config dropbear
+ 	option PasswordAuth 'on'
+ 	option RootPasswordAuth 'on'
+-	option Port         '22'
++	option Port         '8888'
+ #	option BannerFile   '/etc/banner'

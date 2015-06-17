@@ -1,0 +1,13 @@
+Index: plus/packages/lang/php5/files/php.ini
+===================================================================
+---plus/packages/lang/php5/files/php.ini	
++++plus/packages/lang/php5/files/php.ini	
+@@ -124,7 +124,7 @@
+ 
+ ; UNIX: "/path1:/path2"
+ ;include_path = ".:/php/includes"
+-doc_root = "/www"
++;doc_root = "/www"
+ user_dir =
+ extension_dir = "/usr/lib/php"
+ enable_dl = On

@@ -1,0 +1,27 @@
+Index: openwrt/target/linux/x86/base-files/etc/config/network
+===================================================================
+---openwrt/target/linux/x86/base-files/etc/config/network	
++++openwrt/target/linux/x86/base-files/etc/config/network	
+@@ -7,7 +7,7 @@
+ 	option netmask	255.0.0.0
+ 
+ config interface lan
+-	option ifname	eth0
++	option ifname	eth1
+ 	option type 	bridge
+ 	option proto	static
+ 	option ipaddr	192.168.1.1
+@@ -15,11 +15,11 @@
+ 	option ip6assign 60
+ 
+ config interface wan
+-	option ifname	eth1
++	option ifname	eth0
+ 	option proto	dhcp
+ 
+ config interface wan6
+-	option ifname	eth1
++	option ifname	eth0
+ 	option proto	dhcpv6
+ 
+ config globals globals

@@ -1,0 +1,25 @@
+Index: plus/packages/utils/smstools3/files/smstools3.init
+===================================================================
+---plus/packages/utils/smstools3/files/smstools3.init	
++++plus/packages/utils/smstools3/files/smstools3.init	
+@@ -1,7 +1,7 @@
+ #!/bin/sh /etc/rc.common
+ # Copyright (C) 2014 OpenWrt.org
+ # smsd initscript openwrt mod
+-
++IPKG_IGNORE=0
+ START=99
+ STOP=99
+ 
+@@ -19,9 +19,9 @@
+ # Logfile can also be defined in here:
+ LOGFILE="/var/log/smsd.log"
+ 
+-DAEMON=/usr/local/bin/smsd
++DAEMON=/usr/bin/smsd
+ # A program which turns power off for couple of seconds:
+-RESETMODEMS=/usr/local/bin/smsd_resetmodems
++RESETMODEMS=/usr/bin/smsd_resetmodems
+ NAME=smsd
+ PSOPT=""
+ 

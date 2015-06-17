@@ -1,0 +1,41 @@
+Index: openwrt/package/network/utils/iputils/Makefile
+===================================================================
+---openwrt/package/network/utils/iputils/Makefile	
++++openwrt/package/network/utils/iputils/Makefile	
+@@ -126,10 +126,36 @@
+   TARGET_CFLAGS += -D__UCLIBC__
+ endif
+ 
++ifneq ($(CONFIG_PACKAGE_iputils-tracepath),)
++  IPV4_TARGETS += tracepath
++endif
++ifneq ($(CONFIG_PACKAGE_iputils-ping),)
++  IPV4_TARGETS += ping
++endif
++ifneq ($(CONFIG_PACKAGE_iputils-clockdiff),)
++  IPV4_TARGETS += clockdiff
++endif
++ifneq ($(CONFIG_PACKAGE_iputils-arping),)
++  IPV4_TARGETS += arping
++endif
++ifneq ($(CONFIG_PACKAGE_iputils-tftpd),)
++  IPV4_TARGETS += tftpd
++endif
++ifneq ($(CONFIG_PACKAGE_iputils-tracepath6),)
++  IPV6_TARGETS += tracepath6
++endif
++ifneq ($(CONFIG_PACKAGE_iputils-traceroute6),)
++  IPV6_TARGETS += traceroute6
++endif
++ifneq ($(CONFIG_PACKAGE_iputils-ping6),)
++  IPV6_TARGETS += ping6
++endif
++
+ MAKE_FLAGS += \
+ 	CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS) $(TARGET_LDFLAGS)" \
+ 	CONFIG_IPV6="$(CONFIG_IPV6)" \
+ 	CONFIG_USE_UCLIBC="$(CONFIG_USE_UCLIBC)$(CONFIG_USE_MUSL)" \
++	IPV4_TARGETS="$(IPV4_TARGETS)" IPV6_TARGETS="$(IPV6_TARGETS)"
+ 
+ define Package/iputils-arping/install
+ 	$(INSTALL_DIR) $(1)/usr/bin

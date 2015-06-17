@@ -1,0 +1,75 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2014 nanpuyue <nanpuyue@gmail.com>
+IPKG_IGNORE=1
+START=99
+SERVICE_WRITE_PID=1
+SERVICE_DAEMONIZE=1
+
+append_params() {
+	local opt val
+    local cfg="$1"
+    shift
+	for opt in $*; do
+		config_get val "$cfg" "$opt"
+		[ -n "$val" ] && (
+			opt=`echo "$opt" | sed -e 's|_|-|g'`;
+			echo "$opt=$val" >> $config_file
+			)
+	done
+}
+
+section_enabled() {
+	local val
+	config_get_bool val "$1" 'enabled' 0
+	[ $val -eq 1 ]
+}
+
+option_disabled() {
+	local val
+	config_get_bool val "$1" "$2" 1
+	[ $val -eq 0 ]
+}
+
+start_instance() {
+	local cfg="$1"
+	local user dir
+
+	section_enabled "$cfg" || return 1
+
+	config_get config_dir "$cfg" 'config_dir' '/var/etc/aria2'
+    config_get dir "$cfg" 'dir' '/work/download'
+	config_get user "$cfg" 'user'
+
+	config_file="$config_dir/aria2.conf"
+	session_file="$dir/aria2.session"
+	dht_file="$config_dir/dht.dat"
+
+    mkdir -m 0755 -p "$config_dir"
+    touch "$config_file"
+    [ -z "$user" ] || chown -R $user $config_dir
+
+    mkdir -m 0755 -p "$dir"
+    touch "$session_file"
+    [ -z "$user" ] || chown -R $user $dir
+
+	echo -e "enable-rpc=true\nrpc-allow-origin-all=true\nrpc-listen-all=true\nquiet=true" > $config_file
+	echo -e "continue=true\ninput-file=$session_file\nsave-session=$session_file\ndir=$dir" >> $config_file
+	option_disabled "$cfg" 'enable_dht' || echo "dht-file-path=$dht_file" >> $config_file
+
+	append_params "$cfg" file_allocation bt_enable_lpd enable_dht rpc_user rpc_passwd rpc_listen_port 
+    append_params "$cfg" bt_tracker disk_cache max_overall_download_limit max_overall_upload_limit
+    append_params "$cfg" max_download_limit max_upload_limit max_concurrent_downloads max_connection_per_server
+    append_params "$cfg" min_split_size split save_session_interval follow_torrent listen_port bt_max_peers
+    append_params "$cfg" user_agent peer_id_prefix
+
+	SERVICE_UID="$user" service_start /usr/bin/aria2c --conf-path="$config_file"
+}
+
+start() {
+	config_load 'aria2'
+	config_foreach start_instance 'aria2'
+}
+
+stop() {
+	service_stop /usr/bin/aria2c
+}

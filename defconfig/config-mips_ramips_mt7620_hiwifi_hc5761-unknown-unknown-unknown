@@ -246,21 +246,20 @@ CONFIG_NEED_TOOLCHAIN=y
 CONFIG_EXTRA_BINUTILS_CONFIG_OPTIONS=""
 CONFIG_BINUTILS_VERSION="linaro"
 CONFIG_EXTRA_GCC_CONFIG_OPTIONS=""
-# CONFIG_SSP_SUPPORT is not set
+CONFIG_SSP_SUPPORT=y
 # CONFIG_SJLJ_EXCEPTIONS is not set
 # CONFIG_INSTALL_LIBGCJ is not set
 # CONFIG_INSTALL_GFORTRAN is not set
 CONFIG_GDB=y
 # CONFIG_INSIGHT is not set
-CONFIG_USE_UCLIBC=y
+CONFIG_USE_MUSL=y
 CONFIG_GCC_VERSION_4_8_LINARO=y
 CONFIG_GCC_VERSION="4.8-linaro"
 CONFIG_GCC_VERSION_4_8=y
-CONFIG_UCLIBC_VERSION="0.9.33.2"
-CONFIG_UCLIBC_VERSION_0_9_33=y
-CONFIG_LIBC="uClibc"
-CONFIG_LIBC_VERSION="0.9.33.2"
-CONFIG_TARGET_SUFFIX="uclibc"
+CONFIG_MUSL_VERSION="1.1.10"
+CONFIG_LIBC="musl"
+CONFIG_LIBC_VERSION="1.1.10"
+CONFIG_TARGET_SUFFIX="musl"
 # CONFIG_IB is not set
 # CONFIG_SDK is not set
 # CONFIG_MAKE_TOOLCHAIN is not set
@@ -1246,8 +1245,8 @@ CONFIG_PACKAGE_libc=y
 CONFIG_PACKAGE_libgcc=y
 CONFIG_PACKAGE_libpthread=y
 CONFIG_PACKAGE_librt=y
+CONFIG_PACKAGE_libssp=y
 CONFIG_PACKAGE_libstdcpp=y
-# CONFIG_PACKAGE_libthread-db is not set
 # CONFIG_PACKAGE_mksh is not set
 CONFIG_PACKAGE_mtd=y
 CONFIG_PACKAGE_netifd=y
@@ -1897,7 +1896,6 @@ CONFIG_PACKAGE_MAC80211_MESH=y
 # CONFIG_PACKAGE_kmod-net-prism54 is not set
 # CONFIG_PACKAGE_kmod-net-rtl8188eu is not set
 # CONFIG_PACKAGE_kmod-net-rtl8192su is not set
-# CONFIG_PACKAGE_kmod-net-rtl8723au is not set
 # CONFIG_PACKAGE_kmod-p54-common is not set
 # CONFIG_PACKAGE_kmod-p54-pci is not set
 # CONFIG_PACKAGE_kmod-p54-usb is not set
@@ -2773,8 +2771,6 @@ CONFIG_PACKAGE_luci-i18n-base-en=y
 # CONFIG_PACKAGE_luci-i18n-base-vi is not set
 CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-base-zh-tw=y
-CONFIG_PACKAGE_luci-i18n-data-en=y
-CONFIG_PACKAGE_luci-i18n-data-zh-cn=y
 # CONFIG_PACKAGE_luci-i18n-ddns-ca is not set
 # CONFIG_PACKAGE_luci-i18n-ddns-cs is not set
 # CONFIG_PACKAGE_luci-i18n-ddns-de is not set
@@ -2901,8 +2897,6 @@ CONFIG_PACKAGE_luci-i18n-samba-en=y
 # CONFIG_PACKAGE_luci-i18n-samba-vi is not set
 CONFIG_PACKAGE_luci-i18n-samba-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-samba-zh-tw=y
-CONFIG_PACKAGE_luci-i18n-settings-en=y
-CONFIG_PACKAGE_luci-i18n-settings-zh-cn=y
 # CONFIG_PACKAGE_luci-i18n-upnp-ca is not set
 # CONFIG_PACKAGE_luci-i18n-upnp-cs is not set
 # CONFIG_PACKAGE_luci-i18n-upnp-de is not set
@@ -4550,8 +4544,6 @@ CONFIG_PACKAGE_jshn=y
 # CONFIG_PACKAGE_lcd4linux-custom is not set
 # CONFIG_PACKAGE_lcd4linux-full is not set
 # CONFIG_PACKAGE_lcdproc is not set
-# CONFIG_PACKAGE_ldconfig is not set
-# CONFIG_PACKAGE_ldd is not set
 # CONFIG_PACKAGE_less is not set
 # CONFIG_PACKAGE_less-wide is not set
 # CONFIG_PACKAGE_libfreefare-examples is not set

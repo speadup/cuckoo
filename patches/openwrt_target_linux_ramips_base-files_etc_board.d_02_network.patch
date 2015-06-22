@@ -2,7 +2,7 @@ Index: openwrt/target/linux/ramips/base-files/etc/board.d/02_network
 ===================================================================
 ---openwrt/target/linux/ramips/base-files/etc/board.d/02_network	
 +++openwrt/target/linux/ramips/base-files/etc/board.d/02_network	
-@@ -147,6 +147,13 @@
+@@ -150,6 +150,13 @@
  		ucidef_add_switch_vlan "switch0" "2" "4 6t"
  		;;
  
@@ -16,7 +16,7 @@ Index: openwrt/target/linux/ramips/base-files/etc/board.d/02_network
  	whr-1166d)
  		ucidef_set_interfaces_lan_wan "eth0.1" "eth0.2"
  		ucidef_add_switch "switch0" "1" "1"
-@@ -318,6 +325,7 @@
+@@ -321,6 +328,7 @@
  	psr-680w |\
  	sl-r7205 |\
  	y1 |\

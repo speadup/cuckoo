@@ -2,7 +2,7 @@ Index: openwrt/target/linux/ramips/base-files/lib/ramips.sh
 ===================================================================
 ---openwrt/target/linux/ramips/base-files/lib/ramips.sh	
 +++openwrt/target/linux/ramips/base-files/lib/ramips.sh	
-@@ -397,6 +397,9 @@
+@@ -406,6 +406,9 @@
  	*"ZTE Q7")
  		name="zte-q7"
  		;;

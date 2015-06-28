@@ -37,6 +37,7 @@ rm -rf ${temp}/${name}
 mv ${temp}/${name}-$ver ${temp}/$name
 find ${temp}/${name}/package -name 'Makefile' | sed -e '/\/files\/\|\/src\//d' -e 's/\/Makefile//' -e 's/.*\///' >${temp}/list.txt
 echo "%openwrt@trunk:${ver}" > ${temp}/version.txt
+find  ${temp}/${name} -type d -empty -delete
 cat ${cfg} | grep -v '^#' |
 while read type name url buff
 do
@@ -67,6 +68,7 @@ do
             rm -rf ${item1} 
         done
     done
+    find  ${temp}/${feeds}/${name} -type d -empty -delete
 done
 
 #mv $temp/*.tar.gz .

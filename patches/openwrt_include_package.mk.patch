@@ -2,7 +2,7 @@ Index: openwrt/include/package.mk
 ===================================================================
 ---openwrt/include/package.mk	
 +++openwrt/include/package.mk	
-@@ -215,10 +215,13 @@
+@@ -256,10 +256,13 @@
  	touch $$@
  
    ifdef Build/InstallDev

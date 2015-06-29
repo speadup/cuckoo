@@ -37,17 +37,7 @@ Index: feeds/packages/net/coova-chilli/Makefile
  	)
  endef
  
-@@ -134,17 +141,20 @@
- 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/chilli* $(1)/usr/sbin/
- 	$(INSTALL_DIR) $(1)/usr/lib/
- 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib*.so.* $(1)/usr/lib/
--	$(if $(CONFIG_PACKAGE_kmod-ipt-coova), \
--		$(INSTALL_DIR) $(1)/usr/lib/iptables; \
--		$(CP) $(PKG_INSTALL_DIR)/usr/lib/iptables/lib*.so $(1)/usr/lib/iptables/ \
--	)
- 	$(INSTALL_DIR) $(1)/etc/init.d
- 	$(INSTALL_BIN) files/chilli.init $(1)/etc/init.d/chilli
- 	$(INSTALL_DIR) $(1)/etc/config
+@@ -142,7 +149,14 @@
  	$(INSTALL_DATA) files/chilli.config $(1)/etc/config/chilli
  	$(INSTALL_DIR) $(1)/lib/firewall
  	$(CP) files/chilli.firewall $(1)/lib/firewall/chilli.sh

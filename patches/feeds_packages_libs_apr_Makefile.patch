@@ -8,7 +8,7 @@ Index: feeds/packages/libs/apr/Makefile
  	--with-devrandom=/dev/urandom \
 -	--disable-dso \
 +	--enable-dso \
- 	$(call autoconf_bool,CONFIG_IPV6,ipv6)
+ 	--enable-ipv6
  
  # XXX: ac_cv_sizeof_struct_iovec=1 is just to trick configure
  CONFIGURE_VARS += \

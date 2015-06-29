@@ -27,9 +27,9 @@ Index: feeds/packages/utils/vim/files/vimrc.full
 +set showcmd
 +set si
  
- set backupskip+=/etc/crontabs.*	" fix crontab -e
- 
-@@ -26,5 +42,8 @@
+ if filereadable(expand("$VIMRUNTIME/syntax/synload.vim"))
+ 	syntax on
+@@ -24,5 +40,8 @@
  endif
  
  " Uncomment out for line and/or relative numberig

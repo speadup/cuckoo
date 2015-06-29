@@ -1,5 +1,6 @@
 #!/bin/sh
-url=http://192.168.18.24/svn/openwrt/trunk
+url=svn://svn.openwrt.org/openwrt
+branch=branches/chaos_calmer
 cfg=feeds.conf
 feeds=feeds
 temp=temp
@@ -17,32 +18,44 @@ do
         shift
         [ -n "$1" ] && temp=$1
         ;;
+        -m)
+        shift
+        [ -n "$1" ] && mirror=$1
+        ;;
         *)
         ;;
     esac
     shift
 done
 
+mirror=${mirror%%/}
 
 [ ! -f ${cfg} ] && exit 1
 name=openwrt
-ver=`svn info ${url} | sed -e '/Revision:/!d' -e 's/Revision: //'`
+[ -n "${mirror}" ] && url=${mirror}/svn/${name}
+ver=`svn info ${url}/${branch} | sed -e '/Last Changed Rev:/!d' -e 's/.*: //'`
 [ -n "${ver}" ] || exit 1
 mkdir -p ${temp}/${repo}
 rm -rf ${temp}/${repo}/${name}*
-svn co -q ${url} -r ${ver} ${temp}/${repo}/${name} || exit 1
+svn co -q ${url}/${branch} -r ${ver} ${temp}/${repo}/${name} || exit 1
 svn export -q ${temp}/${repo}/${name} -r ${ver} ${temp}/${name}-${ver} || exit 1
 (cd ${temp}; tar zcf ${name}-${ver}.tar.gz ${name}-${ver})
 rm -rf ${temp}/${name}
 mv ${temp}/${name}-$ver ${temp}/$name
 find ${temp}/${name}/package -name 'Makefile' | sed -e '/\/files\/\|\/src\//d' -e 's/\/Makefile//' -e 's/.*\///' >${temp}/list.txt
-echo "%openwrt@trunk:${ver}" > ${temp}/version.txt
+echo "%openwrt@${branch}:${ver}" > ${temp}/version.txt
 find  ${temp}/${name} -type d -empty -delete
 cat ${cfg} | grep -v '^#' |
 while read type name url buff
 do
+    [ -n "${mirror}" ] && url=${url//*:\/\//${mirror}/git/}
+    commit=`echo "${url}" | awk -F\# '{print $2}'`
+    url=${url%#*}
+    branch=`echo "${url}" | awk -F\; '{print $2}'`
+    url=${url%;*}
     rm -rf ${temp}/${repo}/${name}*
-    git clone ${url} ${temp}/${repo}/${name} || exit 1
+    [ -n "${branch}" ] && (git clone --depth 1 --branch ${branch} ${url} ${temp}/${repo}/${name} || exit 1)
+    [ -z "${branch}" ] && (git clone --depth 1 ${url} ${temp}/${repo}/${name} || exit 1)
     ver=`cd ${temp}/${repo}/${name}; git show | sed -e '1!d' -e 's/commit //'`
     (cd ${temp}/${repo}/${name}; git archive --format tar --prefix ${name}-${ver}/ -o ../../${name}-${ver}.tar HEAD)
     rm -f ${temp}/${name}-${ver}.tar.gz
@@ -51,7 +64,7 @@ do
     [ -d ${temp}/${feeds} ] || mkdir -p ${temp}/${feeds}
     rm -rf ${temp}/${feeds}/${name}
     mv ${temp}/${name}-${ver} ${temp}/${feeds}/${name}
-    echo "%${name}@${ver}" >> ${temp}/version.txt
+    echo "%${name}@${branch:-master}:${ver}" >> ${temp}/version.txt
     [ ${name} = "luci" ] && continue
     find ${temp}/${feeds}/${name} -name 'Makefile' | sed -e '/\/files\/\|\/src\//d' -e 's/\/Makefile$//' | sort >${temp}/path.txt
     sed -e 's/.*\///' ${temp}/path.txt >>${temp}/list.txt

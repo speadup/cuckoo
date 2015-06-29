@@ -1,6 +1,6 @@
 #!/bin/sh
 path=$1
-svn st $path | grep '^M\|^A' | grep ' openwrt\| plus' | 
+svn st $path | grep '^M\|^A' | grep ' openwrt\| feeds' | 
 while read f name
 do
     [ -d "$name" ] && continue

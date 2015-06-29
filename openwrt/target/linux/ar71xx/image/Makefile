@@ -104,57 +104,6 @@ endef
 
 DEVICE_VARS += TPLINK_HWID TPLINK_HWREV TPLINK_FLASHLAYOUT
 
-# UBNT_BOARD e.g. one of (XS2, XS5, RS, XM)
-# UBNT_TYPE e.g. one of (BZ, XM, XW)
-# UBNT_CHIP e.g. one of (ar7240, ar933x, ar934x)
-
-# mkubntimage is using the kernel image direct
-# routerboard creates partitions out of the ubnt header
-define Build/mkubntimage
-	$(STAGING_DIR_HOST)/bin/mkfwimage \
-		-B $(UBNT_BOARD) -v $(UBNT_TYPE).$(UBNT_CHIP).v6.0.0-OpenWrt-$(REVISION) \
-		-k $(word 1,$^) \
-		-r $@ \
-		-o $@
-endef
-
-# all UBNT XM device expect the kernel image to have 1024k while flash, when
-# booting the image, the size doesn't matter.
-define Build/mkubntimage-split
-	dd if=$@ of=$@.old1 bs=1024k count=1
-	dd if=$@ of=$@.old2 bs=1024k skip=1
-	$(STAGING_DIR_HOST)/bin/mkfwimage \
-		-B $(UBNT_BOARD) -v $(UBNT_TYPE).$(UBNT_CHIP).v6.0.0-OpenWrt-$(REVISION) \
-		-k $@.old1 \
-		-r $@.old2 \
-		-o $@
-	rm $@.old1 $@.old2
-endef
-
-define Build/mkubntimage2
-	$(STAGING_DIR_HOST)/bin/mkfwimage2 -f 0x9f000000 \
-		-v $(UBNT_TYPE).$(UBNT_CHIP).v6.0.0-OpenWrt-$(REVISION) \
-		-p jffs2:0x50000:0xf60000:0:0:$@ \
-		-o $@.new
-	@mv $@.new $@
-endef
-
-DEVICE_VARS += UBNT_BOARD UBNT_CHIP UBNT_TYPE
-
-define Build/mkubntkernelimage
-	rm -rf $(KDIR_TMP)/ubnt-$(KERNEL_IMAGE)/image && \
-		mkdir -p $(KDIR_TMP)/ubnt-$(KERNEL_IMAGE)/image && \
-		cp $@ $(KDIR_TMP)/ubnt-$(KERNEL_IMAGE)/image/kernel0 && \
-		$(STAGING_DIR_HOST)/bin/mkfs.jffs2 \
-			--pad --big-endian --squash-uids -v -e 64KiB \
-			-o $@.new \
-			-d $(KDIR_TMP)/ubnt-$(KERNEL_IMAGE)/image \
-			2>&1 && \
-		$(STAGING_DIR_HOST)/bin/padjffs2 $@.new -J 64
-	-rm -rf $(KDIR_TMP)/ubnt-$(KERNEL_IMAGE)/image
-	@mv $@.new $@
-endef
-
 define Device/Default
   BOARDNAME :=
   DEVICE_PROFILE = $$(BOARDNAME)
@@ -510,14 +459,6 @@ define Device/tl-wr740n-v4
     CONSOLE := ttyATH0,115200
 endef
 
-define Device/tl-wr740n-v5
-    $(Device/tplink-4mlzma)
-    BOARDNAME := TL-WR741ND-v4
-    DEVICE_PROFILE := TLWR740
-    TPLINK_HWID := 0x07400005
-    CONSOLE := ttyATH0,115200
-endef
-
 define Device/tl-wr741nd-v1
     $(Device/tplink-4m)
     BOARDNAME := TL-WR741ND
@@ -547,7 +488,7 @@ define Device/tl-wr743nd-v2
     TPLINK_HWID := 0x07430002
     CONSOLE := ttyATH0,115200
 endef
-TARGET_DEVICES += tl-wr740n-v4 tl-wr740n-v5 tl-wr741nd-v1 tl-wr741nd-v2 tl-wr741nd-v4 tl-wr743nd-v2
+TARGET_DEVICES += tl-wr740n-v4 tl-wr741nd-v1 tl-wr741nd-v2 tl-wr741nd-v4 tl-wr743nd-v2
 
 define Device/tl-wr841n-v8
     $(Device/tplink-4mlzma)
@@ -694,180 +635,6 @@ define Device/oolite
     CONSOLE := ttyATH0,115200
 endef
 TARGET_DEVICES += oolite
-
-# UBNT_BOARD e.g. one of (XS2, XS5, RS, XM)
-# UBNT_TYPE e.g. one of (BZ, XM, XW)
-# UBNT_CHIP e.g. one of (ar7240, ar933x, ar934x)
-define Device/ubnt-xm
-  DEVICE_PROFILE := UBNT
-  IMAGE_SIZE := 7552k
-  MTDPARTS = spi0.0:256k(u-boot)ro,64k(u-boot-env)ro,7552k(firmware),256k(cfg)ro,64k(EEPROM)ro
-  UBNT_TYPE := XM
-  UBNT_BOARD := XM
-  UBNT_CHIP := ar7240
-  IMAGES := sysupgrade.bin factory.bin
-  IMAGE/factory.bin = $$(IMAGE/sysupgrade.bin) | mkubntimage-split
-  IMAGE/sysupgrade.bin = append-kernel $$$$(BLOCKSIZE) | append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE)
-endef
-
-define Device/ubnt-xw
-  DEVICE_PROFILE := UBNT
-  IMAGE_SIZE := 7552k
-  MTDPARTS = spi0.0:256k(u-boot)ro,64k(u-boot-env)ro,7552k(firmware),256k(cfg)ro,64k(EEPROM)ro
-  UBNT_TYPE := XW
-  UBNT_BOARD := XM
-  UBNT_CHIP := ar934x
-  IMAGES := sysupgrade.bin factory.bin
-  IMAGE/factory.bin = $$(IMAGE/sysupgrade.bin) | mkubntimage-split
-  IMAGE/sysupgrade.bin = append-kernel $$$$(BLOCKSIZE) | append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE)
-endef
-
-define Device/ubnt-bz
-  DEVICE_PROFILE := UBNT
-  IMAGE_SIZE := 7552k
-  MTDPARTS = spi0.0:256k(u-boot)ro,64k(u-boot-env)ro,7552k(firmware),256k(cfg)ro,64k(EEPROM)ro
-  UBNT_TYPE := BZ
-  UBNT_BOARD := XM
-  UBNT_CHIP := ar934x
-  IMAGES := sysupgrade.bin factory.bin
-  IMAGE/factory.bin = $$(IMAGE/sysupgrade.bin) | mkubntimage-split
-  IMAGE/sysupgrade.bin = append-kernel $$$$(BLOCKSIZE) | append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE)
-endef
-
-define Device/rw2458n
-  $(Device/ubnt-xm)
-  BOARDNAME := RW2458N
-endef
-
-define Device/ubnt-airrouter
-  $(Device/ubnt-xm)
-  BOARDNAME := UBNT-AR
-endef
-
-define Device/ubnt-bullet-m
-  $(Device/ubnt-xm)
-  BOARDNAME := UBNT-BM
-endef
-
-define Device/ubnt-rocket-m
-  $(Device/ubnt-xm)
-  BOARDNAME := UBNT-RM
-endef
-
-define Device/ubnt-nano-m
-  $(Device/ubnt-xm)
-  BOARDNAME := UBNT-NM
-endef
-TARGET_DEVICES += rw2458n ubnt-airrouter ubnt-bullet-m ubnt-rocket-m ubnt-nano-m
-
-define Device/ubnt-unifi
-  $(Device/ubnt-bz)
-  BOARDNAME := UBNT-UF
-  DEVICE_PROFILE := UBNT UBNTUNIFI
-endef
-
-define Device/ubnt-unifi-outdoor
-  $(Device/ubnt-bz)
-  BOARDNAME := UBNT-U20
-  DEVICE_PROFILE := UBNT UBNTUNIFIOUTDOOR
-endef
-TARGET_DEVICES += ubnt-unifi ubnt-unifi-outdoor
-
-define Device/ubnt-nano-m-xw
-  $(Device/ubnt-xw)
-  BOARDNAME := UBNT-NM-XW
-endef
-
-define Device/ubnt-loco-m-xw
-  $(Device/ubnt-xw)
-  BOARDNAME := UBNT-LOCO-XW
-endef
-
-define Device/ubnt-rocket-m-xw
-  $(Device/ubnt-xw)
-  BOARDNAME := UBNT-RM-XW
-endef
-TARGET_DEVICES += ubnt-nano-m-xw ubnt-loco-m-xw ubnt-rocket-m-xw
-
-define Device/ubnt-air-gateway
-  $(Device/ubnt-xm)
-  BOARDNAME := UBNT-AGW
-  UBNT_BOARD := XM
-  UBNT_TYPE := AirGW
-  UBNT_CHIP := ar933x
-  CONSOLE = ttyATH0,115200
-endef
-TARGET_DEVICES += ubnt-air-gateway
-
-define Device/ubdev01
-  $(Device/ubnt-xm)
-  MTDPARTS := spi0.0:256k(u-boot)ro,64k(u-boot-env)ro,7488k(firmware),64k(certs),256k(cfg)ro,64k(EEPROM)ro
-  BOARDNAME := UBNT-UF
-  UBNT_BOARD := XM
-  UBNT_TYPE := XM
-  UBNT_CHIP := ar7240
-endef
-
-TARGET_DEVICES += ubdev01
-
-define Device/ubnt-routerstation
-  IMAGE_SIZE := 16128k
-  IMAGES := sysupgrade.bin factory.bin
-  IMAGE/factory.bin = append-rootfs | pad-rootfs | mkubntimage
-  IMAGE/sysupgrade.bin = append-rootfs | pad-rootfs | combined-image | check-size $$$$(IMAGE_SIZE)
-  KERNEL := kernel-bin | patch-cmdline | lzma | pad-to $$(BLOCKSIZE)
-endef
-
-define Device/ubnt-rs
-$(Device/ubnt-routerstation)
-  BOARDNAME := UBNT-RS
-  DEVICE_PROFILE := Madwifi UBNT UBNTRS
-  UBNT_BOARD := RS
-  UBNT_TYPE := RSx
-  UBNT_CHIP := ar7100
-endef
-
-define Device/ubnt-rspro
-$(Device/ubnt-routerstation)
-  BOARDNAME := UBNT-RSPRO
-  DEVICE_PROFILE := Madwifi UBNT UBNTRSPRO
-  UBNT_BOARD := RSPRO
-  UBNT_TYPE := RSPRO
-  UBNT_CHIP := ar7100pro
-endef
-
-define Device/ubnt-ls-sr71
-$(Device/ubnt-routerstation)
-  BOARDNAME := UBNT-LS-SR71
-  DEVICE_PROFILE := Madwifi UBNT
-  UBNT_BOARD := LS-SR71
-  UBNT_TYPE := LS-SR71
-  UBNT_CHIP := ar7100
-endef
-
-TARGET_DEVICES += ubnt-rs ubnt-rspro ubnt-ls-sr71
-
-define Device/ubnt-uap-pro
-  IMAGE_SIZE := 15744k
-  MTDPARTS := spi0.0:256k(u-boot)ro,64k(u-boot-env)ro,1536k(kernel),14208k(rootfs),256k(cfg)ro,64k(EEPROM)ro,15744k@0x50000(firmware)
-  UBNT_TYPE := BZ
-  UBNT_CHIP := ar934x
-  BOARD_NAME := UAP-PRO
-  DEVICE_PROFILE := UBNT UAPPRO
-  KERNEL := kernel-bin | patch-cmdline | lzma | uImage lzma | mkubntkernelimage
-  IMAGES := sysupgrade.bin factory.bin
-  IMAGE/sysupgrade.bin = append-kernel $$$$(BLOCKSIZE) | append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE)
-  IMAGE/factory.bin = append-kernel $$$$(BLOCKSIZE) | append-rootfs | pad-rootfs | check-size $$$$(IMAGE_SIZE) | mkubntimage2
-endef
-
-define Device/ubnt-unifi-outdoor-plus
-$(Device/ubnt-uap-pro)
-  UBNT_CHIP := ar7240
-  BOARD_NAME := UBNT-UOP
-  DEVICE_PROFILE := UBNT
-endef
-
-TARGET_DEVICES += ubnt-uap-pro ubnt-unifi-outdoor-plus
 
 rootfs_type=$(patsubst jffs2-%,jffs2,$(patsubst squashfs-%,squashfs,$(1)))
 
@@ -1163,7 +930,6 @@ cameo_ap94_mtdlayout=mtdparts=spi0.0:256k(uboot)ro,64k(config)ro,6208k(firmware)
 cameo_ap94_mtdlayout_fat=mtdparts=spi0.0:256k(uboot)ro,64k(config)ro,7808k(firmware),64k(caldata)ro,64k@0x660000(caldata_orig),6208k@0x50000(firmware_orig)
 esr900_mtdlayout=mtdparts=spi0.0:192k(u-boot)ro,64k(u-boot-env)ro,1408k(kernel),13248k(rootfs),1024k(manufacture)ro,64k(backup)ro,320k(storage)ro,64k(caldata)ro,14656k@0x40000(firmware)
 esr1750_mtdlayout=mtdparts=spi0.0:192k(u-boot)ro,64k(u-boot-env)ro,1408k(kernel),13248k(rootfs),1024k(manufacture)ro,64k(backup)ro,320k(storage)ro,64k(caldata)ro,14656k@0x40000(firmware)
-epg5000_mtdlayout=mtdparts=spi0.0:192k(u-boot)ro,64k(u-boot-env)ro,1408k(kernel),13248k(rootfs),1024k(manufacture)ro,64k(backup)ro,320k(storage)ro,64k(caldata)ro,14656k@0x40000(firmware)
 ew-dorin_mtdlayout_4M=mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env),3712k(firmware),64k(art)
 ew-dorin_mtdlayout_16M=mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env),16000k(firmware),64k(art)ro
 f9k1115v2_mtdlayout=mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env),14464k(rootfs),1408k(kernel),64k(nvram)ro,64k(envram)ro,64k(art)ro,15872k@0x50000(firmware)
@@ -1484,6 +1250,72 @@ define Image/Build/MyLoader
 			$(call imgname,$(1),$(2))-$(5)-sysupgrade.bin; \
 	fi
 endef
+
+
+Image/Build/UAPPRO/initramfs=$(call MkuImageLzma/initramfs,$(2),$(3) $(uap_pro_mtdlayout))
+
+define Image/Build/UAPPRO/buildkernel
+	$(call MkuImageLzma,$(2),$(3) $(uap_pro_mtdlayout))
+	-rm -rf $(KDIR_TMP)/$(2)
+	mkdir -p $(KDIR_TMP)/$(2)/image
+	cp $(KDIR_TMP)/vmlinux-$(2).uImage $(KDIR_TMP)/$(2)/image/kernel0
+	$(STAGING_DIR_HOST)/bin/mkfs.jffs2 \
+		--pad --big-endian --squash-uids -v -e 64KiB \
+		-o $(KDIR_TMP)/$(2)-kernel.jffs2 \
+		-d $(KDIR_TMP)/$(2)/image \
+		2>&1 1>/dev/null | awk '/^.+$$$$/'
+	-rm -rf $(KDIR_TMP)/$(2)
+	$(STAGING_DIR_HOST)/bin/padjffs2 $(KDIR_TMP)/$(2)-kernel.jffs2 -J 64
+endef
+
+define Image/Build/UAPPRO
+	$(call CatFiles,$(KDIR_TMP)/$(2)-kernel.jffs2,1572864,$(KDIR)/root.$(1),14548992,$(call sysupname,$(1),$(2)))
+	-$(STAGING_DIR_HOST)/bin/mkfwimage2 -f 0x9f000000 \
+		-v $(5).$(6).v6.0.0-OpenWrt-$(REVISION) \
+		-p jffs2:0x50000:0xf60000:0:0:$(call sysupname,$(1),$(2)) \
+		-o $(call factoryname,$(1),$(2))
+endef
+
+# $(4) = board (XS2, XS5, RS, XM)
+# $(5) = series (BZ, XM, XW)
+# $(6) = chip (ar7240, ar934x)
+define Image/Build/UBNT2
+	$(eval fwsize=$(call mtdpartsize,firmware,$(3)))
+	$(call Sysupgrade/KRuImage,$(1),$(2),0,$$$$(($(fwsize)-4*64*1024)),64)
+	if [ -e "$(call sysupname,$(1),$(2))" ]; then \
+		dd if=$(call sysupname,$(1),$(2)) of=$(KDIR_TMP)/$(2)-mtdpart-kernel.bin bs=1024k count=1; \
+		dd if=$(call sysupname,$(1),$(2)) of=$(KDIR_TMP)/$(2)-mtdpart-rootfs.bin bs=1024k skip=1; \
+		$(STAGING_DIR_HOST)/bin/mkfwimage \
+			-B $(4) -v $(5).$(6).v6.0.0-OpenWrt-$(REVISION) \
+			-k $(KDIR_TMP)/$(2)-mtdpart-kernel.bin \
+			-r $(KDIR_TMP)/$(2)-mtdpart-rootfs.bin \
+			-o $(call factoryname,$(1),$(2)); \
+	fi
+endef
+
+Image/Build/UBNTXM/initramfs=$(call MkuImageLzma/initramfs,$(2),$(3) $(ubntxm_mtdlayout))
+Image/Build/UBNTXM/buildkernel=$(call MkuImageLzma,$(2),$(3) $(ubntxm_mtdlayout))
+Image/Build/UBNTXM=$(call Image/Build/UBNT2,$(1),$(2),$(ubntxm_mtdlayout),$(4),$(5),$(6),$(7))
+
+Image/Build/UBDEV/buildkernel=$(call MkuImageLzma,$(2),$(3) $(ubdev_mtdlayout))
+Image/Build/UBDEV=$(call Image/Build/UBNT2,$(1),$(2),$(ubdev_mtdlayout),$(4),$(5),$(6),$(7))
+
+
+Image/Build/UBNT/buildkernel=$(call PatchKernelLzma,$(2),$(3))
+
+define Image/Build/UBNT
+	dd if=$(KDIR_TMP)/vmlinux-$(2).bin.lzma of=$(KDIR_TMP)/vmlinux-$(2).lzma bs=64k conv=sync
+	-$(STAGING_DIR_HOST)/bin/mkfwimage \
+		-B $(4) -v $(5).$(6).OpenWrt.$(REVISION) \
+		-k $(KDIR_TMP)/vmlinux-$(2).lzma \
+		-r $(BIN_DIR)/$(IMG_PREFIX)-root.$(1) \
+		-o $(call factoryname,$(1),$(2))
+	-sh $(TOPDIR)/scripts/combined-image.sh \
+		"$(KDIR_TMP)/vmlinux-$(2).lzma" \
+		"$(BIN_DIR)/$(IMG_PREFIX)-root.$(1)" \
+  $(call sysupname,$(1),$(2))
+endef
+
 
 Image/Build/Planex/initramfs=$(call MkuImageGzip/initramfs,$(2),$(3) $(planex_mtdlayout))
 Image/Build/Planex/loader=$(call Image/BuildLoaderAlone,$(1),gz,$(2) $(planex_mtdlayout),0x52000,0)
@@ -2028,7 +1860,6 @@ $(eval $(call SingleProfile,CameoAP94,64kraw,DLRTDEV01,dlrtdev01,DIR-825-B1,ttyS
 
 $(eval $(call SingleProfile,EnGenius,64k,ESR900,esr900,ESR900,ttyS0,115200,$$(esr900_mtdlayout),KRuImage,,0x4e))
 $(eval $(call SingleProfile,EnGenius,64k,ESR1750,esr1750,ESR1750,ttyS0,115200,$$(esr1750_mtdlayout),KRuImage,,0x61))
-$(eval $(call SingleProfile,EnGenius,64k,EPG5000,epg5000,EPG5000,ttyS0,115200,$$(epg5000_mtdlayout),KRuImage,,0x71))
 
 $(eval $(call SingleProfile,HiWiFi,64k,HIWIFI_HC6361,hiwifi-hc6361,HiWiFi-HC6361,ttyATH0,115200,$$(hiwifi_hc6361_mtdlayout),KRuImage))
 
@@ -2100,6 +1931,27 @@ $(eval $(call SingleProfile,TPLINK-LZMA,64kraw,TLWR2543,tl-wr2543-v1,TL-WR2543N,
 
 $(eval $(call SingleProfile,TPLINK-SAFELOADER,64kraw,CPE510,cpe210-220-510-520,CPE510,ttyS0,115200,$$(cpe510_mtdlayout),CPE510))
 
+$(eval $(call SingleProfile,UAPPRO,64k,UAPPRO,ubnt-uap-pro,UAP-PRO,ttyS0,115200,BZ,BZ,ar934x))
+$(eval $(call SingleProfile,UAPPRO,64k,UBNTUNIFIOUTDOORPLUS,ubnt-unifi-outdoor-plus,UBNT-UOP,ttyS0,115200,BZ,BZ,ar7240))
+
+$(eval $(call SingleProfile,UBDEV,64kraw,UBDEV01,ubdev01,UBNT-UF,ttyS0,115200,XM,XM,ar7240))
+
+$(eval $(call SingleProfile,UBNT,64k,UBNTRS,ubnt-rs,UBNT-RS,ttyS0,115200,RS,RSx,ar7100))
+$(eval $(call SingleProfile,UBNT,64k,UBNTRSPRO,ubnt-rspro,UBNT-RSPRO,ttyS0,115200,RSPRO,RSPRO,ar7100pro))
+$(eval $(call SingleProfile,UBNT,64k,UBNTLSSR71,ubnt-ls-sr71,UBNT-LS-SR71,ttyS0,115200,LS-SR71,LS-SR71,ar7100))
+
+$(eval $(call SingleProfile,UBNTXM,64kraw,RW2458N,rw2458n,RW2458N,ttyS0,115200,XM,XM,ar7240))
+$(eval $(call SingleProfile,UBNTXM,64kraw,UBNTAIRROUTER,ubnt-airrouter,UBNT-AR,ttyS0,115200,XM,XM,ar7240))
+$(eval $(call SingleProfile,UBNTXM,64kraw,UBNTBULLETM,ubnt-bullet-m,UBNT-BM,ttyS0,115200,XM,XM,ar7240))
+$(eval $(call SingleProfile,UBNTXM,64kraw,UBNTROCKETM,ubnt-rocket-m,UBNT-RM,ttyS0,115200,XM,XM,ar7240))
+$(eval $(call SingleProfile,UBNTXM,64kraw,UBNTROCKETMXW,ubnt-rocket-m-xw,UBNT-RM-XW,ttyS0,115200,XM,XW,ar934x))
+$(eval $(call SingleProfile,UBNTXM,64kraw,UBNTNANOM,ubnt-nano-m,UBNT-NM,ttyS0,115200,XM,XM,ar7240))
+$(eval $(call SingleProfile,UBNTXM,64kraw,UBNTUNIFI,ubnt-unifi,UBNT-UF,ttyS0,115200,XM,BZ,ar7240))
+$(eval $(call SingleProfile,UBNTXM,64kraw,UBNTUNIFIOUTDOOR,ubnt-unifi-outdoor,UBNT-U20,ttyS0,115200,XM,BZ,ar7240))
+$(eval $(call SingleProfile,UBNTXM,64kraw,UBNTNANOMXW,ubnt-nano-m-xw,UBNT-NM-XW,ttyS0,115200,XM,XW,ar934x))
+$(eval $(call SingleProfile,UBNTXM,64kraw,UBNTLOCOXW,ubnt-loco-m-xw,UBNT-LOCO-XW,ttyS0,115200,XM,XW,ar934x))
+$(eval $(call SingleProfile,UBNTXM,64kraw,UBNTAIRGW,ubnt-air-gateway,UBNT-AGW,ttyATH0,115200,XM,AirGW,ar933x))
+
 $(eval $(call SingleProfile,WHRHPG300N,64kraw,WHRG301N,whr-g301n,WHR-G301N,ttyS0,115200,$$(whrhpg300n_mtdlayout),WHR-G301N))
 $(eval $(call SingleProfile,WHRHPG300N,64kraw,WHRHPG300N,whr-hp-g300n,WHR-HP-G300N,ttyS0,115200,$$(whrhpg300n_mtdlayout),WHR-HP-G300N))
 $(eval $(call SingleProfile,WHRHPG300N,64kraw,WHRHPGN,whr-hp-gn,WHR-HP-GN,ttyS0,115200,$$(whrhpg300n_mtdlayout),WHR-HP-GN))
@@ -2141,6 +1993,7 @@ $(eval $(call MultiProfile,TLWR941,TLWR941NV2 TLWR941NV3 TLWR941NV4))
 $(eval $(call MultiProfile,TLWR1043,TLWR1043V1 TLWR1043V2))
 $(eval $(call MultiProfile,TLWDR4300,TLWDR3500V1 TLWDR3600V1 TLWDR4300V1 TLWDR4300V1IL TLWDR4310V1 MW4530RV1))
 $(eval $(call MultiProfile,TUBE2H,TUBE2H8M TUBE2H16M))
+$(eval $(call MultiProfile,UBNT,UBNTAIRROUTER UBNTRS UBNTRSPRO UBNTLSSR71 UBNTBULLETM UBNTROCKETM UBNTROCKETMXW UBNTNANOM UBNTNANOMXW UBNTLOCOXW UBNTUNIFI UBNTUNIFIOUTDOOR UBNTUNIFIOUTDOORPLUS UAPPRO UBNTAIRGW))
 $(eval $(call MultiProfile,WNR612V2,REALWNR612V2 N150R))
 $(eval $(call MultiProfile,WNR1000V2,REALWNR1000V2 WNR1000V2_VC))
 $(eval $(call MultiProfile,WP543,WP543_2M WP543_4M WP543_8M WP543_16M))
@@ -2150,7 +2003,7 @@ $(eval $(call MultiProfile,WPJ531,WPJ531_16M))
 $(eval $(call MultiProfile,WPJ558,WPJ558_16M))
 
 $(eval $(call MultiProfile,Minimal,$(SINGLE_PROFILES)))
-$(eval $(call MultiProfile,Madwifi,EAP7660D WP543))
+$(eval $(call MultiProfile,Madwifi,EAP7660D UBNTRS UBNTRSPRO UBNTLSSR71 WP543))
 endif # ifeq ($(SUBTARGET),generic)
 
 ifeq ($(SUBTARGET),nand)

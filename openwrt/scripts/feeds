@@ -450,10 +450,10 @@ sub install_package {
 	my $force = shift;
 	my $ret = 0;
 
-	my $this_feed_target = lookup_target($feed, $name);
-	$this_feed_target and do {
+	$feed = lookup_target($feed, $name);
+	$feed and do {
 		$installed_targets{$name} and return 0;
-		install_target($this_feed_target, $name);
+		install_target($feed, $name);
 		return 0;
 	};
 

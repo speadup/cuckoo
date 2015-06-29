@@ -49,7 +49,6 @@ $(eval $(call BuildPackage,perlbase-archive))
 define Package/perlbase-arybase
 $(call Package/perlbase-template)
 TITLE:=arybase perl module
-DEPENDS+=+perlbase-xsloader
 endef
 
 define Package/perlbase-arybase/install
@@ -77,7 +76,7 @@ $(eval $(call BuildPackage,perlbase-attribute))
 define Package/perlbase-attributes
 $(call Package/perlbase-template)
 TITLE:=attributes perl module
-DEPENDS+=+perlbase-essential +perlbase-xsloader
+DEPENDS+=+perlbase-essential
 endef
 
 define Package/perlbase-attributes/install
@@ -90,7 +89,7 @@ $(eval $(call BuildPackage,perlbase-attributes))
 define Package/perlbase-autodie
 $(call Package/perlbase-template)
 TITLE:=autodie perl module
-DEPENDS+=+perlbase-essential
+DEPENDS+=+perlbase-base +perlbase-essential +perlbase-fatal +perlbase-if
 endef
 
 define Package/perlbase-autodie/install
@@ -144,7 +143,7 @@ $(eval $(call BuildPackage,perlbase-autouse))
 define Package/perlbase-b
 $(call Package/perlbase-template)
 TITLE:=B perl module
-DEPENDS+=+perlbase-config +perlbase-essential +perlbase-feature
+DEPENDS+=+perlbase-config +perlbase-essential
 endef
 
 define Package/perlbase-b/install
@@ -234,10 +233,24 @@ endef
 $(eval $(call BuildPackage,perlbase-bytes))
 
 
+define Package/perlbase-cgi
+$(call Package/perlbase-template)
+TITLE:=CGI perl module
+DEPENDS+=+perlbase-base +perlbase-essential +perlbase-file +perlbase-if
+endef
+
+define Package/perlbase-cgi/install
+$(call perlmod/Install,$(1),CGI CGI.pm,)
+$(call perlmod/InstallBaseTests,$(1),cpan/CGI/t)
+endef
+
+$(eval $(call BuildPackage,perlbase-cgi))
+
+
 define Package/perlbase-charnames
 $(call Package/perlbase-template)
 TITLE:=charnames perl module
-DEPENDS+=+perlbase-bytes +perlbase-essential +perlbase-re +perlbase-unicore
+DEPENDS+=+perlbase-bytes +perlbase-essential +perlbase-file +perlbase-re +perlbase-unicore
 endef
 
 define Package/perlbase-charnames/install
@@ -291,7 +304,7 @@ $(eval $(call BuildPackage,perlbase-config))
 define Package/perlbase-cpan
 $(call Package/perlbase-template)
 TITLE:=CPAN perl module
-DEPENDS+=+perlbase-b +perlbase-config +perlbase-cwd +perlbase-dirhandle +perlbase-essential +perlbase-extutils +perlbase-fcntl +perlbase-file +perlbase-filehandle +perlbase-http-tiny +perlbase-net +perlbase-safe +perlbase-scalar +perlbase-sys +perlbase-text
+DEPENDS+=+perlbase-b +perlbase-config +perlbase-cwd +perlbase-dirhandle +perlbase-essential +perlbase-extutils +perlbase-fcntl +perlbase-file +perlbase-filehandle +perlbase-http-tiny +perlbase-list +perlbase-net +perlbase-safe +perlbase-scalar +perlbase-sys +perlbase-text +perlbase-version
 endef
 
 define Package/perlbase-cpan/install
@@ -346,7 +359,7 @@ $(eval $(call BuildPackage,perlbase-db))
 define Package/perlbase-db-file
 $(call Package/perlbase-template)
 TITLE:=DB_File perl module
-DEPENDS+=+libdb47 +perlbase-essential +perlbase-tie
+DEPENDS+=+libdb47 +perlbase-essential
 endef
 
 define Package/perlbase-db-file/install
@@ -373,7 +386,7 @@ $(eval $(call BuildPackage,perlbase-dbm-filter))
 define Package/perlbase-devel
 $(call Package/perlbase-template)
 TITLE:=Devel perl module
-DEPENDS+=+perlbase-essential +perlbase-file +perlbase-selfloader +perlbase-xsloader
+DEPENDS+=+perlbase-essential +perlbase-file
 endef
 
 define Package/perlbase-devel/install
@@ -401,7 +414,7 @@ $(eval $(call BuildPackage,perlbase-diagnostics))
 define Package/perlbase-digest
 $(call Package/perlbase-template)
 TITLE:=Digest perl module
-DEPENDS+=+perlbase-dynaloader +perlbase-essential +perlbase-fcntl +perlbase-integer
+DEPENDS+=+perlbase-essential +perlbase-fcntl +perlbase-integer
 endef
 
 define Package/perlbase-digest/install
@@ -497,7 +510,6 @@ $(eval $(call BuildPackage,perlbase-encoding))
 define Package/perlbase-english
 $(call Package/perlbase-template)
 TITLE:=English perl module
-DEPENDS+=+perlbase-essential
 endef
 
 define Package/perlbase-english/install
@@ -551,7 +563,7 @@ $(eval $(call BuildPackage,perlbase-essential))
 define Package/perlbase-experimental
 $(call Package/perlbase-template)
 TITLE:=experimental perl module
-DEPENDS+=+perlbase-essential +perlbase-feature +perlbase-version
+DEPENDS+=+perlbase-essential +perlbase-feature
 endef
 
 define Package/perlbase-experimental/install
@@ -565,13 +577,13 @@ $(eval $(call BuildPackage,perlbase-experimental))
 define Package/perlbase-extutils
 $(call Package/perlbase-template)
 TITLE:=ExtUtils perl module
-DEPENDS+=+perlbase-autosplit +perlbase-base +perlbase-config +perlbase-cwd +perlbase-dirhandle +perlbase-encode +perlbase-essential +perlbase-file +perlbase-io +perlbase-ipc +perlbase-ostype +perlbase-symbol +perlbase-text
+DEPENDS+=+perlbase-autosplit +perlbase-config +perlbase-cwd +perlbase-dirhandle +perlbase-essential +perlbase-file +perlbase-io +perlbase-ipc +perlbase-ostype +perlbase-symbol +perlbase-text
 endef
 
 define Package/perlbase-extutils/install
 $(call perlmod/Install,$(1),ExtUtils,ExtUtils/MakeMaker/FAQ.pod ExtUtils/MakeMaker/Tutorial.pod ExtUtils/ParseXS.pm ExtUtils/ParseXS/Utilities.pm)
 $(call perlmod/Install/NoStrip,$(1),ExtUtils/ParseXS.pm ExtUtils/ParseXS/Utilities.pm,)
-$(call perlmod/InstallBaseTests,$(1),cpan/ExtUtils-Command/t cpan/ExtUtils-Constant/t cpan/ExtUtils-Install/t cpan/ExtUtils-MakeMaker/t cpan/ExtUtils-Manifest/t dist/ExtUtils-CBuilder/t dist/ExtUtils-ParseXS/t)
+$(call perlmod/InstallBaseTests,$(1),cpan/ExtUtils-Constant/t cpan/ExtUtils-MakeMaker/t dist/ExtUtils-CBuilder/t dist/ExtUtils-Command/t dist/ExtUtils-Install/t dist/ExtUtils-Manifest/t dist/ExtUtils-ParseXS/t)
 endef
 
 $(eval $(call BuildPackage,perlbase-extutils))
@@ -580,7 +592,7 @@ $(eval $(call BuildPackage,perlbase-extutils))
 define Package/perlbase-fatal
 $(call Package/perlbase-template)
 TITLE:=Fatal perl module
-DEPENDS+=+perlbase-autodie +perlbase-config +perlbase-essential +perlbase-scalar +perlbase-tie
+DEPENDS+=+perlbase-config +perlbase-essential +perlbase-scalar +perlbase-tie
 endef
 
 define Package/perlbase-fatal/install
@@ -593,7 +605,7 @@ $(eval $(call BuildPackage,perlbase-fatal))
 define Package/perlbase-fcntl
 $(call Package/perlbase-template)
 TITLE:=Fcntl perl module
-DEPENDS+=+perlbase-essential +perlbase-xsloader
+DEPENDS+=+perlbase-essential
 endef
 
 define Package/perlbase-fcntl/install
@@ -632,7 +644,7 @@ $(eval $(call BuildPackage,perlbase-fields))
 define Package/perlbase-file
 $(call Package/perlbase-template)
 TITLE:=File perl module
-DEPENDS+=+perlbase-class +perlbase-config +perlbase-cwd +perlbase-errno +perlbase-essential +perlbase-fcntl +perlbase-filehandle +perlbase-io +perlbase-locale +perlbase-params +perlbase-scalar +perlbase-symbol +perlbase-xsloader
+DEPENDS+=+perlbase-class +perlbase-config +perlbase-cwd +perlbase-errno +perlbase-essential +perlbase-fcntl +perlbase-filehandle +perlbase-io +perlbase-locale +perlbase-params +perlbase-scalar
 endef
 
 define Package/perlbase-file/install
@@ -661,7 +673,7 @@ $(eval $(call BuildPackage,perlbase-filecache))
 define Package/perlbase-filehandle
 $(call Package/perlbase-template)
 TITLE:=FileHandle perl module
-DEPENDS+=+perlbase-essential +perlbase-io
+DEPENDS+=+perlbase-essential
 endef
 
 define Package/perlbase-filehandle/install
@@ -686,7 +698,7 @@ $(eval $(call BuildPackage,perlbase-filetest))
 define Package/perlbase-filter
 $(call Package/perlbase-template)
 TITLE:=Filter perl module
-DEPENDS+=+perlbase-dynaloader +perlbase-essential +perlbase-text
+DEPENDS+=+perlbase-essential +perlbase-text
 endef
 
 define Package/perlbase-filter/install
@@ -713,7 +725,7 @@ $(eval $(call BuildPackage,perlbase-findbin))
 define Package/perlbase-gdbm-file
 $(call Package/perlbase-template)
 TITLE:=GDBM_File perl module
-DEPENDS+=+libgdbm +perlbase-essential +perlbase-tie +perlbase-xsloader
+DEPENDS+=+libgdbm +perlbase-essential
 endef
 
 define Package/perlbase-gdbm-file/install
@@ -741,7 +753,7 @@ $(eval $(call BuildPackage,perlbase-getopt))
 define Package/perlbase-hash
 $(call Package/perlbase-template)
 TITLE:=Hash perl module
-DEPENDS+=+perlbase-essential +perlbase-scalar +perlbase-xsloader
+DEPENDS+=+perlbase-essential +perlbase-scalar
 endef
 
 define Package/perlbase-hash/install
@@ -769,7 +781,7 @@ $(eval $(call BuildPackage,perlbase-http-tiny))
 define Package/perlbase-i18n
 $(call Package/perlbase-template)
 TITLE:=I18N perl module
-DEPENDS+=+perlbase-essential +perlbase-posix +perlbase-xsloader
+DEPENDS+=+perlbase-essential +perlbase-posix
 endef
 
 define Package/perlbase-i18n/install
@@ -864,7 +876,7 @@ $(eval $(call BuildPackage,perlbase-less))
 define Package/perlbase-list
 $(call Package/perlbase-template)
 TITLE:=List perl module
-DEPENDS+=+perlbase-essential +perlbase-xsloader
+DEPENDS+=+perlbase-essential
 endef
 
 define Package/perlbase-list/install
@@ -891,7 +903,7 @@ $(eval $(call BuildPackage,perlbase-locale))
 define Package/perlbase-math
 $(call Package/perlbase-template)
 TITLE:=Math perl module
-DEPENDS+=+perlbase-config +perlbase-essential +perlbase-scalar +perlbase-xsloader
+DEPENDS+=+perlbase-config +perlbase-essential +perlbase-scalar
 endef
 
 define Package/perlbase-math/install
@@ -919,7 +931,7 @@ $(eval $(call BuildPackage,perlbase-memoize))
 define Package/perlbase-mime
 $(call Package/perlbase-template)
 TITLE:=MIME perl module
-DEPENDS+=+perlbase-essential +perlbase-xsloader
+DEPENDS+=+perlbase-essential
 endef
 
 define Package/perlbase-mime/install
@@ -933,12 +945,13 @@ $(eval $(call BuildPackage,perlbase-mime))
 define Package/perlbase-module
 $(call Package/perlbase-template)
 TITLE:=Module perl module
-DEPENDS+=+perlbase-essential +perlbase-file +perlbase-filehandle +perlbase-locale +perlbase-params +perlbase-version
+DEPENDS+=+perlbase-config +perlbase-cwd +perlbase-data +perlbase-essential +perlbase-extutils +perlbase-file +perlbase-filehandle +perlbase-if +perlbase-io +perlbase-locale +perlbase-ostype +perlbase-params +perlbase-text +perlbase-version
 endef
 
 define Package/perlbase-module/install
-$(call perlmod/Install,$(1),Module,)
-$(call perlmod/InstallBaseTests,$(1),cpan/Module-Load-Conditional/t cpan/Module-Load/t cpan/Module-Loaded/t cpan/Module-Metadata/lib cpan/Module-Metadata/t dist/Module-CoreList/t)
+$(call perlmod/Install,$(1),Module,Module/Build Module/Build.pm Module/Build/API.pod Module/Build/Authoring.pod)
+$(call perlmod/Install/NoStrip,$(1),Module/Build Module/Build.pm,Module/Build/API.pod Module/Build/Authoring.pod)
+$(call perlmod/InstallBaseTests,$(1),cpan/Module-Build/lib cpan/Module-Build/t cpan/Module-Load-Conditional/t cpan/Module-Load/t cpan/Module-Loaded/t cpan/Module-Metadata/lib cpan/Module-Metadata/t dist/Module-CoreList/t)
 endef
 
 $(eval $(call BuildPackage,perlbase-module))
@@ -947,7 +960,7 @@ $(eval $(call BuildPackage,perlbase-module))
 define Package/perlbase-mro
 $(call Package/perlbase-template)
 TITLE:=mro perl module
-DEPENDS+=+perlbase-essential +perlbase-xsloader
+DEPENDS+=+perlbase-essential
 endef
 
 define Package/perlbase-mro/install
@@ -1053,6 +1066,20 @@ endef
 $(eval $(call BuildPackage,perlbase-ostype))
 
 
+define Package/perlbase-package
+$(call Package/perlbase-template)
+TITLE:=Package perl module
+DEPENDS+=+perlbase-essential +perlbase-if
+endef
+
+define Package/perlbase-package/install
+$(call perlmod/Install,$(1),Package,)
+$(call perlmod/InstallBaseTests,$(1),cpan/Package-Constants/t)
+endef
+
+$(eval $(call BuildPackage,perlbase-package))
+
+
 define Package/perlbase-params
 $(call Package/perlbase-template)
 TITLE:=Params perl module
@@ -1070,7 +1097,7 @@ $(eval $(call BuildPackage,perlbase-params))
 define Package/perlbase-perl5db
 $(call Package/perlbase-template)
 TITLE:=perl5db perl module
-DEPENDS+=+perlbase-cwd +perlbase-essential
+DEPENDS+=+perlbase-essential
 endef
 
 define Package/perlbase-perl5db/install
@@ -1115,7 +1142,7 @@ $(eval $(call BuildPackage,perlbase-pod))
 define Package/perlbase-posix
 $(call Package/perlbase-template)
 TITLE:=POSIX perl module
-DEPENDS+=+perlbase-essential +perlbase-fcntl +perlbase-tie +perlbase-xsloader
+DEPENDS+=+perlbase-essential +perlbase-fcntl
 endef
 
 define Package/perlbase-posix/install
@@ -1143,7 +1170,7 @@ $(eval $(call BuildPackage,perlbase-re))
 define Package/perlbase-safe
 $(call Package/perlbase-template)
 TITLE:=Safe perl module
-DEPENDS+=+perlbase-b +perlbase-essential +perlbase-opcode +perlbase-scalar +perlbase-utf8
+DEPENDS+=+perlbase-b +perlbase-essential +perlbase-opcode +perlbase-scalar
 endef
 
 define Package/perlbase-safe/install
@@ -1157,7 +1184,7 @@ $(eval $(call BuildPackage,perlbase-safe))
 define Package/perlbase-scalar
 $(call Package/perlbase-template)
 TITLE:=Scalar perl module
-DEPENDS+=+perlbase-essential +perlbase-list
+DEPENDS+=+perlbase-essential
 endef
 
 define Package/perlbase-scalar/install
@@ -1172,7 +1199,7 @@ $(eval $(call BuildPackage,perlbase-scalar))
 define Package/perlbase-sdbm-file
 $(call Package/perlbase-template)
 TITLE:=SDBM_File perl module
-DEPENDS+=+perlbase-essential +perlbase-tie +perlbase-xsloader
+DEPENDS+=+perlbase-essential
 endef
 
 define Package/perlbase-sdbm-file/install
@@ -1240,7 +1267,7 @@ $(eval $(call BuildPackage,perlbase-sigtrap))
 define Package/perlbase-socket
 $(call Package/perlbase-template)
 TITLE:=Socket perl module
-DEPENDS+=+perlbase-essential +perlbase-xsloader
+DEPENDS+=+perlbase-essential
 endef
 
 define Package/perlbase-socket/install
@@ -1267,7 +1294,7 @@ $(eval $(call BuildPackage,perlbase-sort))
 define Package/perlbase-storable
 $(call Package/perlbase-template)
 TITLE:=Storable perl module
-DEPENDS+=+perlbase-essential +perlbase-xsloader
+DEPENDS+=+perlbase-essential
 endef
 
 define Package/perlbase-storable/install
@@ -1281,7 +1308,6 @@ $(eval $(call BuildPackage,perlbase-storable))
 define Package/perlbase-symbol
 $(call Package/perlbase-template)
 TITLE:=Symbol perl module
-DEPENDS+=+perlbase-essential
 endef
 
 define Package/perlbase-symbol/install
@@ -1335,7 +1361,7 @@ $(eval $(call BuildPackage,perlbase-term))
 define Package/perlbase-test
 $(call Package/perlbase-template)
 TITLE:=Test perl module
-DEPENDS+=+perlbase-base +perlbase-config +perlbase-essential +perlbase-io +perlbase-symbol +perlbase-tap +perlbase-text
+DEPENDS+=+perlbase-base +perlbase-config +perlbase-essential +perlbase-symbol +perlbase-tap +perlbase-text
 endef
 
 define Package/perlbase-test/install
@@ -1380,7 +1406,7 @@ $(eval $(call BuildPackage,perlbase-thread))
 define Package/perlbase-threads
 $(call Package/perlbase-template)
 TITLE:=threads perl module
-DEPENDS+=+perlbase-config +perlbase-essential +perlbase-scalar +perlbase-xsloader
+DEPENDS+=+perlbase-essential +perlbase-scalar
 endef
 
 define Package/perlbase-threads/install
@@ -1394,7 +1420,7 @@ $(eval $(call BuildPackage,perlbase-threads))
 define Package/perlbase-tie
 $(call Package/perlbase-template)
 TITLE:=Tie perl module
-DEPENDS+=+perlbase-essential +perlbase-fcntl +perlbase-xsloader
+DEPENDS+=+perlbase-essential +perlbase-fcntl +perlbase-posix
 endef
 
 define Package/perlbase-tie/install
@@ -1408,7 +1434,7 @@ $(eval $(call BuildPackage,perlbase-tie))
 define Package/perlbase-time
 $(call Package/perlbase-template)
 TITLE:=Time perl module
-DEPENDS+=+perlbase-class +perlbase-config +perlbase-dynaloader +perlbase-essential
+DEPENDS+=+perlbase-class +perlbase-config +perlbase-essential
 endef
 
 define Package/perlbase-time/install
@@ -1422,7 +1448,7 @@ $(eval $(call BuildPackage,perlbase-time))
 define Package/perlbase-unicode
 $(call Package/perlbase-template)
 TITLE:=Unicode perl module
-DEPENDS+=+perlbase-base +perlbase-charnames +perlbase-dynaloader +perlbase-essential +perlbase-file
+DEPENDS+=+perlbase-base +perlbase-charnames +perlbase-essential +perlbase-file
 endef
 
 define Package/perlbase-unicode/install
@@ -1510,4 +1536,4 @@ endef
 $(eval $(call BuildPackage,perlbase-xsloader))
 
 
-# Generated Mon Jun 15 15:00:59 2015
+# Generated Mon Oct 13 10:06:15 2014

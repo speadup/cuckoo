@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=squid
 PKG_VERSION:=3.5.2
-PKG_RELEASE:=4
+PKG_RELEASE:=2
 
 PKG_LICENSE:=GPL-2.0
 PKG_MAINTAINER:=Luka Perkov <luka@openwrt.org>
@@ -89,15 +89,16 @@ CONFIGURE_ARGS += \
 	--disable-arch-native \
 	--with-krb5-config=no \
 	--without-libcap \
-	--without-netfilter-conntrack
+	--without-netfilter-conntrack \
 
 CONFIGURE_VARS += \
 	ac_cv_header_linux_netfilter_ipv4_h=yes \
-	ac_cv_epoll_works=yes
+	ac_cv_epoll_works=yes \
 
 define Build/Compile
-	+$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR)/lib all
-	+$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR) \
+	$(MAKE) -C $(PKG_BUILD_DIR)/lib \
+		all
+	$(MAKE) -C $(PKG_BUILD_DIR) \
 		DESTDIR="$(PKG_INSTALL_DIR)" \
 		install
 endef

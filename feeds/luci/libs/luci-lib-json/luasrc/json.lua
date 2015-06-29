@@ -149,13 +149,11 @@ function Encoder.parse_iter(self, obj)
 		local first = true
 
 		for key, entry in pairs(obj) do
-			if key ~= null then
-				first = first or self:put(",")
-				first = first and false
-				self:parse_string(tostring(key))
-				self:put(":")
-				self:dispatch(entry)
-			end
+			first = first or self:put(",")
+			first = first and false
+			self:parse_string(tostring(key))
+			self:put(":")
+			self:dispatch(entry)
 		end
 
 		self:put("}")

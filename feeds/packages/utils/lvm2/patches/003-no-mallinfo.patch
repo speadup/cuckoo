@@ -1,5 +1,7 @@
---- a/lib/mm/memlock.c
-+++ b/lib/mm/memlock.c
+Index: LVM2.2.02.119/lib/mm/memlock.c
+===================================================================
+--- LVM2.2.02.119.orig/lib/mm/memlock.c
++++ LVM2.2.02.119/lib/mm/memlock.c
 @@ -161,12 +161,15 @@ static void _allocate_memory(void)
           *  memory on free(), this is good enough for our purposes.
           */

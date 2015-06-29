@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ffmpeg
-PKG_VERSION:=2.6.3
-PKG_RELEASE:=2
+PKG_VERSION:=2.6.2
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=http://ffmpeg.org/releases/
-PKG_MD5SUM:=e2cc3c209f91393d35ab58598e41cf22
+PKG_MD5SUM:=e75d598921285d6775f20164a91936ac
 PKG_MAINTAINER:=Ted Hess <thess@kitschensync.net>
 
 PKG_LICENSE:=LGPL-2.1+ GPL-2+ LGPL-3
@@ -125,7 +125,7 @@ FFMPEG_MINI_DECODERS:= \
 	wmav1 \
 	wmav2 \
 
-FFMPEG_MINI_DEMUXERS:= \
+FFMPEG_MINI_DEMUXERS := \
 	aac \
 	ac3 \
 	avi \
@@ -144,7 +144,7 @@ FFMPEG_MINI_PARSERS:= \
 	mpeg4video \
 	mpegaudio \
 
-FFMPEG_MINI_PROTOCOLS:= \
+FFMPEG_MINI_PROTOCOLS := \
 	file \
 
 FFMPEG_AUDIO_DECODERS:= \
@@ -162,7 +162,6 @@ FFMPEG_AUDIO_DECODERS:= \
 	mp3* \
 	mpc7 \
 	mpc8 \
-	opus \
 	pcm_* \
 	vorbis \
 	wavpack \
@@ -198,10 +197,9 @@ FFMPEG_AUDIO_DEMUXERS:= \
 FFMPEG_AUDIO_PARSERS:= \
 	aac \
 	aac_latm \
-	ac3 \
 	flac \
+	ac3 \
 	mpegaudio \
-	opus \
 
 FFMPEG_AUDIO_PROTOCOLS:= \
 	file http icecast rtp tcp udp
@@ -310,7 +308,7 @@ endef
 define Package/libffmpeg-audio-dec
 $(call Package/libffmpeg/Default)
  TITLE+= (audio)
- DEPENDS+= @BUILD_PATENTED +libspeex
+ DEPENDS+= @DEVEL +libopus +libspeex
  VARIANT:=audio-dec
 endef
 
@@ -464,6 +462,7 @@ ifeq ($(BUILD_VARIANT),audio-dec)
 	$(call FFMPEG_ENABLE,demuxer,$(FFMPEG_AUDIO_DEMUXERS)) \
 	$(call FFMPEG_ENABLE,parser,$(FFMPEG_AUDIO_PARSERS)) \
 	$(call FFMPEG_ENABLE,protocol,$(FFMPEG_AUDIO_PROTOCOLS)) \
+	--enable-libopus --enable-decoder=libopus \
 	--enable-libspeex --enable-decoder=libspeex \
 	--disable-decoder=pcm_bluray,pcm_dvd \
 

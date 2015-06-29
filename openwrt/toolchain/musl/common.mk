@@ -11,7 +11,7 @@ PKG_NAME:=musl
 PKG_VERSION:=$(call qstrip,$(CONFIG_MUSL_VERSION))
 PKG_RELEASE=1
 
-PKG_MD5SUM:=fc30892ee582c91920505bbd0021049f
+PKG_MD5SUM:=14e8c5ac74f887d53256b3dcaf9b4aaa
 
 PKG_SOURCE_URL:=http://www.musl-libc.org/releases
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
@@ -21,7 +21,6 @@ PATCH_DIR:=$(PATH_PREFIX)/patches
 HOST_BUILD_DIR:=$(BUILD_DIR_TOOLCHAIN)/$(PKG_NAME)-$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/toolchain-build.mk
-include $(INCLUDE_DIR)/hardening.mk
 
 MUSL_CONFIGURE:= \
 	$(TARGET_CONFIGURE_OPTS) \

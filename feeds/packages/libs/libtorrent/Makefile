@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libtorrent
-PKG_VERSION:=0.13.4-git-1
+PKG_VERSION:=0.13.4-git-0
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
@@ -49,8 +49,7 @@ CONFIGURE_ARGS+= \
 	--disable-debug \
 	--enable-openssl \
 	--disable-instrumentation \
-	--with-zlib=$(STAGING_DIR)/usr \
-	$(call autoconf_bool,CONFIG_IPV6,ipv6)
+	--with-zlib=$(STAGING_DIR)/usr
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include

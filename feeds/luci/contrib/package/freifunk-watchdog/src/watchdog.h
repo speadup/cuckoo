@@ -29,7 +29,6 @@
 #include <math.h>
 #include <time.h>
 #include <signal.h>
-#include <limits.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <sys/ioctl.h>

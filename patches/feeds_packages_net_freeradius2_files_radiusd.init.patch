@@ -15,7 +15,7 @@ Index: feeds/packages/net/freeradius2/files/radiusd.init
  RADACCT_D=/var/db/radacct
 -IPADDR=$(ifconfig br-lan | sed -n 's/.*dr:\(.*\)Bc.*/\1/p')
 +IPADDR=0.0.0.0
-+OPTIONS=
++OPTIONS=-xx
  
  start() {
  	[ -f $DEFAULT ] && . $DEFAULT

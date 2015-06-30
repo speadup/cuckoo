@@ -2,7 +2,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 ===================================================================
 ---feeds/packages/net/freeradius2/patches/003-config.patch	
 +++feeds/packages/net/freeradius2/patches/003-config.patch	
-@@ -0,0 +1,282 @@
+@@ -0,0 +1,311 @@
 +diff -Nur a/raddb/modules/cui b/raddb/modules/cui
 +--- a/raddb/modules/cui
 ++++ b/raddb/modules/cui
@@ -48,7 +48,36 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + #	clients = per_socket_clients
 + }
 + 
-+@@ -740,7 +740,7 @@
++@@ -406,7 +406,7 @@
++ 	#  The command-line option "-X" over-rides this option, and forces
++ 	#  logging to go to stdout.
++ 	#
++-	destination = files
+++	destination = syslog
++ 
++ 	#
++ 	#  The logging messages for the server are appended to the
++@@ -473,7 +473,7 @@
++ 	#
++ 	#  allowed values: {no, yes}
++ 	#
++-	auth = no
+++	auth = yes
++ 
++ 	#  Log passwords with the authentication requests.
++ 	#  auth_badpass  - logs password if it's rejected
++@@ -481,8 +481,8 @@
++ 	#
++ 	#  allowed values: {no, yes}
++ 	#
++-	auth_badpass = no
++-	auth_goodpass = no
+++	auth_badpass = yes
+++	auth_goodpass = yes
++ 
++ 	#  Log additional text at the end of the "Login OK" messages.
++ 	#  for these to work, the "auth" and "auth_goopass" or "auth_badpass"
++@@ -732,7 +732,7 @@
 + 	#  Include another file that has the SQL-related configuration.
 + 	#  This is another file only because it tends to be big.
 + 	#
@@ -57,7 +86,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + 
 + 	#
 + 	#  This module is an SQL enabled version of the counter module.
-+@@ -752,7 +752,7 @@
++@@ -744,7 +744,7 @@
 + 	#  totally dependent on the SQL module to process Accounting
 + 	#  packets.
 + 	#
@@ -66,7 +95,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + 
 + 	#
 + 	#  IP addresses managed in an SQL table.
-+@@ -799,7 +799,7 @@
++@@ -791,7 +791,7 @@
 + 	#  other xlat functions such as md5, sha1 and lc.
 + 	#
 + 	#  We do not recommend removing it's listing here.
@@ -75,7 +104,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + 
 + 	#
 + 	# We add the counter module here so that it registers
-+@@ -831,7 +831,7 @@
++@@ -823,7 +823,7 @@
 + #	to multiple times.
 + #
 + ######################################################################
@@ -105,7 +134,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + 
 + 	#
 + 	#  If the users are logging in with an MS-CHAP-Challenge
-+@@ -167,14 +167,14 @@
++@@ -169,14 +169,14 @@
 + 
 + 	#
 + 	#  Read the 'users' file
@@ -122,7 +151,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + 
 + 	#
 + 	#  If you are using /etc/smbpasswd, and are also doing
-+@@ -209,7 +209,7 @@
++@@ -211,7 +211,7 @@
 + 	#  This module should be listed last, so that the other modules
 + 	#  get a chance to set Auth-Type for themselves.
 + 	#
@@ -131,7 +160,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + 
 + 	#
 + 	#  If "status_server = yes", then Status-Server messages are passed
-+@@ -220,6 +220,7 @@
++@@ -222,6 +222,7 @@
 + #	Autz-Type Status-Server {
 + #
 + #	}
@@ -139,7 +168,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + }
 + 
 + 
-+@@ -254,9 +255,9 @@
++@@ -256,9 +257,9 @@
 + 	#  PAP authentication, when a back-end database listed
 + 	#  in the 'authorize' section supplies a password.  The
 + 	#  password can be clear-text, or encrypted.
@@ -152,7 +181,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + 
 + 	#
 + 	#  Most people want CHAP authentication
-+@@ -269,9 +270,9 @@
++@@ -271,9 +272,9 @@
 + 
 + 	#
 + 	#  MSCHAP authentication.
@@ -165,7 +194,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + 
 + 	#
 + 	#  If you have a Cisco SIP server authenticating against
-+@@ -330,7 +331,7 @@
++@@ -332,7 +333,7 @@
 + #
 + #  Pre-accounting.  Decide which accounting type to use.
 + #
@@ -174,7 +203,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + #	preprocess
 + 
 + 	#
-+@@ -346,15 +347,15 @@
++@@ -348,15 +349,15 @@
 + 	#  The start time is: NOW - delay - session_length
 + 	#
 + 
@@ -194,7 +223,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + 
 + 	#
 + 	#  Look for IPASS-style 'realm/', and if not found, look for
-+@@ -370,7 +371,7 @@
++@@ -372,7 +373,7 @@
 + 	#
 + 	#  Read the 'acct_users' file
 + #	files
@@ -203,7 +232,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + 
 + #
 + #  Accounting.  Log the accounting data.
-+@@ -403,7 +404,7 @@
++@@ -405,7 +406,7 @@
 + 	#  Log traffic to an SQL database.
 + 	#
 + 	#  See "Accounting queries" in sql.conf
@@ -212,7 +241,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + 
 + 	#
 + 	#  If you receive stop packets with zero session length,
-+@@ -440,6 +441,8 @@
++@@ -442,6 +443,8 @@
 + #	Acct-Type Status-Server {
 + #
 + #	}
@@ -221,7 +250,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + }
 + 
 + 
-+@@ -447,18 +450,18 @@
++@@ -449,18 +452,18 @@
 + #  or rlm_sql module can handle this.
 + #  The rlm_sql module is *much* faster
 + session {
@@ -243,7 +272,7 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + 	#  Get an address from the IP Pool.
 + #	main_pool
 + 
-+@@ -472,7 +475,7 @@
++@@ -474,7 +477,7 @@
 + 	#  After authenticating the user, do another SQL query.
 + 	#
 + 	#  See "Authentication Logging Queries" in sql.conf
@@ -252,8 +281,8 @@ Index: feeds/packages/net/freeradius2/patches/003-config.patch
 + 
 + 	#
 + 	#  Instead of sending the query to the SQL server,
-+@@ -577,7 +580,10 @@
-+ #		sql
++@@ -585,7 +588,10 @@
++ 
 + #		attr_filter.access_reject
 + #	}
 +-#}

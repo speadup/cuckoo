@@ -1449,7 +1449,7 @@ CONFIG_PACKAGE_kmod-crypto-michael-mic=y
 # CONFIG_PACKAGE_kmod-fs-cifs is not set
 # CONFIG_PACKAGE_kmod-fs-configfs is not set
 # CONFIG_PACKAGE_kmod-fs-cramfs is not set
-# CONFIG_PACKAGE_kmod-fs-exfat is not set
+CONFIG_PACKAGE_kmod-fs-exfat=y
 # CONFIG_PACKAGE_kmod-fs-exportfs is not set
 CONFIG_PACKAGE_kmod-fs-ext4=y
 # CONFIG_PACKAGE_kmod-fs-f2fs is not set
@@ -2190,7 +2190,7 @@ CONFIG_PACKAGE_libbz2=y
 # Filesystem
 #
 # CONFIG_PACKAGE_libacl is not set
-CONFIG_PACKAGE_libattr=y
+# CONFIG_PACKAGE_libattr is not set
 CONFIG_PACKAGE_libext2fs=y
 # CONFIG_PACKAGE_libfuse is not set
 # CONFIG_PACKAGE_libnfsidmap is not set
@@ -2375,7 +2375,6 @@ CONFIG_PACKAGE_libdaemon=y
 # CONFIG_PACKAGE_libdbus is not set
 # CONFIG_PACKAGE_libdbus-glib is not set
 # CONFIG_PACKAGE_libdevmapper is not set
-CONFIG_PACKAGE_libdlna=y
 # CONFIG_PACKAGE_libdmapsharing is not set
 # CONFIG_PACKAGE_libdnet is not set
 # CONFIG_PACKAGE_libdvbpsi is not set
@@ -2403,7 +2402,7 @@ CONFIG_PACKAGE_libffi=y
 # CONFIG_PACKAGE_libffmpeg-audio-dec is not set
 # CONFIG_PACKAGE_libffmpeg-custom is not set
 # CONFIG_PACKAGE_libffmpeg-full is not set
-CONFIG_PACKAGE_libffmpeg-mini=y
+# CONFIG_PACKAGE_libffmpeg-mini is not set
 # CONFIG_PACKAGE_libflac is not set
 # CONFIG_PACKAGE_libfreefare is not set
 # CONFIG_PACKAGE_libfreenect is not set
@@ -2580,8 +2579,7 @@ CONFIG_PACKAGE_libuci-lua=y
 # CONFIG_PACKAGE_libuecc is not set
 # CONFIG_PACKAGE_libunbound is not set
 # CONFIG_PACKAGE_libunistring is not set
-CONFIG_PACKAGE_libupnp=y
-# CONFIG_PACKAGE_libupnp-sample is not set
+# CONFIG_PACKAGE_libupnp is not set
 # CONFIG_PACKAGE_libupnpp is not set
 # CONFIG_PACKAGE_liburcu is not set
 CONFIG_PACKAGE_libusb-1.0=y
@@ -2718,8 +2716,7 @@ CONFIG_PACKAGE_luci-app-hd-idle=y
 # CONFIG_PACKAGE_luci-app-hnet is not set
 # CONFIG_PACKAGE_luci-app-lxc is not set
 # CONFIG_PACKAGE_luci-app-meshwizard is not set
-# CONFIG_PACKAGE_luci-app-minidlna is not set
-CONFIG_PACKAGE_luci-app-mjpg-streamer=y
+# CONFIG_PACKAGE_luci-app-mjpg-streamer is not set
 # CONFIG_PACKAGE_luci-app-multiwan is not set
 # CONFIG_PACKAGE_luci-app-mwan3 is not set
 # CONFIG_PACKAGE_luci-app-ntpc is not set
@@ -2749,7 +2746,6 @@ CONFIG_PACKAGE_luci-app-sqm=y
 # CONFIG_PACKAGE_luci-app-transmission is not set
 # CONFIG_PACKAGE_luci-app-udpxy is not set
 CONFIG_PACKAGE_luci-app-upnp=y
-CONFIG_PACKAGE_luci-app-ushare=y
 # CONFIG_PACKAGE_luci-app-vnstat is not set
 # CONFIG_PACKAGE_luci-app-voice-core is not set
 # CONFIG_PACKAGE_luci-app-voice-diag is not set
@@ -3012,31 +3008,6 @@ CONFIG_PACKAGE_luci-i18n-upnp-en=y
 # CONFIG_PACKAGE_luci-i18n-upnp-vi is not set
 CONFIG_PACKAGE_luci-i18n-upnp-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-upnp-zh-tw=y
-# CONFIG_PACKAGE_luci-i18n-ushare-ca is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-cs is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-de is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-el is not set
-CONFIG_PACKAGE_luci-i18n-ushare-en=y
-# CONFIG_PACKAGE_luci-i18n-ushare-es is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-fr is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-he is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-hu is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-it is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-ja is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-ms is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-no is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-pl is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-pt is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-pt-br is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-ro is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-ru is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-sk is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-sv is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-tr is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-uk is not set
-# CONFIG_PACKAGE_luci-i18n-ushare-vi is not set
-CONFIG_PACKAGE_luci-i18n-ushare-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-ushare-zh-tw=y
 # CONFIG_PACKAGE_luci-i18n-watchcat-ca is not set
 # CONFIG_PACKAGE_luci-i18n-watchcat-cs is not set
 # CONFIG_PACKAGE_luci-i18n-watchcat-de is not set
@@ -3158,15 +3129,7 @@ CONFIG_POSTFIX_CDB=y
 # CONFIG_PACKAGE_imagemagick-tiff is not set
 # CONFIG_PACKAGE_imagemagick-tools is not set
 # CONFIG_PACKAGE_kissdx is not set
-# CONFIG_PACKAGE_minidlna is not set
-CONFIG_PACKAGE_mjpg-streamer=y
-# CONFIG_MJPG_STREAMER_V4L2 is not set
-# CONFIG_MJPG_STREAMER_INPUT_FILE is not set
-CONFIG_MJPG_STREAMER_INPUT_UVC=y
-# CONFIG_MJPG_STREAMER_INPUT_TESTPICTURE is not set
-# CONFIG_MJPG_STREAMER_OUTPUT_FILE is not set
-CONFIG_MJPG_STREAMER_OUTPUT_HTTP=y
-# CONFIG_MJPG_STREAMER_WWW is not set
+# CONFIG_PACKAGE_mjpg-streamer is not set
 # CONFIG_PACKAGE_motion is not set
 # CONFIG_PACKAGE_peercast is not set
 # CONFIG_PACKAGE_puppy is not set
@@ -3179,7 +3142,6 @@ CONFIG_MJPG_STREAMER_OUTPUT_HTTP=y
 # CONFIG_PACKAGE_rygel-tracker is not set
 # CONFIG_PACKAGE_streamripper is not set
 # CONFIG_PACKAGE_tvheadend is not set
-CONFIG_PACKAGE_ushare=y
 # CONFIG_PACKAGE_vips is not set
 # CONFIG_PACKAGE_xupnpd is not set
 
@@ -4281,9 +4243,7 @@ CONFIG_PACKAGE_wpad-mini=y
 # CONFIG_PACKAGE_lame-lib is not set
 # CONFIG_PACKAGE_listener is not set
 # CONFIG_PACKAGE_madplay is not set
-# CONFIG_PACKAGE_moc is not set
 # CONFIG_PACKAGE_mpc is not set
-# CONFIG_PACKAGE_mpd-full is not set
 # CONFIG_PACKAGE_mpd-mini is not set
 # CONFIG_PACKAGE_mpdas is not set
 # CONFIG_PACKAGE_mt-daapd is not set
@@ -4298,7 +4258,6 @@ CONFIG_PACKAGE_wpad-mini=y
 # CONFIG_PACKAGE_shairport-sync is not set
 # CONFIG_PACKAGE_shell-fm is not set
 # CONFIG_PACKAGE_shine is not set
-# CONFIG_PACKAGE_sox is not set
 # CONFIG_PACKAGE_svox is not set
 # CONFIG_PACKAGE_upmpdcli is not set
 

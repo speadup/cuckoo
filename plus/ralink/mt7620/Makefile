@@ -1,0 +1,61 @@
+# All rights reserved.
+#
+# This is free software, licensed under the GNU General Public License v2.
+# See /LICENSE for more information.
+
+include $(TOPDIR)/rules.mk
+include $(INCLUDE_DIR)/kernel.mk
+
+PKG_NAME:=mt7620
+PKG_VERSION:=wifi2716_all_dpa_20130426
+
+PKG_KCONFIG:=RALINK_MT7620 RALINK_RT5350 RALINK_3883 RALINK_RT3052 RT2860V2_AP RT2860V2_AP_V24_DATA_STRUCTURE \
+	RT2860V2_AP_WSC RT2860V2_AP_WSC_V2 RT2860V2_AP_LLTD RT2860V2_AP_WDS RT2860V2_AP_MBSS NEW_MBSSID_MODE \
+	RT2860V2_AP_APCLI RT2860V2_AP_MAC_REPEATER RT2860V2_AP_IGMP_SNOOP RT2860V2_AP_NETIF_BLOCK RT2860V2_AP_DFS \
+	RT2860V2_AP_CARRIER RT2860V2_AP_DLS RT2860V2_AP_IDS RT2860V2_HW_ANTENNA_DIVERSITY RT2860V2_AP_COC \
+	RT2860V2_AP_MEMORY_OPTIMIZATION RT2860V2_AP_VIDEO_TURBINE RA_CLASSIFIER RT2860V2_AP_INTELLIGENT_RATE_ADAPTION \
+	RT2860V2_AP_TXBF RT2860V2_AP_80211N_DRAFT3 RT2860V2_ADJ_PWR_CONSUMPTION_SUPPORT RT2860V2_SINGLE_SKU \
+	RT2860V2_AP_RTMP_INTERNAL_TX_ALC RT2860V2_AP_RTMP_TEMPERATURE_COMPENSATION RT2860V2_AP_LED RT2860V2_DBG \
+	INTERNAL_PA_INTERNAL_LNA EXTERNAL_PA_EXTERNAL_LNA INTERNAL_PA_EXTERNAL_LNA
+PKG_CONFIG_DEPENDS:=$(foreach c, $(PKG_KCONFIG),$(if $(CONFIG_$c),CONFIG_$(c)))
+
+include $(INCLUDE_DIR)/package.mk
+
+TAR_CMD=$(HOST_TAR) -C $(1)/ $(TAR_OPTIONS)
+
+define KernelPackage/mt7620
+  SECTION:=kernel
+  CATEGORY:=Kernel modules
+  TITLE:=Ralink MT7620 wifi AP driver
+  FILES:=$(PKG_BUILD_DIR)/rt2860v2_ap/rt2860v2_ap.ko
+  DEPENDS:=@TARGET_ramips_mt7620||TARGET_ramips_mt7620a||TARGET_ramips_mt7620n||TARGET_ramips_rt305x +wireless-tools +maccalc
+  AUTOLOAD:=$(call AutoLoad,90,rt2860v2_ap)
+  SUBMENU:=Wireless Drivers
+  MENU:=1
+endef
+
+define KernelPackage/mt7620/config
+	source "$(SOURCE)/Config-mt7620.in"
+endef
+
+define Build/Prepare
+	mkdir -p $(PKG_BUILD_DIR)
+	$(CP) ./src/* $(PKG_BUILD_DIR)/
+endef
+
+define Build/Compile
+	$(MAKE) -C "$(LINUX_DIR)" \
+		CROSS_COMPILE="$(TARGET_CROSS)" \
+		ARCH="$(LINUX_KARCH)" \
+		SUBDIRS="$(PKG_BUILD_DIR)/rt2860v2_ap/" \
+		$(foreach c, $(PKG_KCONFIG),$(if $(CONFIG_$c),CONFIG_$(c)=y))\
+		modules
+endef
+
+define KernelPackage/mt7620/install
+	$(CP) -r ./files/* $(1)/
+	$(INSTALL_DIR) $(1)/etc/Wireless/RT2860/
+	ln -s /tmp/RT2860AP.dat $(1)/etc/Wireless/RT2860/RT2860.dat
+endef
+
+$(eval $(call KernelPackage,mt7620))

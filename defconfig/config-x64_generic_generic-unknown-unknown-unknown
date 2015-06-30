@@ -2689,7 +2689,7 @@ CONFIG_PACKAGE_luci-app-aria2=y
 # CONFIG_PACKAGE_luci-app-bmx6 is not set
 # CONFIG_PACKAGE_luci-app-cjdns is not set
 # CONFIG_PACKAGE_luci-app-commands is not set
-CONFIG_PACKAGE_luci-app-coovachilli=y
+# CONFIG_PACKAGE_luci-app-coovachilli is not set
 # CONFIG_PACKAGE_luci-app-cshark is not set
 CONFIG_PACKAGE_luci-app-data=y
 CONFIG_PACKAGE_luci-app-ddns=y
@@ -2796,31 +2796,6 @@ CONFIG_PACKAGE_luci-i18n-base-en=y
 # CONFIG_PACKAGE_luci-i18n-base-vi is not set
 CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-base-zh-tw=y
-# CONFIG_PACKAGE_luci-i18n-coovachilli-ca is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-cs is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-de is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-el is not set
-CONFIG_PACKAGE_luci-i18n-coovachilli-en=y
-# CONFIG_PACKAGE_luci-i18n-coovachilli-es is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-fr is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-he is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-hu is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-it is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-ja is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-ms is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-no is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-pl is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-pt is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-pt-br is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-ro is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-ru is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-sk is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-sv is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-tr is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-uk is not set
-# CONFIG_PACKAGE_luci-i18n-coovachilli-vi is not set
-CONFIG_PACKAGE_luci-i18n-coovachilli-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-coovachilli-zh-tw=y
 # CONFIG_PACKAGE_luci-i18n-ddns-ca is not set
 # CONFIG_PACKAGE_luci-i18n-ddns-cs is not set
 # CONFIG_PACKAGE_luci-i18n-ddns-de is not set
@@ -4211,6 +4186,10 @@ CONFIG_PACKAGE_wpad-mini=y
 # CONFIG_PACKAGE_wshaper is not set
 # CONFIG_PACKAGE_wwan is not set
 # CONFIG_PACKAGE_xinetd is not set
+
+#
+# Ralink
+#
 
 #
 # Sound

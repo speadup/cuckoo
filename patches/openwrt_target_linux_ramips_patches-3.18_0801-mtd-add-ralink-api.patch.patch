@@ -1,0 +1,117 @@
+Index: openwrt/target/linux/ramips/patches-3.18/0801-mtd-add-ralink-api.patch
+===================================================================
+---openwrt/target/linux/ramips/patches-3.18/0801-mtd-add-ralink-api.patch	
++++openwrt/target/linux/ramips/patches-3.18/0801-mtd-add-ralink-api.patch	
+@@ -0,0 +1,112 @@
++Index: linux-3.10.18/drivers/mtd/maps/ralink-flash.c
++===================================================================
++--- /dev/null
+++++ linux-3.10.18/drivers/mtd/maps/ralink-flash.c
++@@ -0,0 +1,95 @@
+++/* ralink-flash.c
+++ * 
+++ * 
+++ */
+++
+++#include <linux/module.h>
+++#include <linux/types.h>
+++#include <linux/init.h>
+++#include <linux/kernel.h>
+++#include <linux/err.h>
+++
+++#include <linux/slab.h>
+++#include <asm/io.h>
+++#include <linux/mtd/mtd.h>
+++#include <linux/mtd/map.h>
+++#include <linux/mtd/concat.h>
+++#include <linux/mtd/partitions.h>
+++#include <asm/addrspace.h>
+++
+++
+++int ra_mtd_write_nm(char *name, loff_t to, size_t len, const u_char *buf)
+++{
+++	int ret = -1;
+++	size_t rdlen, wrlen;
+++	struct mtd_info *mtd;
+++	struct erase_info ei;
+++	u_char *bak = NULL;
+++
+++	printk(KERN_ERR "name %s, offset %d, len %d, buf %p\n", name, to, len, buf);
+++	mtd = get_mtd_device_nm(name);
+++	if (IS_ERR(mtd))
+++	{
+++		return (int)mtd;
+++	}
+++	if (len > mtd->erasesize) {
+++		put_mtd_device(mtd);
+++		return -E2BIG;
+++	}
+++
+++	bak = kmalloc(mtd->erasesize, GFP_KERNEL);
+++	if (bak == NULL) {
+++		put_mtd_device(mtd);
+++		return -ENOMEM;
+++	}
+++
+++	ret = mtd->_read(mtd, 0, mtd->erasesize, &rdlen, bak);
+++	if (ret != 0) {
+++		put_mtd_device(mtd);
+++		kfree(bak);
+++		return ret;
+++	}
+++	if (rdlen != mtd->erasesize)
+++		printk("warning: ra_mtd_write: rdlen is not equal to erasesize\n");
+++
+++	memcpy(bak + to, buf, len);
+++
+++	ei.mtd = mtd;
+++	ei.callback = NULL;
+++	ei.addr = 0;
+++	ei.len = mtd->erasesize;
+++	ei.priv = 0;
+++	ret = mtd->_erase(mtd, &ei);
+++	if (ret != 0) {
+++		put_mtd_device(mtd);
+++		kfree(bak);
+++		return ret;
+++	}
+++
+++	ret = mtd->_write(mtd, 0, mtd->erasesize, &wrlen, bak);
+++
+++	put_mtd_device(mtd);
+++	kfree(bak);
+++	return ret;
+++}
+++
+++int ra_mtd_read_nm(char *name, loff_t from, size_t len, u_char *buf)
+++{
+++	int ret;
+++	size_t rdlen;
+++	struct mtd_info *mtd;
+++
+++	mtd = get_mtd_device_nm(name);
+++	if (IS_ERR(mtd))
+++		return (int)mtd;
+++
+++	ret = mtd->_read(mtd, from, len, &rdlen, buf);
+++	if (rdlen != len)
+++		printk("warning: ra_mtd_read_nm: rdlen is not equal to len\n");
+++
+++	put_mtd_device(mtd);
+++	return ret;
+++}
+++
+++EXPORT_SYMBOL(ra_mtd_write_nm);
+++EXPORT_SYMBOL(ra_mtd_read_nm);
++Index: linux-3.10.18/drivers/mtd/maps/Makefile
++===================================================================
++--- linux-3.10.18.orig/drivers/mtd/maps/Makefile
+++++ linux-3.10.18/drivers/mtd/maps/Makefile
++@@ -18,6 +18,7 @@ obj-$(CONFIG_MTD_TSUNAMI)	+= tsunami_fla
++ obj-$(CONFIG_MTD_PXA2XX)	+= pxa2xx-flash.o
++ obj-$(CONFIG_MTD_OCTAGON)	+= octagon-5066.o
++ obj-$(CONFIG_MTD_PHYSMAP)	+= physmap.o
+++obj-$(CONFIG_MTD_PHYSMAP)	+= ralink-flash.o
++ obj-$(CONFIG_MTD_PHYSMAP_OF)	+= physmap_of.o
++ obj-$(CONFIG_MTD_PISMO)		+= pismo.o
++ obj-$(CONFIG_MTD_PMC_MSP_EVM)   += pmcmsp-flash.o

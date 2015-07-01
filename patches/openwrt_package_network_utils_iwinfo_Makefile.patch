@@ -1,0 +1,21 @@
+Index: openwrt/package/network/utils/iwinfo/Makefile
+===================================================================
+---openwrt/package/network/utils/iwinfo/Makefile	
++++openwrt/package/network/utils/iwinfo/Makefile	
+@@ -23,6 +23,7 @@
+ 	CONFIG_PACKAGE_kmod-brcm-wl-mini \
+ 	CONFIG_PACKAGE_kmod-brcm-wl-mimo \
+ 	CONFIG_PACKAGE_kmod-madwifi \
++	CONFIG_PACKAGE_kmod-mt7620 \
+ 	CONFIG_PACKAGE_kmod-cfg80211
+ 
+ include $(INCLUDE_DIR)/package.mk
+@@ -76,6 +77,8 @@
+ 	$(if $(CONFIG_PACKAGE_kmod-brcm-wl-mini),wl) \
+ 	$(if $(CONFIG_PACKAGE_kmod-brcm-wl-mimo),wl) \
+ 	$(if $(CONFIG_PACKAGE_kmod-madwifi),madwifi) \
++	$(if $(CONFIG_PACKAGE_kmod-mt7620),mt7620) \
++	$(if $(CONFIG_PACKAGE_kmod-rt2860v2),rt2860v2) \
+ 	$(if $(CONFIG_PACKAGE_kmod-cfg80211),nl80211)
+ 
+ TARGET_CFLAGS += \

@@ -54,8 +54,8 @@ do
     branch=`echo "${url}" | awk -F\; '{print $2}'`
     url=${url%;*}
     rm -rf ${temp}/${repo}/${name}*
-    [ -n "${branch}" ] && (git clone --depth 1 --branch ${branch} ${url} ${temp}/${repo}/${name} || exit 1)
-    [ -z "${branch}" ] && (git clone --depth 1 ${url} ${temp}/${repo}/${name} || exit 1)
+    [ -n "${branch}" ] && (git clone --branch ${branch} ${url} ${temp}/${repo}/${name} || exit 1)
+    [ -z "${branch}" ] && (git clone ${url} ${temp}/${repo}/${name} || exit 1)
     ver=`cd ${temp}/${repo}/${name}; git show | sed -e '1!d' -e 's/commit //'`
     (cd ${temp}/${repo}/${name}; git archive --format tar --prefix ${name}-${ver}/ -o ../../${name}-${ver}.tar HEAD)
     rm -f ${temp}/${name}-${ver}.tar.gz

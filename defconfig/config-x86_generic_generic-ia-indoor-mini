@@ -228,7 +228,7 @@ CONFIG_DEVEL=y
 # CONFIG_BROKEN is not set
 CONFIG_BINARY_FOLDER="$(TOPDIR)/../release/$(BOARD)"
 CONFIG_DOWNLOAD_FOLDER="$(TOPDIR)/../download"
-CONFIG_LOCALMIRROR="http://192.168.19.197/openwrt/download.php"
+CONFIG_LOCALMIRROR="http://192.168.19.197/openwrt/download.php http://oa.yeetec.com:19780/openwrt/download.php"
 CONFIG_AUTOREBUILD=y
 CONFIG_BUILD_SUFFIX=""
 CONFIG_TARGET_ROOTFS_DIR=""

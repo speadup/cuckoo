@@ -3642,6 +3642,7 @@ CONFIG_PACKAGE_gesftpserver=y
 # CONFIG_PACKAGE_openvpn-nossl is not set
 # CONFIG_PACKAGE_openvpn-openssl is not set
 # CONFIG_PACKAGE_openvpn-polarssl is not set
+# CONFIG_PACKAGE_openvpn-radius is not set
 # CONFIG_PACKAGE_peervpn is not set
 # CONFIG_PACKAGE_quicktun is not set
 # CONFIG_PACKAGE_ssltunnel is not set

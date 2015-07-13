@@ -26,8 +26,8 @@ define Package/openvpn-radius
 endef
 
 define Package/openvpn-radius/install
-	$(INSTALL_DIR) $(1)/usr/lib/openvpn $(1)/etc/openvp
+	$(INSTALL_DIR) $(1)/usr/lib/openvpn $(1)/etc/openvpn
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/lib/openvpn/radiusplugin.so $(1)/usr/lib/openvpn
-	$(INSTALL_CONF) ./files/radius.cnf $(1)/etc/openvpn
+	$(INSTALL_CONF) ./files/radius.cnf $(1)/etc/openvpn/
 endef
 $(eval $(call BuildPackage,openvpn-radius))

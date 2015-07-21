@@ -1,0 +1,176 @@
+Index: feeds/packages/net/coova-chilli/patches/304-fix-syslog-format-error.patch
+===================================================================
+---feeds/packages/net/coova-chilli/patches/304-fix-syslog-format-error.patch	
++++feeds/packages/net/coova-chilli/patches/304-fix-syslog-format-error.patch	
+@@ -0,0 +1,171 @@
++--- a/src/tun.c
+++++ b/src/tun.c
++@@ -798,7 +798,7 @@
++   if (c->idx) ethhdr = 0;
++ 
++ #if(_debug_ > 1)
++-  syslog(LOG_DEBUG, "tun_decaps(idx=%d, len=%d)", tun(c->this, c->idx).ifindex, length);
+++  syslog(LOG_DEBUG, "tun_decaps(idx=%d, len=%zu)", tun(c->this, c->idx).ifindex, length);
++ #endif
++ 
++   if (length < PKT_IP_HLEN)
++@@ -1074,7 +1074,7 @@
++ 
++ #if(_debug_ > 1)
++     syslog(LOG_DEBUG, "writing to tap src=%.2x:%.2x:%.2x:%.2x:%.2x:%.2x "
++-	    "dst=%.2x:%.2x:%.2x:%.2x:%.2x:%.2x len=%d",
+++	    "dst=%.2x:%.2x:%.2x:%.2x:%.2x:%.2x len=%zu",
++ 	    ethh->src[0],ethh->src[1],ethh->src[2],
++ 	    ethh->src[3],ethh->src[4],ethh->src[5],
++ 	    ethh->dst[0],ethh->dst[1],ethh->dst[2],
++@@ -1088,7 +1088,7 @@
++   }
++ 
++ #if(_debug_ > 1)
++-  syslog(LOG_DEBUG, "tun_encaps(%s) len=%d", tun(tun,idx).devname, len);
+++  syslog(LOG_DEBUG, "tun_encaps(%s) len=%zu", tun(tun,idx).devname, len);
++ #endif
++ 
++   result = tun_write(tun, pack, len, idx);
++--- a/src/redir.c
+++++ b/src/redir.c
++@@ -1454,7 +1454,7 @@
++   size_t r = 0;
++ 
++ #if(_debug_ > 1)
++-  syslog(LOG_DEBUG, "redir_write(%d)",len);
+++  syslog(LOG_DEBUG, "redir_write(%zu)",len);
++ #endif
++ 
++   while (r < len) {
++@@ -3615,14 +3615,14 @@
++ #endif
++ 		if ((buflen = safe_read(ctop[0], buffer, bufsize)) > 0) {
++ #if(_debug_ > 1)
++-		  syslog(LOG_DEBUG, "script_read(%d)",buflen);
+++		  syslog(LOG_DEBUG, "script_read(%zu)",buflen);
++ #endif
++ 		  if (redir_write(&socket, buffer, (size_t) buflen) < 0) {
++ 		    syslog(LOG_ERR, "%s: redir_write() failed!", strerror(errno));
++ 		    break;
++ 		  }
++ #if(_debug_ > 1)
++-		  syslog(LOG_DEBUG, "ssl_write(%d)",buflen);
+++		  syslog(LOG_DEBUG, "ssl_write(%zu)",buflen);
++ #endif
++ 		} else {
++ #if(_debug_ > 1)
++--- a/src/dhcp.c
+++++ b/src/dhcp.c
++@@ -409,7 +409,7 @@
++ #endif
++ 
++ #if(_debug_ > 1)
++-  syslog(LOG_DEBUG, "dhcp_send() len=%d", length);
+++  syslog(LOG_DEBUG, "dhcp_send() len=%zu", length);
++ #endif
++ 
++   return net_write_eth(netif, packet, length, &netif->dest);
++@@ -1707,7 +1707,7 @@
++ #if(_debug_ > 1)
++     uint16_t id      = ntohs(dnsp->id);
++ 
++-    syslog(LOG_DEBUG, "dhcp_dns plen=%d dlen=%d olen=%d", *plen, dlen, olen);
+++    syslog(LOG_DEBUG, "dhcp_dns plen=%zu dlen=%zu olen=%zu", *plen, dlen, olen);
++     syslog(LOG_DEBUG, "DNS ID:    %d", id);
++     syslog(LOG_DEBUG, "DNS Flags: %d", flags);
++ #endif
++@@ -1791,7 +1791,7 @@
++     copyres(0,ar);
++ 
++ #if(_debug_ > 1)
++-    syslog(LOG_DEBUG, "left (should be zero): %d q=%s", dlen, q);
+++    syslog(LOG_DEBUG, "left (should be zero): %zu q=%s", dlen, q);
++ #endif
++ 
++     if (dlen) {
++@@ -5174,7 +5174,7 @@
++   if (_options.debug) {
++     struct pkt_ethhdr_t *ethh = pkt_ethhdr(packet);
++     syslog(LOG_DEBUG, "dhcp_decaps: src="MAC_FMT" "
++-	    "dst="MAC_FMT" prot=%.4x %d len=%d",
+++	    "dst="MAC_FMT" prot=%.4x %d len=%zu",
++ 	    MAC_ARG(ethh->src),
++ 	    MAC_ARG(ethh->dst),
++ 	    prot, (int)prot, length);
++@@ -5531,7 +5531,7 @@
++     packet = pkt_buffer_head(pb);
++     length = pkt_buffer_length(pb);
++ #if(_debug_ > 1)
++-    syslog(LOG_DEBUG, "adding %d to IP frame length %d", hdrlen, length);
+++    syslog(LOG_DEBUG, "adding %zu to IP frame length %zu", hdrlen, length);
++ #endif
++   }
++ 
++@@ -5637,7 +5637,7 @@
++     pb->length = length;
++ 
++ #if(_debug_ > 1)
++-    syslog(LOG_DEBUG, "adding 20 to frame length %d", length);
+++    syslog(LOG_DEBUG, "adding 20 to frame length %zu", length);
++ #endif
++ 
++     pkt_buffer_grow(pb, 20);
++--- a/src/dns.c
+++++ b/src/dns.c
++@@ -35,7 +35,7 @@
++   if (lvl >= 15) return -1;
++ 
++ #if(_debug_ > 1)
++-  syslog(LOG_DEBUG, "%s dlen=%d reslen=%d olen=%d lvl=%d",
+++  syslog(LOG_DEBUG, "%s dlen=%zu reslen=%zu olen=%zu lvl=%d",
++ 	  __FUNCTION__, dlen, reslen, olen, lvl);
++ #endif
++ 
++@@ -57,7 +57,7 @@
++ 	}
++ 
++ #if(_debug_ > 1)
++-	syslog(LOG_DEBUG, "skip[%d] olen=%d", offset, olen);
+++	syslog(LOG_DEBUG, "skip[%d] olen=%zu", offset, olen);
++ #endif
++ 
++ 	if (dns_fullname(d, dlen,
++@@ -75,7 +75,7 @@
++     }
++ 
++ #if(_debug_ > 1)
++-    syslog(LOG_DEBUG, "part[%.*s] reslen=%d l=%d dlen=%d",
+++    syslog(LOG_DEBUG, "part[%.*s] reslen=%zu l=%d dlen=%zu",
++ 	    l, res, reslen, l, dlen);
++ #endif
++ 
++@@ -151,7 +151,7 @@
++   uint16_t us;
++ 
++ #if(_debug_ > 1)
++-  syslog(LOG_DEBUG, "%s: left=%d olen=%d qsize=%d",
+++  syslog(LOG_DEBUG, "%s: left=%zu olen=%zu qsize=%zu",
++ 	  __FUNCTION__, *left, olen, qsize);
++ #endif
++ 
++@@ -276,7 +276,7 @@
++   len -= 2;
++ 
++ #if(_debug_ > 1)
++-  syslog(LOG_DEBUG, "-> w ttl: %d rdlength: %d/%d", ttl, rdlen, len);
+++  syslog(LOG_DEBUG, "-> w ttl: %d rdlength: %d/%zu", ttl, rdlen, len);
++ #endif
++ 
++   if (*qmatch == 1 && ttl > _options.uamdomain_ttl) {
++--- a/src/net.c
+++++ b/src/net.c
++@@ -1736,7 +1736,7 @@
++   h->tp_status = TP_STATUS_SEND_REQUEST;
++ 
++   if (_options.debug > 100)
++-    syslog(LOG_DEBUG, "TX sent=%d (idx %d)", length, iface->ifindex);
+++    syslog(LOG_DEBUG, "TX sent=%zu (idx %d)", length, iface->ifindex);
++ 
++   if (!iface->is_active) {
++     iface->is_active = 1;

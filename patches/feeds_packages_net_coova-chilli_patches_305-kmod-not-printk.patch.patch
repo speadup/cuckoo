@@ -1,0 +1,93 @@
+Index: feeds/packages/net/coova-chilli/patches/305-kmod-not-printk.patch
+===================================================================
+---feeds/packages/net/coova-chilli/patches/305-kmod-not-printk.patch	
++++feeds/packages/net/coova-chilli/patches/305-kmod-not-printk.patch	
+@@ -0,0 +1,88 @@
++--- a/src/linux/xt_coova.c
+++++ b/src/linux/xt_coova.c
++@@ -304,15 +304,19 @@
++ 	if (info->name[0] == '\0' ||
++ 	    strnlen(info->name, XT_COOVA_NAME_LEN) == XT_COOVA_NAME_LEN)
++ 		return -EINVAL;
++
+++#if(_debug_ > 1)
++ 	printk(KERN_INFO "xt_coova: looking for %s\n", info->name);
+++#endif
++
++ 	mutex_lock(&coova_mutex);
++ 	t = coova_table_lookup(info->name);
++ 	if (t != NULL) {
++ 		t->refcnt++;
+++#if(_debug_ > 1)
++ 		printk(KERN_INFO "xt_coova: found %s refcnt=%d\n", 
++ 		       info->name, t->refcnt);
+++#endif
++ 		goto out;
++ 	}
++ 
++@@ -345,11 +348,15 @@
++ 	spin_lock_bh(&coova_lock);
++ 	list_add_tail(&t->list, &tables);
++ 	spin_unlock_bh(&coova_lock);
+++#if(_debug_ > 1)
++ 	printk(KERN_INFO "xt_coova: created %s refcnt=%d\n", 
++ 	       t->name, t->refcnt);
+++#endif
++ out:
++ 	mutex_unlock(&coova_mutex);
+++#if(_debug_ > 1)
++ 	printk(KERN_INFO "xt_coova: match ret=%d\n", ret); 
+++#endif
++ 	return ret;
++ }
++ 
++@@ -517,7 +524,9 @@
++ 		release = true;
++ 		break;
++ 	default:
+++#if(_debug_ > 1)
++ 		printk(KERN_INFO KBUILD_MODNAME ": Need +ip, -ip, or /\n");
+++#endif
++ 		return -EINVAL;
++ 	}
++ 
++@@ -532,8 +541,10 @@
++ 	}
++ 
++ 	if (!succ) {
+++#if(_debug_ > 1)
++ 		printk(KERN_INFO KBUILD_MODNAME ": illegal address written "
++ 		       "to procfs\n");
+++#endif
++ 		return -EINVAL;
++ 	}
++ 
++@@ -627,7 +638,9 @@
++ 
++ #ifdef CONFIG_PROC_FS
++ 	if (err < 0) {
+++#if(_debug_ > 1)
++ 		printk(KERN_ERR "xt_coova: could not register match %d\n",err);
+++#endif
++ 		return err;
++ 	}
++ 	coova_proc_dir = proc_mkdir("coova", init_net.proc_net);
++@@ -637,14 +650,18 @@
++ 	}
++ #endif
++ 
+++#if(_debug_ > 1)
++ 	printk(KERN_INFO "xt_coova: ready\n");
+++#endif
++ 
++ 	return err;
++ }
++ 
++ static void __exit coova_mt_exit(void)
++ {
+++#if(_debug_ > 1)
++ 	printk(KERN_INFO "xt_coova: exit\n");
+++#endif
++ 
++ 	/* BUG_ON(!list_empty(&tables)); */
++ 

@@ -1,0 +1,29 @@
+Index: openwrt/target/linux/x86/64/config-default
+===================================================================
+---openwrt/target/linux/x86/64/config-default	
++++openwrt/target/linux/x86/64/config-default	
+@@ -31,7 +31,8 @@
+ CONFIG_ARCH_SUPPORTS_NUMA_BALANCING=y
+ CONFIG_ARCH_USE_CMPXCHG_LOCKREF=y
+ # CONFIG_ASUS_LAPTOP is not set
+-# CONFIG_ATA_SFF is not set
++CONFIG_ATA_SFF=y
++CONFIG_ATA_BMDMA=y
+ CONFIG_AUDIT_ARCH=y
+ CONFIG_AVERAGE=y
+ CONFIG_BLK_DEV_INTEGRITY=y
+@@ -131,6 +132,14 @@
+ # CONFIG_PARAVIRT_DEBUG is not set
+ # CONFIG_PARAVIRT_SPINLOCKS is not set
+ # CONFIG_PARAVIRT_TIME_ACCOUNTING is not set
++
++CONFIG_PATA_AMD=y
++CONFIG_PATA_LEGACY=y
++CONFIG_PATA_MPIIX=y
++CONFIG_PATA_OLDPIIX=y
++CONFIG_PATA_PLATFORM=y
++CONFIG_PATA_SC1200=y
++CONFIG_PATA_VIA=y
+ CONFIG_PCIEAER=y
+ CONFIG_PCIEPORTBUS=y
+ # CONFIG_PCI_IOAPIC is not set

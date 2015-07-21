@@ -1,4 +1,4 @@
-module("luci.controller.settings",package.seeall)
+module("luci.controller.plus",package.seeall)
 function index()
     local e
     e = entry({"admin","settings"},alias("admin","settings","settings"),_("Settings"),60)

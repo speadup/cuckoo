@@ -178,7 +178,7 @@ done
 Default
 CountryRegion=${countryregion:-0}
 CountryRegionABand=7
-CountryCode=${country:-US}
+CountryCode=${country:-CN}
 BssidNum=${ssid_num:-1}
 SSID1=${ssid1:-OpenWrt_SSID1}
 SSID2=${ssid2:-OpenWrt_SSID2}
@@ -630,7 +630,7 @@ config wifi-device  ra${i}
 	option channel  auto
 	option txpower 100
 	option ht 	40
-	option country US
+	option country CN
 	
 # REMOVE THIS LINE TO ENABLE WIFI:
 	option disabled 0	
@@ -639,7 +639,7 @@ config wifi-iface
 	option device   ra${i}
 	option network	lan
 	option mode     ap
-	option ssid     OpenWrt
+	option ssid     OpenWrt-$(dd bs=1 skip=4 count=6 if=/dev/mtdblock2 2>/dev/null | maccalc bin2mac | sed -e 's/://g' -e 's/^.\{6\}//g')
 	option encryption none
 	
 EOF

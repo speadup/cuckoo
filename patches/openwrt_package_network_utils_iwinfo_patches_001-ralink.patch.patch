@@ -2,10 +2,10 @@ Index: openwrt/package/network/utils/iwinfo/patches/001-ralink.patch
 ===================================================================
 ---openwrt/package/network/utils/iwinfo/patches/001-ralink.patch	
 +++openwrt/package/network/utils/iwinfo/patches/001-ralink.patch	
-@@ -0,0 +1,1493 @@
-+diff -Nur a/api/ralink.h b/api/ralink.h
-+--- a/api/ralink.h	1970-01-01 08:00:00.000000000 +0800
-++++ b/api/ralink.h	2015-07-01 12:12:38.950514095 +0800
+@@ -0,0 +1,1505 @@
++diff -Nur -x '*.orig' -x '*.rej' -x '*.o' -x build.log -x tags -x swp a/api/ralink.h b/api/ralink.h
++--- a/api/ralink.h
+++++ b/api/ralink.h
 +@@ -0,0 +1,206 @@
 ++#ifndef _RALINK_H
 ++#define _RALINK_H
@@ -213,9 +213,9 @@ Index: openwrt/package/network/utils/iwinfo/patches/001-ralink.patch
 ++} RT_802_11_MAC_TABLE;
 ++
 ++#endif
-+diff -Nur a/hardware.txt b/hardware.txt
-+--- a/hardware.txt	2015-06-23 01:28:19.000000000 +0800
-++++ b/hardware.txt	2015-07-01 12:11:49.969805582 +0800
++diff -Nur -x '*.orig' -x '*.rej' -x '*.o' -x build.log -x tags -x swp a/hardware.txt b/hardware.txt
++--- a/hardware.txt
+++++ b/hardware.txt
 +@@ -58,3 +58,6 @@
 + 0x1814 0x3052 0x1814 0x0008    0      0  "RaLink"   "Rt3052"
 + 0x1814 0x3352 0x1814 0x000c    0      0  "RaLink"   "Rt3352"
@@ -223,9 +223,9 @@ Index: openwrt/package/network/utils/iwinfo/patches/001-ralink.patch
 ++0x1814 0x5350 0x1814 0x0001    0      0  "RaLink"   "RT5350"
 ++0x1814 0x7620 0x1814 0x0001    0      0  "RaLink/MTK"   "MT7620"
 ++0x1814 0x2860 0x1814 0x0001    0      0  "RaLink/MTK"   "RT2860v2"
-+diff -Nur a/include/iwinfo/lua.h b/include/iwinfo/lua.h
-+--- a/include/iwinfo/lua.h	2015-06-23 01:28:19.000000000 +0800
-++++ b/include/iwinfo/lua.h	2015-07-01 12:15:28.669515672 +0800
++diff -Nur -x '*.orig' -x '*.rej' -x '*.o' -x build.log -x tags -x swp a/include/iwinfo/lua.h b/include/iwinfo/lua.h
++--- a/include/iwinfo/lua.h
+++++ b/include/iwinfo/lua.h
 +@@ -37,6 +37,10 @@
 + #define IWINFO_MADWIFI_META	"iwinfo.madwifi"
 + #endif
@@ -237,9 +237,9 @@ Index: openwrt/package/network/utils/iwinfo/patches/001-ralink.patch
 + #ifdef USE_NL80211
 + #define IWINFO_NL80211_META	"iwinfo.nl80211"
 + #endif
-+diff -Nur a/include/iwinfo.h b/include/iwinfo.h
-+--- a/include/iwinfo.h	2015-06-23 01:28:19.000000000 +0800
-++++ b/include/iwinfo.h	2015-07-01 12:45:20.649862941 +0800
++diff -Nur -x '*.orig' -x '*.rej' -x '*.o' -x build.log -x tags -x swp a/include/iwinfo.h b/include/iwinfo.h
++--- a/include/iwinfo.h
+++++ b/include/iwinfo.h
 +@@ -203,6 +203,7 @@
 + void iwinfo_finish(void);
 + 
@@ -248,9 +248,21 @@ Index: openwrt/package/network/utils/iwinfo/patches/001-ralink.patch
 + extern const struct iwinfo_ops madwifi_ops;
 + extern const struct iwinfo_ops nl80211_ops;
 + extern const struct iwinfo_ops wl_ops;
-+diff -Nur a/iwinfo_lib.c b/iwinfo_lib.c
-+--- a/iwinfo_lib.c	2015-06-23 01:28:19.000000000 +0800
-++++ b/iwinfo_lib.c	2015-07-01 12:48:25.924912200 +0800
++diff -Nur -x '*.orig' -x '*.rej' -x '*.o' -x build.log -x tags -x swp a/iwinfo_cli.c b/iwinfo_cli.c
++--- a/iwinfo_cli.c
+++++ b/iwinfo_cli.c
++@@ -517,7 +517,7 @@
++ {
++ 	static char buf[32];
++ 
++-	if (!iw->phyname(ifname, buf))
+++	if (iw->phyname && !iw->phyname(ifname, buf))
++ 		return buf;
++ 
++ 	return "?";
++diff -Nur -x '*.orig' -x '*.rej' -x '*.o' -x build.log -x tags -x swp a/iwinfo_lib.c b/iwinfo_lib.c
++--- a/iwinfo_lib.c
+++++ b/iwinfo_lib.c
 +@@ -333,6 +333,9 @@
 + #ifdef USE_WL
 + 	&wl_ops,
@@ -261,9 +273,9 @@ Index: openwrt/package/network/utils/iwinfo/patches/001-ralink.patch
 + 	&wext_ops,
 + };
 + 
-+diff -Nur a/iwinfo_lua.c b/iwinfo_lua.c
-+--- a/iwinfo_lua.c	2015-06-23 01:28:19.000000000 +0800
-++++ b/iwinfo_lua.c	2015-07-01 13:43:12.855138568 +0800
++diff -Nur -x '*.orig' -x '*.rej' -x '*.o' -x build.log -x tags -x swp a/iwinfo_lua.c b/iwinfo_lua.c
++--- a/iwinfo_lua.c
+++++ b/iwinfo_lua.c
 +@@ -634,6 +634,33 @@
 + 	return 1;
 + }
@@ -354,9 +366,9 @@ Index: openwrt/package/network/utils/iwinfo/patches/001-ralink.patch
 + #ifdef USE_WL
 + 	luaL_newmetatable(L, IWINFO_WL_META);
 + 	luaL_register(L, NULL, R_common);
-+diff -Nur a/iwinfo_nl80211.c b/iwinfo_nl80211.c
-+--- a/iwinfo_nl80211.c	2015-06-23 01:28:19.000000000 +0800
-++++ b/iwinfo_nl80211.c	2015-07-01 12:59:20.361511027 +0800
++diff -Nur -x '*.orig' -x '*.rej' -x '*.o' -x build.log -x tags -x swp a/iwinfo_nl80211.c b/iwinfo_nl80211.c
++--- a/iwinfo_nl80211.c
+++++ b/iwinfo_nl80211.c
 +@@ -2613,17 +2613,17 @@
 + 	return NL_SKIP;
 + }
@@ -385,9 +397,9 @@ Index: openwrt/package/network/utils/iwinfo/patches/001-ralink.patch
 + }
 + 
 + static int nl80211_get_hardware_id(const char *ifname, char *buf)
-+diff -Nur a/iwinfo_ra.c b/iwinfo_ra.c
-+--- a/iwinfo_ra.c	1970-01-01 08:00:00.000000000 +0800
-++++ b/iwinfo_ra.c	2015-07-01 13:06:18.736302540 +0800
++diff -Nur -x '*.orig' -x '*.rej' -x '*.o' -x build.log -x tags -x swp a/iwinfo_ra.c b/iwinfo_ra.c
++--- a/iwinfo_ra.c
+++++ b/iwinfo_ra.c
 +@@ -0,0 +1,966 @@
 ++#include "iwinfo.h"
 ++#include "iwinfo_ra.h"
@@ -1355,9 +1367,9 @@ Index: openwrt/package/network/utils/iwinfo/patches/001-ralink.patch
 ++    *buf = 0;
 ++    return -1;
 ++}
-+diff -Nur a/iwinfo_ra.h b/iwinfo_ra.h
-+--- a/iwinfo_ra.h	1970-01-01 08:00:00.000000000 +0800
-++++ b/iwinfo_ra.h	2015-07-01 13:09:16.508353953 +0800
++diff -Nur -x '*.orig' -x '*.rej' -x '*.o' -x build.log -x tags -x swp a/iwinfo_ra.h b/iwinfo_ra.h
++--- a/iwinfo_ra.h
+++++ b/iwinfo_ra.h
 +@@ -0,0 +1,70 @@
 ++#ifndef __IWINFO_RA_H_
 ++#define __IWINFO_RA_H_
@@ -1429,9 +1441,9 @@ Index: openwrt/package/network/utils/iwinfo/patches/001-ralink.patch
 ++};
 ++
 ++#endif
-+diff -Nur a/iwinfo_wext.c b/iwinfo_wext.c
-+--- a/iwinfo_wext.c	2015-06-23 01:28:19.000000000 +0800
-++++ b/iwinfo_wext.c	2015-07-01 13:51:46.035355385 +0800
++diff -Nur -x '*.orig' -x '*.rej' -x '*.o' -x build.log -x tags -x swp a/iwinfo_wext.c b/iwinfo_wext.c
++--- a/iwinfo_wext.c
+++++ b/iwinfo_wext.c
 +@@ -185,7 +185,7 @@
 + 	return -1;
 + }
@@ -1477,9 +1489,9 @@ Index: openwrt/package/network/utils/iwinfo/patches/001-ralink.patch
 + {
 + 	char chans[IWINFO_BUFSIZE] = { 0 };
 + 	struct iwinfo_freqlist_entry *e = NULL;
-+diff -Nur a/Makefile b/Makefile
-+--- a/Makefile	2015-06-23 01:28:19.000000000 +0800
-++++ b/Makefile	2015-07-01 12:09:52.568498607 +0800
++diff -Nur -x '*.orig' -x '*.rej' -x '*.o' -x build.log -x tags -x swp a/Makefile b/Makefile
++--- a/Makefile
+++++ b/Makefile
 +@@ -32,6 +32,15 @@
 + 	IWINFO_LIB_OBJ     += iwinfo_nl80211.o
 + endif

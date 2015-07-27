@@ -2,7 +2,7 @@ Index: openwrt/package/kernel/mac80211/Makefile
 ===================================================================
 ---openwrt/package/kernel/mac80211/Makefile	
 +++openwrt/package/kernel/mac80211/Makefile	
-@@ -2009,6 +2009,12 @@
+@@ -2021,6 +2021,12 @@
  		$(PKG_BUILD_DIR)/$(PKG_LINUX_FIRMWARE_SUBDIR)/brcm/brcmfmac43143.bin \
  		$(1)/lib/firmware/brcm/
  endif

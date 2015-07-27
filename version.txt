@@ -1,4 +1,4 @@
-%openwrt@branches/chaos_calmer:46419
+%openwrt@branches/chaos_calmer:46499
 %packages@for-15.05:75f978879e2b98065d86d4bcb377c0f3e677557d
 %luci@for-15.05:69fd4f14eef783076b69315c71fe57baad1f8925
 %routing@for-15.05:0a514a34e7a371df99e7b48d831001130efbdbda

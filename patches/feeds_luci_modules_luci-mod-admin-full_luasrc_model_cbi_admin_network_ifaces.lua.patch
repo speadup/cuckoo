@@ -7,9 +7,9 @@ Index: feeds/luci/modules/luci-mod-admin-full/luasrc/model/cbi/admin_network/ifa
  end
  
 +-- show portal at ui
-+if string.sub(net:name(), 0, 3) ~= "wan" and net:proto() == "static" then 
-+	s:taboption("general", Flag, "portal", translate("Enable authentication portal"))
-+end
++-- if string.sub(net:name(), 0, 3) ~= "wan" and net:proto() == "static" then 
++-- 	s:taboption("general", Flag, "portal", translate("Enable authentication portal"))
++-- end
  
  --
  -- Display DNS settings if dnsmasq is available

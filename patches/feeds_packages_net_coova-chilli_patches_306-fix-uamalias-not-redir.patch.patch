@@ -1,0 +1,15 @@
+Index: feeds/packages/net/coova-chilli/patches/306-fix-uamalias-not-redir.patch
+===================================================================
+---feeds/packages/net/coova-chilli/patches/306-fix-uamalias-not-redir.patch	
++++feeds/packages/net/coova-chilli/patches/306-fix-uamalias-not-redir.patch	
+@@ -0,0 +1,10 @@
++--- a/src/dhcp.c
+++++ /bsrc/dhcp.c
++@@ -4029,6 +4029,7 @@
++       pack_iph->daddr == _options.uamalias.s_addr) {
++     
++     do_checksum = 1;
+++    authstate = DHCP_AUTH_DNAT;
++     dhcp_uam_nat(conn, pack_ethh, pack_iph, pack_tcph, &this->uamlisten,
++ #ifdef ENABLE_UAMUIPORT
++ 		 _options.uamuiport ? _options.uamuiport : 

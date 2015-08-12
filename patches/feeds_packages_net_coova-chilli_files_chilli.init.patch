@@ -2,7 +2,7 @@ Index: feeds/packages/net/coova-chilli/files/chilli.init
 ===================================================================
 ---feeds/packages/net/coova-chilli/files/chilli.init	
 +++feeds/packages/net/coova-chilli/files/chilli.init	
-@@ -3,59 +3,109 @@
+@@ -3,59 +3,141 @@
  START=30
  STOP=90
  
@@ -66,6 +66,11 @@ Index: feeds/packages/net/coova-chilli/files/chilli.init
 +     done
 +}
 +
++append_config() {
++    local cfg=$1;local key=$2;local val=$3
++    echo "${key} ${val}" >>"/var/etc/chilli-${cfg}.conf"
++}
++
 +add_instance() {
      local cfg="$1"
 -    local start_chilli=$(eval "echo \$start_chilli_$cfg")
@@ -87,13 +92,38 @@ Index: feeds/packages/net/coova-chilli/files/chilli.init
  }
  
 -start() {
++ipcalc() {
++    local IP NETMASK BROADCAST NETWORK PREFIX
++    eval `ipcalc.sh $@`
++    echo "${NETWORK}/${PREFIX}"
++}
++
 +start_instance() {
-+    local cfg="$1"; local disabled
++    local cfg="$1"; local disabled interface ifname lease ipaddr netmask dhcpstart dhcplimit
 +    config_get disabled "${cfg}" disabled
++    config_get interface "${cfg}" interface
++    config_get ifname "${cfg}" ifname
++    config_get ipaddr "${cfg}" ipaddr
++    config_get netmask "${cfg}" netmask
++    config_get lease "${cfg}" leasetime
++    config_get dhcpstart "${cfg}" start
++    config_get dhcplimit "${cfg}" limit
 +    [ "${disabled}" = 1 ] && return 1
++    [ -z "${ifname}" ] && return 1
++    [ -z "${ipaddr}" ] && return 1
 +    [ ! -d /var/run ] && mkdir -p /var/run
 +    [ ! -d /var/etc ] && mkdir -p /var/etc
 +    [ -f "/var/etc/chilli-${cfg}.conf" ] && rm "/var/etc/chilli-${cfg}.conf"
++    append_config "${cfg}" dhcpif "${ifname}"
++    append_config "${cfg}" tundev tun-"${cfg}"
++    append_config "${cfg}" kname "${cfg}"
++    append_config "${cfg}" net `ipcalc ${ipaddr} ${netmask}`
++    append_config "${cfg}" dhcplisten "${ipaddr}"
++    append_config "${cfg}" lease `echo ${lease:-300} | sed -e 's/h/*3600/' -e 's/m/*60/' -e 's/s//' | bc`
++    append_config "${cfg}" dhcpstart "${dhcpstart}"
++    append_config "${cfg}" dhcpend `echo "${dhcpstart}+${dhcplimit}" | bc`
++    append_config "${cfg}" dns1 "${ipaddr}"
++
 +    # append flags
 +    append_bools "${cfg}" \
 +        debug reload forgiving \
@@ -111,15 +141,15 @@ Index: feeds/packages/net/coova-chilli/files/chilli.init
 +
 +    # append params
 +    append_params "${cfg}" \
-+        dhcpif debugfacility logfacility interval statedir uid gid net dhcpstart \
-+        dhcpend dynip statip uamanyipex uamnatanyipex dns1 dns2 domain ipup ipdown \
-+        conup condown macup macdown vlanupdate locationupdate txqlen tundev mtu autostatip \
++        debugfacility logfacility interval statedir uid gid \
++        dynip statip uamanyipex uamnatanyipex dns1 dns2 domain ipup ipdown \
++        conup condown macup macdown vlanupdate locationupdate txqlen mtu autostatip \
 +        ringsize sndbuf rcvbuf childmax peerid peerkey radiuslisten radiusserver1 radiusserver2 \
 +        radiusauthport radiusacctport radiussecret radiustimeout radiusretry radiusretrysec \
 +        radiusnasid radiuslocationid radiuslocationname locationname radiusnasporttype \
 +        coaport proxylisten proxyport proxyclient proxysecret proxylocattr moreif dhcpmac \
-+        nexthop dhcpgateway dhcpgatewayport dhcprelayagent lease leaseplus uamserver uamhomepage \
-+        uamsecret uamlisten dhcplisten uamport uamuiport uamallowed uamdomain uamdomainttl \
++        nexthop dhcpgateway dhcpgatewayport dhcprelayagent leaseplus uamserver uamhomepage \
++        uamsecret uamlisten uamport uamuiport uamallowed uamdomain uamdomainttl \
 +        uamregex wisprlogin uamlogoutip uamaliasip uamaliasname uamhostname authedallowed \
 +        uamaaaurl defsessiontimeout defidletimeout defbandwidthmaxdown defbandwidthmaxup \
 +        definteriminterval bwbucketupsize bwbucketdnsize bwbucketminsize macallowed macsuffix \
@@ -128,7 +158,7 @@ Index: feeds/packages/net/coova-chilli/files/chilli.init
 +        postauthproxyport wpadpacfile routeif tcpwin tcpmss maxclients dhcphashsize \
 +        radiusqsize challengetimeout challengetimeout2 inject injectext sslkeyfile \
 +        sslkeypass sslcertfile sslcafile natip natport dnslog ipwhitelist uamdomainfile \
-+        ipsrcallowed kname moddir module dhcpopt extadmvsa forcedns1 forcedns1port forcedns2 \
++        ipsrcallowed moddir module dhcpopt extadmvsa forcedns1 forcedns1port forcedns2 \
 +        forcedns2port ipv6mode
 +
 +    add_instance "${cfg}" 
@@ -136,6 +166,8 @@ Index: feeds/packages/net/coova-chilli/files/chilli.init
 +}
 +
 +start_service() {
++    config_load dhcp
++    config_load network
      config_load chilli
 -    config_foreach start_chilli chilli
 +    config_foreach start_instance chilli

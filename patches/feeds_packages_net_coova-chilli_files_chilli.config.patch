@@ -2,9 +2,13 @@ Index: feeds/packages/net/coova-chilli/files/chilli.config
 ===================================================================
 ---feeds/packages/net/coova-chilli/files/chilli.config	
 +++feeds/packages/net/coova-chilli/files/chilli.config	
-@@ -4,10 +4,10 @@
+@@ -2,12 +2,13 @@
+ # Sample Coova-Chilli configuration file
+ #
  
- config chilli
+-config chilli
++config chilli lan
++    option interface 'lan'
      # disable to running chilli. remove this option before running.
 -    option disabled 1
 +    #option disabled 1
@@ -15,7 +19,7 @@ Index: feeds/packages/net/coova-chilli/files/chilli.config
  
      # Include this flag if process is to run in the foreground
      #option fg
-@@ -34,31 +34,31 @@
+@@ -34,31 +35,31 @@
      # IP network address of external packet data network
      # Used to allocate dynamic IP addresses and set up routing.
      # Normally you do not need to uncomment this option.
@@ -52,7 +56,7 @@ Index: feeds/packages/net/coova-chilli/files/chilli.config
  
      # Domain name
      # Will be suggested to the client.
-@@ -69,13 +69,13 @@
+@@ -69,13 +70,13 @@
      # Executed with the following parameters: <devicename> <ip address>
      # <mask>
      # Normally you do not need to uncomment this option.
@@ -68,7 +72,7 @@ Index: feeds/packages/net/coova-chilli/files/chilli.config
  
  
      # Radius parameters
-@@ -86,13 +86,13 @@
+@@ -86,13 +87,13 @@
  
      # IP address of radius server 1
      # For most installations you need to modify this option.
@@ -84,7 +88,7 @@ Index: feeds/packages/net/coova-chilli/files/chilli.config
  
      # Radius authentication port
      # The UDP port number to use for radius authentication requests.
-@@ -108,7 +108,7 @@
+@@ -108,7 +109,7 @@
  
      # Radius shared secret for both servers
      # For all installations you should modify this option.
@@ -93,7 +97,7 @@ Index: feeds/packages/net/coova-chilli/files/chilli.config
  
      # Radius NAS-Identifier
      # Normally you do not need to uncomment this option.
-@@ -151,7 +151,7 @@
+@@ -151,7 +152,7 @@
      # Ethernet interface to listen to.
      # This is the network interface which is connected to the access points.
      # In a typical configuration this option should be set to eth1.
@@ -102,7 +106,7 @@ Index: feeds/packages/net/coova-chilli/files/chilli.config
  
      # Use specified MAC address.
      # An address in the range  00:00:5E:00:02:00 - 00:00:5E:FF:FF:FF falls
-@@ -162,30 +162,30 @@
+@@ -162,30 +163,30 @@
  
      # Time before DHCP lease expires
      # Normally you do not need to uncomment this option.
@@ -139,7 +143,7 @@ Index: feeds/packages/net/coova-chilli/files/chilli.config
  
      # Comma separated list of domain names, IP addresses or network segments
      # the client can access without first authenticating.
-@@ -202,7 +202,7 @@
+@@ -202,7 +203,7 @@
      # If this flag is given unauthenticated users are allowed to use
      # any DNS server.
      # Normally you do not need to uncomment this option.
@@ -148,7 +152,7 @@ Index: feeds/packages/net/coova-chilli/files/chilli.config
  
  
      # MAC authentication
-@@ -210,7 +210,7 @@
+@@ -210,7 +211,7 @@
      # If this flag is given users will be authenticated only on their MAC
      # address.
      # Normally you do not need to uncomment this option.
@@ -157,7 +161,7 @@ Index: feeds/packages/net/coova-chilli/files/chilli.config
  
      # List of MAC addresses.
      # The MAC addresses specified in this list will be authenticated only on
-@@ -227,4 +227,7 @@
+@@ -227,4 +228,7 @@
      # Suffix to add to MAC address in order to form the username.
      # Normally you do not need to uncomment this option.
      #option macsuffix suffix

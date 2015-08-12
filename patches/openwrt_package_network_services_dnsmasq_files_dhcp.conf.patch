@@ -1,0 +1,17 @@
+Index: openwrt/package/network/services/dnsmasq/files/dhcp.conf
+===================================================================
+---openwrt/package/network/services/dnsmasq/files/dhcp.conf	
++++openwrt/package/network/services/dnsmasq/files/dhcp.conf	
+@@ -23,9 +23,9 @@
+ 
+ config dhcp lan
+ 	option interface	lan
+-	option start 	100
+-	option limit	150
+-	option leasetime	12h
++	option start 	10
++	option limit	200
++	option leasetime	10m
+ 
+ config dhcp wan
+ 	option interface	wan

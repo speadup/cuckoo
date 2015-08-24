@@ -61,11 +61,13 @@ if [ -n "$dc" ];then
     rm -rf $dir/dl $dir/download
     rm -f $dir/scripts/config/zconf.lex.c
     rm -f $dir/scripts/config/mconf_check
+    rm -rf $dir/key-build $dir/key-build.pub
 fi
 
 [ -n "$cf" ] && [ ! -f "$cf" ] && echo "File [ $cf ] not exists!" && exit 1
 [ -n "$cf" ] && [ -f "$cf" ] && cp $cf $dir/.config
 [ ! -f $dir/.config ] && echo "File [ .config ] not exists!" && exit 1
+[ -z "$cl" -a -z "$dc" ] && make -j $jb V=$vb package/luci/clean
 
 mkdir -p $dir/tmp
 find $dir/tmp -maxdepth 1 -name 'debug-*.txt' -delete

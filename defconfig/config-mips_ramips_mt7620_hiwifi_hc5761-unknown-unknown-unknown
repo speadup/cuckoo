@@ -1245,7 +1245,7 @@ CONFIG_PACKAGE_libgcc=y
 CONFIG_PACKAGE_libpthread=y
 CONFIG_PACKAGE_librt=y
 CONFIG_PACKAGE_libstdcpp=y
-# CONFIG_PACKAGE_libthread-db is not set
+CONFIG_PACKAGE_libthread-db=y
 # CONFIG_PACKAGE_mksh is not set
 CONFIG_PACKAGE_mtd=y
 CONFIG_PACKAGE_netifd=y
@@ -1343,7 +1343,7 @@ CONFIG_PACKAGE_wireless-tools=y
 # CONFIG_PACKAGE_diffutils is not set
 # CONFIG_PACKAGE_gcc is not set
 # CONFIG_PACKAGE_gdb is not set
-# CONFIG_PACKAGE_gdbserver is not set
+CONFIG_PACKAGE_gdbserver=y
 # CONFIG_PACKAGE_lttng-tools is not set
 # CONFIG_PACKAGE_make is not set
 # CONFIG_PACKAGE_objdump is not set

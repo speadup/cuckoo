@@ -1265,7 +1265,7 @@ CONFIG_PACKAGE_ubusd=y
 CONFIG_PACKAGE_uci=y
 # CONFIG_PACKAGE_udev is not set
 # CONFIG_PACKAGE_usign is not set
-# CONFIG_PACKAGE_wireless-tools is not set
+CONFIG_PACKAGE_wireless-tools=y
 # CONFIG_PACKAGE_zram-swap is not set
 
 #
@@ -2709,7 +2709,7 @@ CONFIG_PACKAGE_luci-app-firewall=y
 CONFIG_PACKAGE_luci-app-hd-idle=y
 # CONFIG_PACKAGE_luci-app-hnet is not set
 # CONFIG_PACKAGE_luci-app-lxc is not set
-# CONFIG_PACKAGE_luci-app-meshwizard is not set
+CONFIG_PACKAGE_luci-app-meshwizard=y
 # CONFIG_PACKAGE_luci-app-minidlna is not set
 # CONFIG_PACKAGE_luci-app-mjpg-streamer is not set
 # CONFIG_PACKAGE_luci-app-multiwan is not set
@@ -2878,6 +2878,31 @@ CONFIG_PACKAGE_luci-i18n-hd-idle-en=y
 # CONFIG_PACKAGE_luci-i18n-hd-idle-vi is not set
 CONFIG_PACKAGE_luci-i18n-hd-idle-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-hd-idle-zh-tw=y
+# CONFIG_PACKAGE_luci-i18n-meshwizard-ca is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-cs is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-de is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-el is not set
+CONFIG_PACKAGE_luci-i18n-meshwizard-en=y
+# CONFIG_PACKAGE_luci-i18n-meshwizard-es is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-fr is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-he is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-hu is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-it is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-ja is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-ms is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-no is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-pl is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-pt is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-pt-br is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-ro is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-ru is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-sk is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-sv is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-tr is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-uk is not set
+# CONFIG_PACKAGE_luci-i18n-meshwizard-vi is not set
+CONFIG_PACKAGE_luci-i18n-meshwizard-zh-cn=y
+CONFIG_PACKAGE_luci-i18n-meshwizard-zh-tw=y
 # CONFIG_PACKAGE_luci-i18n-openvpn-ca is not set
 # CONFIG_PACKAGE_luci-i18n-openvpn-cs is not set
 # CONFIG_PACKAGE_luci-i18n-openvpn-de is not set

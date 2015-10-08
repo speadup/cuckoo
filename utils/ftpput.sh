@@ -1,6 +1,6 @@
 #!/bin/sh
 #host=192.168.19.192
-host=192.168.19.24
+host=192.168.19.20
 port=21
 user=upload
 pass=1sjwt6uF11e1Sdwz

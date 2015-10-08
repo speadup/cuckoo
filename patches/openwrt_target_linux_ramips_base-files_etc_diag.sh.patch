@@ -2,7 +2,7 @@ Index: openwrt/target/linux/ramips/base-files/etc/diag.sh
 ===================================================================
 ---openwrt/target/linux/ramips/base-files/etc/diag.sh	
 +++openwrt/target/linux/ramips/base-files/etc/diag.sh	
-@@ -236,6 +236,9 @@
+@@ -239,6 +239,9 @@
  	na930)
  		status_led="na930:blue:power"
  		;;

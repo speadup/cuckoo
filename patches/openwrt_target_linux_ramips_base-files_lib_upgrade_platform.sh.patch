@@ -2,7 +2,7 @@ Index: openwrt/target/linux/ramips/base-files/lib/upgrade/platform.sh
 ===================================================================
 ---openwrt/target/linux/ramips/base-files/lib/upgrade/platform.sh	
 +++openwrt/target/linux/ramips/base-files/lib/upgrade/platform.sh	
-@@ -123,6 +123,7 @@
+@@ -124,6 +124,7 @@
  	xiaomi-miwifi-mini |\
  	y1 |\
  	y1s |\

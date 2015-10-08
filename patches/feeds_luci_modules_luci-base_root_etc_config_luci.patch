@@ -6,6 +6,6 @@ Index: feeds/luci/modules/luci-base/root/etc/config/luci
  config core main
 -	option lang auto
 +	option lang zh_cn
- 	option mediaurlbase /luci-static/openwrt.org
+ 	option mediaurlbase /luci-static/bootstrap
  	option resourcebase /luci-static/resources
  	

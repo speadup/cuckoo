@@ -16,7 +16,7 @@ Index: openwrt/target/linux/ramips/base-files/etc/board.d/02_network
  	whr-1166d)
  		ucidef_set_interfaces_lan_wan "eth0.1" "eth0.2"
  		ucidef_add_switch "switch0" "1" "1"
-@@ -321,6 +328,7 @@
+@@ -326,6 +333,7 @@
  	psr-680w |\
  	sl-r7205 |\
  	y1 |\

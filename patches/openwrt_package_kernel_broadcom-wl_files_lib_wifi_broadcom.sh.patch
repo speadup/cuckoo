@@ -2,7 +2,7 @@ Index: openwrt/package/kernel/broadcom-wl/files/lib/wifi/broadcom.sh
 ===================================================================
 ---openwrt/package/kernel/broadcom-wl/files/lib/wifi/broadcom.sh	
 +++openwrt/package/kernel/broadcom-wl/files/lib/wifi/broadcom.sh	
-@@ -462,13 +462,13 @@
+@@ -463,13 +463,13 @@
  	option txantenna 3
  	option rxantenna 3
  	# REMOVE THIS LINE TO ENABLE WIFI:

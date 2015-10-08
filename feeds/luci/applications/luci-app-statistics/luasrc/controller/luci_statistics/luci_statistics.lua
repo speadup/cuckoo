@@ -30,6 +30,7 @@ function index()
 		disk		= _("Disk Usage"),
 		dns			= _("DNS"),
 		email		= _("Email"),
+		entropy		= _("Entropy"),
 		exec		= _("Exec"),
 		interface	= _("Interfaces"),
 		iptables	= _("Firewall"),
@@ -53,7 +54,7 @@ function index()
 	-- our collectd menu
 	local collectd_menu = {
 		output  = { "csv", "network", "rrdtool", "unixsock" },
-		system  = { "cpu", "df", "disk", "email", "exec", "irq", "load", "memory", "nut", "processes", "uptime" },
+		system  = { "cpu", "df", "disk", "email", "entropy", "exec", "irq", "load", "memory", "nut", "processes", "uptime" },
 		network = { "conntrack", "dns", "interface", "iptables", "netlink", "olsrd", "ping", "splash_leases", "tcpconns", "iwinfo" }
 	}
 
@@ -169,7 +170,7 @@ function statistics_render()
 	if #instances == 0 then
 		--instances = { graph.tree:plugin_instances( plugin )[1] }
 		instances = graph.tree:plugin_instances( plugin )
-		is_index = true
+		is_index = (#instances > 1)
 
 	-- index instance requested
 	elseif instances[1] == "-" then

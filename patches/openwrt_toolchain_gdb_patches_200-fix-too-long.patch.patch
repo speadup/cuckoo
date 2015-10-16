@@ -1,0 +1,28 @@
+Index: openwrt/toolchain/gdb/patches/200-fix-too-long.patch
+===================================================================
+---openwrt/toolchain/gdb/patches/200-fix-too-long.patch	
++++openwrt/toolchain/gdb/patches/200-fix-too-long.patch	
+@@ -0,0 +1,23 @@
++diff -Nur a/gdb/remote.c b/gdb/remote.c
++--- a/gdb/remote.c	2013-05-14 21:36:33.000000000 +0800
+++++ b/gdb/remote.c	2015-08-18 15:36:56.801330162 +0800
++@@ -6110,8 +6110,17 @@
++   buf_len = strlen (rs->buf);
++ 
++   /* Further sanity checks, with knowledge of the architecture.  */
++-  if (buf_len > 2 * rsa->sizeof_g_packet)
++-    error (_("Remote 'g' packet reply is too long: %s"), rs->buf);
+++  if (buf_len > 2 * rsa->sizeof_g_packet) {
+++      rsa->sizeof_g_packet = buf_len;
+++      for (i = 0; i < gdbarch_num_regs(gdbarch); i++) {
+++          if (rsa->regs->pnum == -1)
+++              continue;
+++          if (rsa->regs->offset >= rsa->sizeof_g_packet)
+++              rsa->regs->in_g_packet = 0;
+++          else
+++              rsa->regs->in_g_packet = 1;
+++      }
+++  }
++ 
++   /* Save the size of the packet sent to us by the target.  It is used
++      as a heuristic when determining the max size of packets that the

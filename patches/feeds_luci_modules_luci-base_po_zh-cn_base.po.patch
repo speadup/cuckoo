@@ -2,7 +2,7 @@ Index: feeds/luci/modules/luci-base/po/zh-cn/base.po
 ===================================================================
 ---feeds/luci/modules/luci-base/po/zh-cn/base.po	
 +++feeds/luci/modules/luci-base/po/zh-cn/base.po	
-@@ -2788,6 +2788,9 @@
+@@ -2801,6 +2801,9 @@
  msgid "Use routing table"
  msgstr "使用路由表"
  

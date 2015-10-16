@@ -2,7 +2,7 @@ Index: feeds/luci/modules/luci-base/po/templates/base.pot
 ===================================================================
 ---feeds/luci/modules/luci-base/po/templates/base.pot	
 +++feeds/luci/modules/luci-base/po/templates/base.pot	
-@@ -2713,6 +2713,9 @@
+@@ -2732,6 +2732,9 @@
  msgid "Use routing table"
  msgstr ""
  

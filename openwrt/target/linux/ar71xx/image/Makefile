@@ -136,6 +136,14 @@ define Device/carambola2
 endef
 TARGET_DEVICES += carambola2
 
+define Device/weio
+  BOARDNAME = WEIO
+  IMAGE_SIZE = 16000k
+  CONSOLE = ttyATH0,115200
+  MTDPARTS = spi0.0:256k(u-boot)ro,64k(u-boot-env)ro,16000k(firmware),64k(art)ro
+endef
+TARGET_DEVICES += weio
+
 define Device/wndr3700
   BOARDNAME = WNDR3700
   NETGEAR_KERNEL_MAGIC = 0x33373030
@@ -288,19 +296,19 @@ endef
 TARGET_DEVICES += archer-c5 archer-c7-v1 archer-c7-v2
 
 define Device/antminer-s1
-	$(Device/tplink-8mlzma)
-	BOARDNAME := ANTMINER-S1
-	DEVICE_PROFILE := ANTMINER_S1
-	TPLINK_HWID := 0x04440001
-	CONSOLE := ttyATH0,115200
+    $(Device/tplink-8mlzma)
+    BOARDNAME := ANTMINER-S1
+    DEVICE_PROFILE := ANTMINERS1
+    TPLINK_HWID := 0x04440101
+    CONSOLE := ttyATH0,115200
 endef
 
 define Device/antminer-s3
-	$(Device/tplink-8mlzma)
-	BOARDNAME := ANTMINER-S3
-	DEVICE_PROFILE := ANTMINER_S3
-	TPLINK_HWID := 0x04440003
-	CONSOLE := ttyATH0,115200
+    $(Device/tplink-8mlzma)
+    BOARDNAME := ANTMINER-S3
+    DEVICE_PROFILE := ANTMINERS3
+    TPLINK_HWID := 0x04440301
+    CONSOLE := ttyATH0,115200
 endef
 
 define Device/el-m150
@@ -344,6 +352,15 @@ define Device/mc-mac1200r
     TPLINK_HWID := 0x12000001
 endef
 TARGET_DEVICES += mc-mac1200r
+
+define Device/minibox-v1
+    $(Device/tplink-16mlzma)
+    BOARDNAME := MINIBOX-V1
+    DEVICE_PROFILE := MINIBOXV1
+    TPLINK_HWID := 0x3C000201
+    CONSOLE := ttyATH0,115200
+endef
+TARGET_DEVICES += minibox-v1
 
 define Device/onion-omega
     $(Device/tplink-16mlzma)

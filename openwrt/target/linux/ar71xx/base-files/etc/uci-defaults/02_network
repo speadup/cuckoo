@@ -322,6 +322,8 @@ dlan-pro-1200-ac)
 	;;
 
 all0305 |\
+antminer-s1 |\
+antminer-s3 |\
 aw-nr580 |\
 bullet-m |\
 cap4200ag |\
@@ -366,8 +368,6 @@ wp543)
 	ucidef_set_interface_lan "eth0"
 	;;
 
-antminer-s1 |\
-antminer-s3 |\
 dir-505-a1)
 	ucidef_set_interface_lan "eth1"
 	;;
@@ -415,6 +415,7 @@ dir-615-e4 |\
 hiwifi-hc6361 |\
 ja76pf |\
 mc-mac1200r|\
+minibox-v1 |\
 mynet-n600 |\
 oolite |\
 qihoo-c301 |\

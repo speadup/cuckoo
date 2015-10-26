@@ -2,6 +2,29 @@
 src=${1-temp}
 dest=${2-.}
 
+
+add()
+{
+    if [ -d .svn ];then
+        svn add $1
+    elif [ -d .git ];then
+        git add $1
+    else
+        echo "error ... no .git or .svn $1"
+        exit 0
+    fi
+}
+del()
+{
+    if [ -d .svn ];then
+        svn del $1
+    elif [ -d .git ];then
+        git rm $1
+    else
+        echo "error ... no .git or .svn $1"
+        exit 0
+    fi
+}
 update_delete()
 {
     local subdir curdir=$1

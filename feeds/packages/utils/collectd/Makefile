@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2006-2014 OpenWrt.org
+# Copyright (C) 2006-2015 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=collectd
-PKG_VERSION:=5.4.2
-PKG_RELEASE:=2
+PKG_VERSION:=5.5.0
+PKG_RELEASE:=5
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=http://collectd.org/files/
-PKG_MD5SUM:=feff9fd0ed89e956d7cf12ba18cfc248
+PKG_MD5SUM:=c39305ef5514b44238b0d31f77e29e6a
 
 PKG_FIXUP:=autoreconf
 PKG_REMOVE_FILES:=aclocal.m4 libltdl/aclocal.m4
@@ -27,20 +27,26 @@ COLLECTD_PLUGINS_DISABLED:= \
 	amqp \
 	apple_sensors \
 	aquaero \
+	barometer \
 	battery \
+	ceph \
 	cgroups \
 	cpufreq \
 	curl_json \
 	curl_xml \
 	dbi \
+	drbd \
 	ethstat \
+	fhcount \
 	genericjmx \
 	gmond \
 	hddtemp \
+	ipc \
 	ipmi \
 	ipvs \
 	java \
-	libvirt \
+	log_logstash \
+	lvm \
 	lpar \
 	mbmon \
 	md \
@@ -55,6 +61,7 @@ COLLECTD_PLUGINS_DISABLED:= \
 	notify_email \
 	numa \
 	nut \
+	openldap \
 	openvz \
 	oracle \
 	perl \
@@ -66,19 +73,26 @@ COLLECTD_PLUGINS_DISABLED:= \
 	rrdcached \
 	serial \
 	sigrok \
+	smart \
 	statsd \
 	swap \
 	tape \
 	tokyotyrant \
+	turbostat \
 	uuid \
 	varnish \
+	virt \
 	vserver \
-	write_graphite \
+	write_kafka \
+	write_log \
 	write_mongodb \
 	write_redis \
 	write_riemann \
+	write_sensu \
+	write_tsdb \
 	xmms \
 	zfs_arc \
+	zookeeper
 
 COLLECTD_PLUGINS_SELECTED:= \
 	apache \
@@ -135,6 +149,7 @@ COLLECTD_PLUGINS_SELECTED:= \
 	users \
 	vmem \
 	wireless \
+	write_graphite \
 	write_http \
 
 PKG_CONFIG_DEPENDS:= \
@@ -169,8 +184,8 @@ endif
 CONFIGURE_ARGS+= \
 	--disable-debug \
 	--enable-daemon \
-	--enable-getifaddrs \
 	--with-nan-emulation \
+	--with-perl-bindings= \
 	--without-libgcrypt
 
 CONFIGURE_VARS+= \
@@ -300,7 +315,7 @@ $(eval $(call BuildPlugin,madwifi,MadWifi status input,madwifi,))
 #$(eval $(call BuildPlugin,mysql,MySQL status input,mysql,+PACKAGE_collectd-mod-mysql:libmysqlclient-r))
 $(eval $(call BuildPlugin,memory,physical memory usage input,memory,))
 $(eval $(call BuildPlugin,modbus,read variables through libmodbus,modbus,+PACKAGE_collectd-mod-modbus:libmodbus))
-$(eval $(call BuildPlugin,netlink,netlink input,netlink,+PACKAGE_collectd-mod-netlink:ip @BROKEN))
+$(eval $(call BuildPlugin,netlink,netlink input,netlink,+PACKAGE_collectd-mod-netlink:libmnl))
 $(eval $(call BuildPlugin,network,network input/output,network))
 $(eval $(call BuildPlugin,nginx,nginx status input,nginx,+PACKAGE_collectd-mod-nginx:libcurl))
 $(eval $(call BuildPlugin,ntpd,NTP daemon status input,ntpd,))
@@ -328,4 +343,5 @@ $(eval $(call BuildPlugin,uptime,uptime status input,uptime,))
 $(eval $(call BuildPlugin,users,user logged in status input,users,))
 $(eval $(call BuildPlugin,vmem,virtual memory usage input,vmem,))
 $(eval $(call BuildPlugin,wireless,wireless status input,wireless,))
+$(eval $(call BuildPlugin,write-graphite,Carbon/Graphite output,write_graphite,+PACKAGE_collectd-mod-write-graphite:libpthread))
 $(eval $(call BuildPlugin,write-http,HTTP POST output,write_http,+PACKAGE_collectd-mod-write-http:libcurl))

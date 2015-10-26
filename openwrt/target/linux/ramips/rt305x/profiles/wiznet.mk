@@ -8,7 +8,7 @@
 define Profile/WIZFI630A
 	NAME:=WIZnet WizFi630A
 	PACKAGES:=\
-		kmod-usb2
+		kmod-usb2 
 endef
 
 define Profile/WIZFI630A/Description

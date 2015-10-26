@@ -6,7 +6,7 @@
 #
 
 PYTHON_VERSION:=2.7
-PYTHON_VERSION_MICRO:=9
+PYTHON_VERSION_MICRO:=10
 
 PYTHON_DIR:=$(STAGING_DIR)/usr
 PYTHON_BIN_DIR:=$(PYTHON_DIR)/bin
@@ -103,6 +103,7 @@ define Build/Compile/PyMod
 		cd $(PKG_BUILD_DIR)/$(strip $(1)); \
 		CC="$(TARGET_CC)" \
 		CCSHARED="$(TARGET_CC) $(FPIC)" \
+		CXX="$(TARGET_CXX)" \
 		LD="$(TARGET_CC)" \
 		LDSHARED="$(TARGET_CC) -shared" \
 		CFLAGS="$(TARGET_CFLAGS)" \

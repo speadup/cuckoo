@@ -14,15 +14,16 @@
 	};
 
 	cpuintc: cpuintc@0 {
-		compatible = "mti,cpu-interrupt-controller";
-		interrupt-controller;
+		#address-cells = <0>;
 		#interrupt-cells = <1>;
+		interrupt-controller;
+		compatible = "mti,cpu-interrupt-controller";
 	};
 
 	palmbus@10000000 {
 		compatible = "palmbus";
 		reg = <0x10000000 0x200000>;
-                ranges = <0x0 0x10000000 0x1FFFFF>;
+		ranges = <0x0 0x10000000 0x1FFFFF>;
 
 		#address-cells = <1>;
 		#size-cells = <1>;
@@ -145,7 +146,7 @@
 			reset-names = "spi";
 
 			#address-cells = <1>;
-			#size-cells = <1>;
+			#size-cells = <0>;
 
 			pinctrl-names = "default";
 			pinctrl-0 = <&spi_pins>;
@@ -259,8 +260,10 @@
 		compatible = "ralink,rt2880-pinmux";
 		pinctrl-names = "default";
 		pinctrl-0 = <&state_default>;
+
 		state_default: pinctrl0 {
 		};
+
 		spi_pins: spi {
 			spi {
 				ralink,group = "spi";
@@ -435,5 +438,4 @@
 			device_type = "pci";
 		};
 	};
-
 };

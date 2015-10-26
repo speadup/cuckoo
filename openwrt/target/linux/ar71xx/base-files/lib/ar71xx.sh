@@ -38,7 +38,7 @@ wndr3700_board_detect() {
 		;;
 	"33373031")
 		# Use awk to remove everything after the first zero byte
-		model="$(ar71xx_get_mtd_offset_size_format art 41 32 %c | awk 'BEGIN{FS="[[:cntrl:]]"} {print $1; exit}')"
+		model="$(ar71xx_get_mtd_offset_size_format art 41 32 %c | LC_CTYPE=C awk -v 'FS=[^[:print:]]' '{print $1; exit}')"
 		case $model in
 		$'\xff'*)
 			if [ "${model:24:1}" = 'N' ]; then
@@ -224,6 +224,9 @@ tplink_board_detect() {
 	"342000"*)
 		model="TP-Link TL-MR3420"
 		;;
+	"332000"*)
+		model="TP-Link TL-WDR3320"
+		;;
 	"350000"*)
 		model="TP-Link TL-WDR3500"
 		;;
@@ -242,6 +245,9 @@ tplink_board_detect() {
 		;;
 	"49000002")
 		model="TP-Link TL-WDR4900"
+		;;
+	"65000002")
+		model="TP-Link TL-WDR6500"
 		;;
 	"453000"*)
 		model="MERCURY MW4530R"
@@ -326,6 +332,9 @@ ar71xx_board_detect() {
 	*"AirGateway")
 		name="airgateway"
 		;;
+	*"AirGateway Pro")
+		name="airgatewaypro"
+		;;
 	*"AirRouter")
 		name="airrouter"
 		;;
@@ -371,6 +380,15 @@ ar71xx_board_detect() {
 	*"AP135-020 reference board")
 		name="ap135-020"
 		;;
+	*"AP143 reference board")
+		name="ap143"
+		;;
+	*"AP147-010 reference board")
+		name="ap147-010"
+		;;
+	*"AP152 reference board")
+		name="ap152"
+		;;
 	*AP81)
 		name="ap81"
 		;;
@@ -391,6 +409,9 @@ ar71xx_board_detect() {
 		;;
 	*CAP4200AG)
 		name="cap4200ag"
+		;;
+	*"COMFAST CF-E316N v2")
+		name="cf-e316n-v2"
 		;;
 	*"CPE210/220/510/520")
 		name="cpe510"
@@ -513,6 +534,9 @@ ar71xx_board_detect() {
 		;;
 	*MR600v2)
 		name="mr600v2"
+		;;
+	*MR1750)
+		name="mr1750"
 		;;
 	*MR600)
 		name="mr600"
@@ -664,6 +688,9 @@ ar71xx_board_detect() {
 	*"Rocket M")
 		name="rocket-m"
 		;;
+	*"Rocket M TI")
+		name="rocket-m-ti"
+		;;
 	*"Rocket M XW")
 		name="rocket-m-xw"
 		;;
@@ -763,6 +790,9 @@ ar71xx_board_detect() {
 	*"TL-WA901ND v3")
 		name="tl-wa901nd-v3"
 		;;
+	*"TL-WDR3320 v2")
+		name="tl-wdr3320-v2"
+		;;
 	*"TL-WDR3500")
 		name="tl-wdr3500"
 		;;
@@ -771,6 +801,9 @@ ar71xx_board_detect() {
 		;;
 	*"TL-WDR4900 v2")
 		name="tl-wdr4900-v2"
+		;;
+	*"TL-WDR6500 v2")
+		name="tl-wdr6500-v2"
 		;;
 	*TL-WR741ND)
 		name="tl-wr741nd"

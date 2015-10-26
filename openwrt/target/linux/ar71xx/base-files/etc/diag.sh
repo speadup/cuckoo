@@ -25,6 +25,9 @@ get_status_led() {
 	ap136-020)
 		status_led="ap136:green:status"
 		;;
+	ap147-010)
+		status_led="ap147:green:status"
+		;;
 	ap135-020)
 		status_led="ap135:green:status"
 		;;
@@ -46,11 +49,17 @@ get_status_led() {
 	bullet-m | rocket-m | rocket-m-xw | nano-m | nanostation-m | nanostation-m-xw | loco-m-xw)
 		status_led="ubnt:green:link4"
 		;;
+	rocket-m-ti)
+		status_led="ubnt:green:link6"
+		;;
 	bxu2000n-2-a1)
 		status_led="bhu:green:status"
 		;;
 	cap4200ag)
 		status_led="senao:green:pwr"
+		;;
+	cf-e316n-v2)
+		status_led="$(ar71xx_board_name):blue:wan"
 		;;
 	cpe510)
 		status_led="tp-link:green:link4"
@@ -142,6 +151,9 @@ get_status_led() {
 		;;
 	mr600v2)
 		status_led="mr600:blue:power"
+		;;
+	mr1750)
+		status_led="mr1750:blue:power"
 		;;
 	mr900 | \
 	mr900v2)
@@ -255,6 +267,7 @@ get_status_led() {
 	tl-wa901nd | \
 	tl-wa901nd-v2 | \
 	tl-wa901nd-v3 | \
+	tl-wdr3320-v2 | \
 	tl-wdr3500 | \
 	tl-wr1041n-v2 | \
 	tl-wr1043nd | \
@@ -288,6 +301,9 @@ get_status_led() {
 	tl-wr2543n)
 		status_led="tp-link:green:wps"
 		;;
+	tl-wdr6500-v2)
+		status_led="tp-link:white:system"
+		;;
 	tube2h)
 		status_led="alfa:green:signal4"
 		;;
@@ -300,7 +316,8 @@ get_status_led() {
 	unifi-outdoor-plus)
 		status_led="ubnt:white:front"
 		;;
-	airgateway)
+	airgateway | \
+	airgatewaypro)
 		status_led="ubnt:white:status"
 		;;
 	whr-g301n | \

@@ -815,7 +815,7 @@ CONFIGURE_ARGS += \
 	--enable-shared \
 	--enable-static \
 	--disable-rpath \
-	--enable-ipv6 \
+	$(call autoconf_bool,CONFIG_IPV6,ipv6) \
 	--disable-install-doc \
 	--disable-install-capi \
 	--with-ruby-version=minor \

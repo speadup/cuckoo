@@ -44,6 +44,9 @@ msgstr "עומס במשך דקה:"
 msgid "15 Minute Load:"
 msgstr "עומס במשך רבע שעה:"
 
+msgid "464XLAT (CLAT)"
+msgstr ""
+
 msgid "5 Minute Load:"
 msgstr "עומס במשך 5 דקות:"
 
@@ -202,6 +205,9 @@ msgstr "הוסף ממשק חדש..."
 msgid "Additional Hosts files"
 msgstr "קבצי מארח נוספים"
 
+msgid "Additional servers file"
+msgstr ""
+
 msgid "Address"
 msgstr "כתובת"
 
@@ -333,6 +339,9 @@ msgstr "חבילות זמינות"
 
 msgid "Average:"
 msgstr "ממוצע:"
+
+msgid "BR / DMR / AFTR"
+msgstr ""
 
 msgid "BSSID"
 msgstr "BSSID"
@@ -668,6 +677,12 @@ msgstr "מכשיר"
 msgid "Device Configuration"
 msgstr "הגדרות מכשיר"
 
+msgid "Device is rebooting..."
+msgstr ""
+
+msgid "Device unreachable"
+msgstr ""
+
 msgid "Diagnostics"
 msgstr "אבחון"
 
@@ -772,11 +787,19 @@ msgid ""
 "having static leases will be served."
 msgstr ""
 
+msgid "EA-bits length"
+msgstr ""
+
 msgid "EAP-Method"
 msgstr ""
 
 msgid "Edit"
 msgstr "ערוך"
+
+msgid ""
+"Edit the raw configuration data above to fix any error and hit \"Save\" to "
+"reload the page."
+msgstr ""
 
 msgid "Edit this interface"
 msgstr "ערוך ממשק זה"
@@ -794,9 +817,6 @@ msgid "Enable <abbr title=\"Spanning Tree Protocol\">STP</abbr>"
 msgstr "אפשר <abbr title=\"Spanning Tree Protocol\">STP</abbr>"
 
 msgid "Enable HE.net dynamic endpoint update"
-msgstr ""
-
-msgid "Enable IPv6 negotiation on the PPP link"
 msgstr ""
 
 msgid "Enable Jumbo Frame passthrough"
@@ -953,6 +973,9 @@ msgstr ""
 msgid "Force TKIP and CCMP (AES)"
 msgstr ""
 
+msgid "Form token mismatch"
+msgstr ""
+
 msgid "Forward DHCP traffic"
 msgstr ""
 
@@ -1101,6 +1124,9 @@ msgstr ""
 msgid "IPv4 only"
 msgstr ""
 
+msgid "IPv4 prefix"
+msgstr ""
+
 msgid "IPv4 prefix length"
 msgstr ""
 
@@ -1203,6 +1229,11 @@ msgid "Image"
 msgstr ""
 
 msgid "In"
+msgstr ""
+
+msgid ""
+"In order to prevent unauthorized access to the system, your request has been "
+"blocked. Click \"Continue »\" below to return to the previous page."
 msgstr ""
 
 msgid "Inactivity timeout"
@@ -1471,6 +1502,9 @@ msgstr ""
 msgid "MAC-List"
 msgstr ""
 
+msgid "MAP / LW4over6"
+msgstr ""
+
 msgid "MB/s"
 msgstr ""
 
@@ -1483,6 +1517,9 @@ msgstr ""
 msgid ""
 "Make sure to clone the root filesystem using something like the commands "
 "below:"
+msgstr ""
+
+msgid "Manual"
 msgstr ""
 
 msgid "Maximum Rate"
@@ -1590,6 +1627,9 @@ msgid "Multicast address"
 msgstr ""
 
 msgid "NAS ID"
+msgstr ""
+
+msgid "NAT64 Prefix"
 msgstr ""
 
 msgid "NDP-Proxy"
@@ -1816,6 +1856,12 @@ msgstr ""
 msgid "PPtP"
 msgstr ""
 
+msgid "PSID offset"
+msgstr ""
+
+msgid "PSID-bits length"
+msgstr ""
+
 msgid "Package libiwinfo required!"
 msgstr ""
 
@@ -1841,9 +1887,6 @@ msgid "Password of Private Key"
 msgstr ""
 
 msgid "Password successfully changed!"
-msgstr ""
-
-msgid "Path"
 msgstr ""
 
 msgid "Path to CA-Certificate"
@@ -1881,9 +1924,6 @@ msgstr ""
 
 msgid "Please enter your username and password."
 msgstr "אנא הזן את שם המשתמש והסיסמה שלך:"
-
-msgid "Please wait: Device rebooting..."
-msgstr "אנא המתן: המכשיר מאותחל מחדש..."
 
 msgid "Policy"
 msgstr ""
@@ -2260,6 +2300,9 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
+msgid "Size (.ipk)"
+msgstr ""
+
 msgid "Skip"
 msgstr ""
 
@@ -2459,6 +2502,9 @@ msgid ""
 "code> and <code>_</code>"
 msgstr ""
 
+msgid "The configuration file could not be loaded due to the following error:"
+msgstr ""
+
 msgid ""
 "The device file of the memory or partition (<abbr title=\"for example\">e.g."
 "</abbr> <code>/dev/sda1</code>)"
@@ -2514,6 +2560,9 @@ msgstr ""
 msgid "The selected protocol needs a device assigned"
 msgstr ""
 
+msgid "The submitted security token is invalid or already expired!"
+msgstr ""
+
 msgid ""
 "The system is erasing the configuration partition now and will reboot itself "
 "when finished."
@@ -2559,6 +2608,12 @@ msgid ""
 msgstr ""
 
 msgid "This IPv4 address of the relay"
+msgstr ""
+
+msgid ""
+"This file may contain lines like 'server=/domain/1.2.3.4' or "
+"'server=1.2.3.4' fordomain-specific or full upstream <abbr title=\"Domain "
+"Name System\">DNS</abbr> servers."
 msgstr ""
 
 msgid ""
@@ -2871,11 +2926,14 @@ msgstr ""
 msgid "Waiting for command to complete..."
 msgstr ""
 
+msgid "Waiting for device..."
+msgstr ""
+
 msgid "Warning"
 msgstr "אזהרה"
 
-msgid "Warning: There are unsaved changes that will be lost while rebooting!"
-msgstr "אזהרה: ישנם שינויים שלא נשמרו ויאבדו בעת הפעלה מחדש!"
+msgid "Warning: There are unsaved changes that will get lost on reboot!"
+msgstr ""
 
 msgid "Whether to create an IPv6 default route over the tunnel"
 msgstr ""
@@ -3098,6 +3156,13 @@ msgstr "כן"
 
 msgid "« Back"
 msgstr "<< אחורה"
+
+#~ msgid "Please wait: Device rebooting..."
+#~ msgstr "אנא המתן: המכשיר מאותחל מחדש..."
+
+#~ msgid ""
+#~ "Warning: There are unsaved changes that will be lost while rebooting!"
+#~ msgstr "אזהרה: ישנם שינויים שלא נשמרו ויאבדו בעת הפעלה מחדש!"
 
 #~ msgid "Cached"
 #~ msgstr "שמור במטמון"

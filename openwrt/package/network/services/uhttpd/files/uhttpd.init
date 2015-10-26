@@ -96,7 +96,7 @@ start_instance()
 
 	config_get alias_list "$cfg" alias
 	for alias in $alias_list; do
-		procd_append_param command -y "$alias"
+		 procd_append_param command -y "$alias"
 	done
 
 	config_get http "$cfg" listen_http

@@ -41,6 +41,9 @@ msgstr "1 minutts belastning:"
 msgid "15 Minute Load:"
 msgstr "15 minutters belastning:"
 
+msgid "464XLAT (CLAT)"
+msgstr ""
+
 msgid "5 Minute Load:"
 msgstr "5 minutters belastning:"
 
@@ -205,6 +208,9 @@ msgstr "Legg til grensesnitt..."
 msgid "Additional Hosts files"
 msgstr "Tilleggs vertsfiler"
 
+msgid "Additional servers file"
+msgstr ""
+
 msgid "Address"
 msgstr "Adresse"
 
@@ -329,6 +335,9 @@ msgstr "Tilgjengelige pakker"
 
 msgid "Average:"
 msgstr "Gjennomsnitt:"
+
+msgid "BR / DMR / AFTR"
+msgstr ""
 
 msgid "BSSID"
 msgstr "BSSID"
@@ -674,6 +683,12 @@ msgstr "Enhet"
 msgid "Device Configuration"
 msgstr "Enhet Konfigurasjon"
 
+msgid "Device is rebooting..."
+msgstr ""
+
+msgid "Device unreachable"
+msgstr ""
+
 msgid "Diagnostics"
 msgstr "Nettverksdiagnostikk"
 
@@ -791,11 +806,19 @@ msgstr ""
 "Dynamisk tildeling av DHCP adresser til klienter. Om deaktivert, kan en kun "
 "bruke klienter med statisk leie."
 
+msgid "EA-bits length"
+msgstr ""
+
 msgid "EAP-Method"
 msgstr "EAP-metode"
 
 msgid "Edit"
 msgstr "Endre"
+
+msgid ""
+"Edit the raw configuration data above to fix any error and hit \"Save\" to "
+"reload the page."
+msgstr ""
 
 msgid "Edit this interface"
 msgstr "Endre dette grensesnittet"
@@ -814,9 +837,6 @@ msgstr "Aktiver <abbr title=\"Spanning Tree Protocol\">STP</abbr>"
 
 msgid "Enable HE.net dynamic endpoint update"
 msgstr "Aktiver HE,net dynamisk endepunkt oppdatering"
-
-msgid "Enable IPv6 negotiation on the PPP link"
-msgstr "Aktiver IPv6 på PPP lenke"
 
 msgid "Enable Jumbo Frame passthrough"
 msgstr "Aktiver Jumbo Frames gjennomgang"
@@ -974,6 +994,9 @@ msgstr "Bruk TKIP"
 msgid "Force TKIP and CCMP (AES)"
 msgstr "Bruk TKIP og CCMP (AES)"
 
+msgid "Form token mismatch"
+msgstr ""
+
 msgid "Forward DHCP traffic"
 msgstr "Videresend DHCP trafikk"
 
@@ -1126,6 +1149,9 @@ msgstr "IPv4 nettmaske"
 msgid "IPv4 only"
 msgstr "Kun IPv4"
 
+msgid "IPv4 prefix"
+msgstr ""
+
 msgid "IPv4 prefix length"
 msgstr "IPv4 prefikslengde"
 
@@ -1233,6 +1259,11 @@ msgstr "Firmware"
 
 msgid "In"
 msgstr "i"
+
+msgid ""
+"In order to prevent unauthorized access to the system, your request has been "
+"blocked. Click \"Continue »\" below to return to the previous page."
+msgstr ""
 
 msgid "Inactivity timeout"
 msgstr "Tidsavbrudd etter innaktivitet"
@@ -1511,6 +1542,9 @@ msgstr "MAC-Filter"
 msgid "MAC-List"
 msgstr "MAC-Liste"
 
+msgid "MAP / LW4over6"
+msgstr ""
+
 msgid "MB/s"
 msgstr "MB/s"
 
@@ -1523,6 +1557,9 @@ msgstr "MTU"
 msgid ""
 "Make sure to clone the root filesystem using something like the commands "
 "below:"
+msgstr ""
+
+msgid "Manual"
 msgstr ""
 
 msgid "Maximum Rate"
@@ -1633,6 +1670,9 @@ msgstr "Multicast adresse"
 
 msgid "NAS ID"
 msgstr "NAS ID"
+
+msgid "NAT64 Prefix"
+msgstr ""
 
 msgid "NDP-Proxy"
 msgstr ""
@@ -1866,6 +1906,12 @@ msgstr "PPPoE"
 msgid "PPtP"
 msgstr "PPtP"
 
+msgid "PSID offset"
+msgstr ""
+
+msgid "PSID-bits length"
+msgstr ""
+
 msgid "Package libiwinfo required!"
 msgstr "Pakken libiwinfo er nødvendig!"
 
@@ -1892,9 +1938,6 @@ msgstr "Passord for privatnøkkel"
 
 msgid "Password successfully changed!"
 msgstr "Passordet er endret!"
-
-msgid "Path"
-msgstr ""
 
 msgid "Path to CA-Certificate"
 msgstr "Sti til CA-sertifikat"
@@ -1931,9 +1974,6 @@ msgstr "Pakker."
 
 msgid "Please enter your username and password."
 msgstr "Skriv inn ditt brukernavn og passord."
-
-msgid "Please wait: Device rebooting..."
-msgstr "Vent: Enheten starter på nytt..."
 
 msgid "Policy"
 msgstr "Policy"
@@ -2327,6 +2367,9 @@ msgstr "Signal:"
 msgid "Size"
 msgstr "Størrelse"
 
+msgid "Size (.ipk)"
+msgstr ""
+
 msgid "Skip"
 msgstr "Gå videre"
 
@@ -2540,6 +2583,9 @@ msgstr ""
 "Gyldige tegn er: <code>A-Z</code>, <code>a-z</code>, <code>0-9</code> og "
 "<code>_</code>"
 
+msgid "The configuration file could not be loaded due to the following error:"
+msgstr ""
+
 msgid ""
 "The device file of the memory or partition (<abbr title=\"for example\">e.g."
 "</abbr> <code>/dev/sda1</code>)"
@@ -2611,6 +2657,9 @@ msgstr ""
 msgid "The selected protocol needs a device assigned"
 msgstr "Den valgte protokoll må ha en enhet tilknyttet"
 
+msgid "The submitted security token is invalid or already expired!"
+msgstr ""
+
 msgid ""
 "The system is erasing the configuration partition now and will reboot itself "
 "when finished."
@@ -2669,6 +2718,12 @@ msgstr ""
 
 msgid "This IPv4 address of the relay"
 msgstr "Dette IPv4 adressen til relayet"
+
+msgid ""
+"This file may contain lines like 'server=/domain/1.2.3.4' or "
+"'server=1.2.3.4' fordomain-specific or full upstream <abbr title=\"Domain "
+"Name System\">DNS</abbr> servers."
+msgstr ""
 
 msgid ""
 "This is a list of shell glob patterns for matching files and directories to "
@@ -3002,11 +3057,14 @@ msgstr "Venter på at endringer utføres..."
 msgid "Waiting for command to complete..."
 msgstr "Venter på at kommando fullføres..."
 
+msgid "Waiting for device..."
+msgstr ""
+
 msgid "Warning"
 msgstr "Advarsel"
 
-msgid "Warning: There are unsaved changes that will be lost while rebooting!"
-msgstr "Advarsel: Det er ulagrede endringer som vil gå tapt under omstarten!"
+msgid "Warning: There are unsaved changes that will get lost on reboot!"
+msgstr ""
 
 msgid "Whether to create an IPv6 default route over the tunnel"
 msgstr ""
@@ -3238,8 +3296,19 @@ msgstr "ja"
 msgid "« Back"
 msgstr "« Tilbake"
 
+#~ msgid "Enable IPv6 negotiation on the PPP link"
+#~ msgstr "Aktiver IPv6 på PPP lenke"
+
 #~ msgid "Ignore Hosts files"
 #~ msgstr "Ignorer vertsfiler"
+
+#~ msgid "Please wait: Device rebooting..."
+#~ msgstr "Vent: Enheten starter på nytt..."
+
+#~ msgid ""
+#~ "Warning: There are unsaved changes that will be lost while rebooting!"
+#~ msgstr ""
+#~ "Advarsel: Det er ulagrede endringer som vil gå tapt under omstarten!"
 
 #~ msgid ""
 #~ "Always use 40MHz channels even if the secondary channel overlaps. Using "

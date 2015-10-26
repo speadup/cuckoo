@@ -1,5 +1,5 @@
-%openwrt@branches/chaos_calmer:47243
-%packages@for-15.05:ffd3b199e11ec335ce4f6ddd4a1a3aaff370318d
-%luci@for-15.05:18d9c672c02382ccf844a58192db123566bcc866
-%routing@for-15.05:e870c3373eea80df852d42fac3f40aaffd7a0f58
+%openwrt@trunk:47254
+%packages@master:25ca289e4d8436118583469c770f03e14610a1ed
+%luci@master:53d767de5ea8c596936fbf0bddce357efe0c4425
+%routing@master:9b33760b99f87ea3ee472dbbdbd84d7b31304d90
 %oldpackages@master:7a333896ddb38e4545fb6c687ea40de77b0bf970

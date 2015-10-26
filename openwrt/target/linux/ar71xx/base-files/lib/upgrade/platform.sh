@@ -179,6 +179,7 @@ platform_check_image() {
 	ap136-010 | \
 	ap136-020 | \
 	ap135-020 | \
+	ap147-010 | \
 	ap96 | \
 	bxu2000n-2-a1 | \
 	db120 | \
@@ -198,6 +199,7 @@ platform_check_image() {
 	ap81 | \
 	ap83 | \
 	ap132 | \
+	cf-e316n-v2 | \
 	dgl-5500-a1 |\
 	dhp-1565-a1 |\
 	dir-505-a1 | \
@@ -225,12 +227,14 @@ platform_check_image() {
 	tew-732br | \
 	wrt400n | \
 	airgateway | \
+	airgatewaypro | \
 	airrouter | \
 	bullet-m | \
 	loco-m-xw | \
 	nanostation-m | \
 	rocket-m | \
 	rocket-m-xw | \
+	rocket-m-ti | \
 	nanostation-m-xw | \
 	rw2458n | \
 	wpj531 | \
@@ -290,6 +294,7 @@ platform_check_image() {
 
 		return 0;
 		;;
+	mr1750 | \
 	mr600 | \
 	mr600v2 | \
 	mr900 | \
@@ -338,9 +343,11 @@ platform_check_image() {
 	tl-wa901nd | \
 	tl-wa901nd-v2 | \
 	tl-wa901nd-v3 | \
+	tl-wdr3320-v2 | \
 	tl-wdr3500 | \
 	tl-wdr4300 | \
 	tl-wdr4900-v2 | \
+	tl-wdr6500-v2 | \
 	tl-wr703n | \
 	tl-wr710n | \
 	tl-wr720n-v3 | \
@@ -358,7 +365,15 @@ platform_check_image() {
 	tl-wr1043nd | \
 	tl-wr1043nd-v2 | \
 	tl-wr2543n)
-		[ "$magic" != "0100" ] && {
+		local magic_ver="0100"
+
+		case "$board" in
+		tl-wdr6500-v2)
+			magic_ver="0200"
+			;;
+		esac
+
+		[ "$magic" != "$magic_ver" ] && {
 			echo "Invalid image type."
 			return 1
 		}
@@ -508,6 +523,7 @@ platform_do_upgrade() {
 	tew-673gru)
 		platform_do_upgrade_dir825b "$ARGV"
 		;;
+	mr1750 | \
 	mr600 | \
 	mr600v2 | \
 	mr900 | \

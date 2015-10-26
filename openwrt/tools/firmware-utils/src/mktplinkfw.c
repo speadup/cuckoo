@@ -30,6 +30,7 @@
 #define ALIGN(x,a) ({ typeof(a) __a = (a); (((x) + __a - 1) & ~(__a - 1)); })
 
 #define HEADER_VERSION_V1	0x01000000
+#define HEADER_VERSION_V2	0x02000000
 #define HWID_ANTMINER_S1	0x04440101
 #define HWID_ANTMINER_S3	0x04440301
 #define HWID_GL_INET_V1		0x08000001
@@ -130,6 +131,7 @@ static char *progname;
 static char *vendor = "TP-LINK Technologies";
 static char *version = "ver. 1.0";
 static char *fw_ver = "0.0.0";
+static uint32_t hdr_ver = HEADER_VERSION_V1;
 
 static char *board_id;
 static struct board_info *board;
@@ -139,6 +141,7 @@ static char *opt_hw_id;
 static uint32_t hw_id;
 static char *opt_hw_rev;
 static uint32_t hw_rev;
+static uint32_t opt_hdr_ver = 1;
 static int fw_ver_lo;
 static int fw_ver_mid;
 static int fw_ver_hi;
@@ -452,7 +455,7 @@ static struct board_info boards[] = {
 #define ERRS(fmt, ...) do { \
 	int save = errno; \
 	fflush(0); \
-	fprintf(stderr, "[%s] *** error: " fmt "\n", \
+	fprintf(stderr, "[%s] *** error: " fmt ": %s\n", \
 			progname, ## __VA_ARGS__, strerror(save)); \
 } while (0)
 
@@ -531,6 +534,7 @@ static void usage(int status)
 "  -N <vendor>     set image vendor to <vendor>\n"
 "  -V <version>    set image version to <version>\n"
 "  -v <version>    set firmware version to <version>\n"
+"  -m <version>    set header version to <version>\n"
 "  -i <file>       inspect given firmware file <file>\n"
 "  -x              extract kernel and rootfs while inspecting (requires -i)\n"
 "  -X <size>       reserve <size> bytes in the firmware image (hexval prefixed with 0x)\n"
@@ -596,6 +600,7 @@ static int read_to_buf(struct file_info *fdata, char *buf)
 static int check_options(void)
 {
 	int ret;
+	int exceed_bytes;
 
 	if (inspect_info.file_name) {
 		ret = get_file_stat(&inspect_info);
@@ -669,10 +674,10 @@ static int check_options(void)
 	kernel_len = kernel_info.file_size;
 
 	if (combined) {
-		if (kernel_info.file_size >
-		    fw_max_len - sizeof(struct fw_header)) {
+		exceed_bytes = kernel_info.file_size - (fw_max_len - sizeof(struct fw_header));
+		if (exceed_bytes > 0) {
 			if (!ignore_size) {
-				ERR("kernel image is too big");
+				ERR("kernel image is too big by %i bytes", exceed_bytes);
 				return -1;
 			}
 			layout->fw_max_len = sizeof(struct fw_header) +
@@ -696,20 +701,20 @@ static int check_options(void)
 
 			DBG("kernel length aligned to %u", kernel_len);
 
-			if (kernel_len + rootfs_info.file_size >
-			    fw_max_len - sizeof(struct fw_header)) {
-				ERR("images are too big");
+			exceed_bytes = kernel_len + rootfs_info.file_size - (fw_max_len - sizeof(struct fw_header));
+			if (exceed_bytes > 0) {
+				ERR("images are too big by %i bytes", exceed_bytes);
 				return -1;
 			}
 		} else {
-			if (kernel_info.file_size >
-			    rootfs_ofs - sizeof(struct fw_header)) {
+			exceed_bytes = kernel_info.file_size - (rootfs_ofs - sizeof(struct fw_header));
+			if (exceed_bytes > 0) {
 				ERR("kernel image is too big");
 				return -1;
 			}
 
-			if (rootfs_info.file_size >
-			    (fw_max_len - rootfs_ofs)) {
+			exceed_bytes = rootfs_info.file_size - (fw_max_len - rootfs_ofs);
+			if (exceed_bytes > 0) {
 				ERR("rootfs image is too big");
 				return -1;
 			}
@@ -727,6 +732,15 @@ static int check_options(void)
 		return -1;
 	}
 
+	if (opt_hdr_ver == 1) {
+		hdr_ver = HEADER_VERSION_V1;
+	} else if (opt_hdr_ver == 2) {
+		hdr_ver = HEADER_VERSION_V2;
+	} else {
+		ERR("invalid header version '%u'", opt_hdr_ver);
+		return -1;
+	}
+
 	return 0;
 }
 
@@ -736,7 +750,7 @@ static void fill_header(char *buf, int len)
 
 	memset(hdr, 0, sizeof(struct fw_header));
 
-	hdr->version = htonl(HEADER_VERSION_V1);
+	hdr->version = htonl(hdr_ver);
 	strncpy(hdr->vendor_name, vendor, sizeof(hdr->vendor_name));
 	strncpy(hdr->fw_version, version, sizeof(hdr->fw_version));
 	hdr->hw_id = htonl(hw_id);
@@ -976,8 +990,9 @@ static int inspect_fw(void)
 	inspect_fw_pstr("File name", inspect_info.file_name);
 	inspect_fw_phexdec("File size", inspect_info.file_size);
 
-	if (ntohl(hdr->version) != HEADER_VERSION_V1) {
-		ERR("file does not seem to have V1 header!\n");
+	if ((ntohl(hdr->version) != HEADER_VERSION_V1) &&
+	    (ntohl(hdr->version) != HEADER_VERSION_V2)) {
+		ERR("file does not seem to have V1/V2 header!\n");
 		goto out_free_buf;
 	}
 
@@ -1112,7 +1127,7 @@ int main(int argc, char *argv[])
 	while ( 1 ) {
 		int c;
 
-		c = getopt(argc, argv, "a:B:H:E:F:L:V:N:W:ci:k:r:R:o:xX:hsSjv:");
+		c = getopt(argc, argv, "a:B:H:E:F:L:m:V:N:W:ci:k:r:R:o:xX:hsSjv:");
 		if (c == -1)
 			break;
 
@@ -1137,6 +1152,9 @@ int main(int argc, char *argv[])
 			break;
 		case 'L':
 			sscanf(optarg, "0x%x", &kernel_la);
+			break;
+		case 'm':
+			sscanf(optarg, "%u", &opt_hdr_ver);
 			break;
 		case 'V':
 			version = optarg;

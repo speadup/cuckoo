@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=unbound
-PKG_VERSION:=1.5.3
+PKG_VERSION:=1.5.5
 PKG_RELEASE:=1
 
 PKG_LICENSE:=BSD-3-Clause
@@ -17,7 +17,7 @@ PKG_MAINTAINER:=Michael Hanselmann <public@hansmi.ch>
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://www.unbound.net/downloads
-PKG_MD5SUM:=1e95fdcbaaf5dc87432d898006a5eb13
+PKG_MD5SUM:=e86cccd261c1b01fa9e34cb59b0013d3
 
 PKG_BUILD_DEPENDS:=libexpat
 PKG_BUILD_PARALLEL:=1
@@ -109,7 +109,6 @@ define Package/libunbound/description
 endef
 
 CONFIGURE_ARGS += \
-	--disable-ecdsa \
 	--disable-gost \
 	--enable-allsymbols \
 	--with-libexpat="$(STAGING_DIR)/usr" \

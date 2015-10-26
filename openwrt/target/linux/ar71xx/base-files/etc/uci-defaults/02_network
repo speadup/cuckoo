@@ -18,6 +18,7 @@ case "$board" in
 all0315n |\
 all0258n |\
 ja76pf2|\
+rocket-m-ti |\
 ubnt-unifi-outdoor)
 	ucidef_set_interface_lan "eth0 eth1"
 	;;
@@ -39,6 +40,13 @@ epg5000)
 	;;
 
 ap136-010)
+	ucidef_set_interfaces_lan_wan "eth0" "eth1"
+	ucidef_add_switch "switch0" "1" "1"
+	ucidef_add_switch_vlan "switch0" "1" "0 1 2 3 4"
+	ucidef_add_switch_vlan "switch0" "2" "5 6"
+	;;
+
+ap147-010)
 	ucidef_set_interfaces_lan_wan "eth0" "eth1"
 	ucidef_add_switch "switch0" "1" "1"
 	ucidef_add_switch_vlan "switch0" "1" "0 1 2 3 4"
@@ -76,6 +84,13 @@ cpe510)
 	ucidef_add_switch "switch0" "1" "1"
 	ucidef_add_switch_vlan "switch0" "1" "0t 5"
 	ucidef_add_switch_vlan "switch0" "2" "0t 4"
+	;;
+
+airgatewaypro)
+	ucidef_set_interfaces_lan_wan "eth0.1" "eth0.2"
+	ucidef_add_switch "switch0" "1" "1"
+	ucidef_add_switch_vlan "switch0" "1" "0t 4"
+	ucidef_add_switch_vlan "switch0" "2" "0t 5"
 	;;
 
 db120 |\
@@ -126,6 +141,7 @@ nbg6716)
 	ucidef_add_switch_vlan "switch0" "2" "5 6"
 	;;
 
+ap143 |\
 rb-433 |\
 rb-433u)
 	ucidef_set_interfaces_lan_wan "eth1" "eth0"
@@ -219,13 +235,14 @@ tl-wr941nd)
 	ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4" "wan"
 	;;
 
+dir-615-i1 |\
 r6100 |\
 smart-300 |\
-dir-615-i1 |\
 tl-mr3420-v2 |\
 tl-wr841n-v8 |\
 tl-wr842n-v2 |\
 tl-wr941nd-v5 |\
+tl-wdr6500-v2 |\
 wnr2000-v3 |\
 wnr2000-v4 |\
 wnr2200 |\
@@ -331,6 +348,7 @@ eap300v2 |\
 eap7660d |\
 el-mini |\
 loco-m-xw |\
+mr1750 |\
 mr600 |\
 mr600v2 |\
 mr900 |\
@@ -426,6 +444,7 @@ tew-712br |\
 tl-mr3220 |\
 tl-mr3220-v2 |\
 tl-mr3420 |\
+tl-wdr3320-v2 |\
 tl-wdr3500 |\
 tl-wr741nd |\
 tl-wr741nd-v4 |\

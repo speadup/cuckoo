@@ -7,8 +7,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=hnetd
-PKG_SOURCE_VERSION:=ea2bd2bc2d8e617efca4b27fbf1c5c3c8ad09ad9
-PKG_VERSION:=2015-07-10-$(PKG_SOURCE_VERSION)
+PKG_SOURCE_VERSION:=a67835f479ca9d756128c3554e8d4c21feb03b1f
+PKG_VERSION:=2015-09-29-$(PKG_SOURCE_VERSION)
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
@@ -37,7 +37,7 @@ define Package/hnetd/Default
   CATEGORY:=Network
   TITLE:=HNCP Homenet daemon - $(2)
   URL:=https://github.com/sbyx/hnetd
-  DEPENDS:=+odhcpd +odhcp6c +netifd +ip $(3)
+  DEPENDS:=+odhcpd +odhcp6c +netifd $(3)
   DEPENDS+=+@IPV6
   VARIANT:=$1
 endef
@@ -50,11 +50,11 @@ define Package/hnet-full
   CATEGORY:=Network
   TITLE:=HNCP Homenet metapackage
   URL:=https://github.com/sbyx/hnetd
-  DEPENDS:=+hnetd-nossl +luci-app-hnet
+  DEPENDS:=+hnetd-nossl +luci-app-hnet +ip
   # Routing
   DEPENDS+=+babeld
   # Service discovery
-  DEPENDS+=+ohybridproxy
+  DEPENDS+=+ohybridproxy +zonestitcher
   # Distributed PCP support
   DEPENDS+=+miniupnpd +minimalist-pcproxy
 endef
@@ -62,13 +62,27 @@ endef
 define Package/hnet-full-secure
   SECTION:=net
   CATEGORY:=Network
-  TITLE:=HNCP Homenet metapackage
+  TITLE:=HNCP Homenet metapackage (w/ SSL)
   URL:=https://github.com/sbyx/hnetd
-  DEPENDS:=+hnetd-openssl +luci-app-hnet
+  DEPENDS:=+hnetd-openssl +luci-app-hnet +ip
   # Routing
   DEPENDS+=+babeld
   # Service discovery
-  DEPENDS+=+ohybridproxy
+  DEPENDS+=+ohybridproxy +zonestitcher
+  # Distributed PCP support
+  DEPENDS+=+miniupnpd +minimalist-pcproxy
+endef
+
+define Package/hnet-full-l2tp
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=HNCP Homenet metapackage (w/ L2TP)
+  URL:=https://github.com/sbyx/hnetd
+  DEPENDS:=+hnetd-nossl +luci-app-hnet +ip-full +kmod-l2tp-eth
+  # Routing
+  DEPENDS+=+babeld
+  # Service discovery
+  DEPENDS+=+ohybridproxy +zonestitcher
   # Distributed PCP support
   DEPENDS+=+miniupnpd +minimalist-pcproxy
 endef
@@ -101,11 +115,14 @@ define Package/hnetd-$(BUILD_VARIANT)/install
 	$(INSTALL_BIN) ./files/hnetd.init $(1)/etc/init.d/hnetd
 	$(INSTALL_DIR) $(1)/etc/config
 	$(INSTALL_DATA) ./files/hnet.config $(1)/etc/config/hnet
-	$(INSTALL_BIN) ./files/ohp-script $(1)/usr/sbin/hnetd-ohp-script
-	$(INSTALL_BIN) ./files/pcp-script $(1)/usr/sbin/hnetd-pcp-script
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/generic/ohp.script $(1)/usr/sbin/hnetd-ohp-script
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/generic/ddz.script $(1)/usr/sbin/hnetd-ddz-script
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/generic/pcp.script $(1)/usr/sbin/hnetd-pcp-script
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/generic/hnetd-routing $(1)/usr/sbin/hnetd-routing
 	$(INSTALL_DIR) $(1)/etc/uci-defaults
 	$(INSTALL_BIN) ./files/hnetd.defaults $(1)/etc/uci-defaults/x-hnetd.defaults
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/generic/multicast.script $(1)/usr/sbin/hnet-multicast
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/openwrt/autowifi.script $(1)/usr/sbin/autowifi
 endef
 
 define Package/hnet-full/install
@@ -114,6 +131,11 @@ endef
 
 define Package/hnet-full-secure/install
 	true
+endef
+
+define Package/hnet-full-l2tp/install
+	$(INSTALL_DIR) $(1)/usr/sbin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/generic/tunnel.script $(1)/usr/sbin/hnetd-tunnel
 endef
 
 define Package/luci-app-hnet/install
@@ -137,4 +159,5 @@ $(eval $(call BuildPackage,hnetd-nossl))
 $(eval $(call BuildPackage,hnetd-openssl))
 $(eval $(call BuildPackage,hnet-full))
 $(eval $(call BuildPackage,hnet-full-secure))
+$(eval $(call BuildPackage,hnet-full-l2tp))
 $(eval $(call BuildPackage,luci-app-hnet))

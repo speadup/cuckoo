@@ -49,6 +49,20 @@ define Package/cjdns/description
 	of the security and scalability issues that plague existing networks.
 endef
 
+define Package/cjdns-tests
+	SECTION:=net
+	CATEGORY:=Network
+	SUBMENU:=Routing and Redirection
+	TITLE:=cjdns test cases
+	URL:=https://github.com/hyperboria/cjdns
+	MAINTAINER:=Lars Gierth <larsg@systemli.org>
+	DEPENDS:=+libpthread +librt
+endef
+
+define Package/cjdns-test/description
+	cjdns test cases
+endef
+
 define Build/Configure
 endef
 
@@ -65,11 +79,14 @@ endif
 define Build/Compile
 	CROSS="true" \
 	CC="$(TARGET_CC)" \
+	AR="$(TARGET_AR)" \
+	RANLIB="$(TARGET_RANLIB)" \
 	CFLAGS="$(TARGET_CFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
 	SYSTEM="linux" \
 	TARGET_ARCH="$(CONFIG_ARCH)" \
 	SSP_SUPPORT="$(CONFIG_SSP_SUPPORT)" \
+	GYP_ADDITIONAL_ARGS="-f make-linux" \
 	$(PKG_DO_VARS) \
 	$(PKG_BUILD_DIR)/do
 endef
@@ -118,4 +135,12 @@ if [ -z $${IPKG_INSTROOT} ] ; then
 fi
 endef
 
+define Package/cjdns-tests/install
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) \
+		$(PKG_BUILD_DIR)/build_linux/test_testcjdroute_c \
+		$(1)/usr/bin
+endef
+
 $(eval $(call BuildPackage,cjdns))
+$(eval $(call BuildPackage,cjdns-tests))

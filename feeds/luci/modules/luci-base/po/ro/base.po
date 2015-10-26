@@ -45,6 +45,9 @@ msgstr "Incarcarea in ultimul minut"
 msgid "15 Minute Load:"
 msgstr "Incarcarea in ultimele 15 minute"
 
+msgid "464XLAT (CLAT)"
+msgstr ""
+
 msgid "5 Minute Load:"
 msgstr "Incarcarea in ultimele 5 minute"
 
@@ -202,6 +205,9 @@ msgstr "Adauga interfata noua.."
 msgid "Additional Hosts files"
 msgstr "Fisiere de tip hosts aditionale"
 
+msgid "Additional servers file"
+msgstr ""
+
 msgid "Address"
 msgstr "Adresa"
 
@@ -329,6 +335,9 @@ msgstr "Pachete disponibile"
 
 msgid "Average:"
 msgstr "Medie:"
+
+msgid "BR / DMR / AFTR"
+msgstr ""
 
 msgid "BSSID"
 msgstr "BSSID"
@@ -659,6 +668,12 @@ msgstr "Dispozitiv"
 msgid "Device Configuration"
 msgstr "Configurarea dispozitivului"
 
+msgid "Device is rebooting..."
+msgstr ""
+
+msgid "Device unreachable"
+msgstr ""
+
 msgid "Diagnostics"
 msgstr "Diagnosticuri"
 
@@ -763,11 +778,19 @@ msgid ""
 "having static leases will be served."
 msgstr ""
 
+msgid "EA-bits length"
+msgstr ""
+
 msgid "EAP-Method"
 msgstr ""
 
 msgid "Edit"
 msgstr "Editeaza"
+
+msgid ""
+"Edit the raw configuration data above to fix any error and hit \"Save\" to "
+"reload the page."
+msgstr ""
 
 msgid "Edit this interface"
 msgstr "Editeaza aceasta interfata"
@@ -785,9 +808,6 @@ msgid "Enable <abbr title=\"Spanning Tree Protocol\">STP</abbr>"
 msgstr "Activeaza <abbr title=\"Spanning Tree Protocol\">STP</abbr>"
 
 msgid "Enable HE.net dynamic endpoint update"
-msgstr ""
-
-msgid "Enable IPv6 negotiation on the PPP link"
 msgstr ""
 
 msgid "Enable Jumbo Frame passthrough"
@@ -945,6 +965,9 @@ msgstr "Forteaza TKIP"
 msgid "Force TKIP and CCMP (AES)"
 msgstr "Forteaza TKIP si CCMP (AES)"
 
+msgid "Form token mismatch"
+msgstr ""
+
 msgid "Forward DHCP traffic"
 msgstr ""
 
@@ -1095,6 +1118,9 @@ msgstr ""
 msgid "IPv4 only"
 msgstr "Doar IPv4"
 
+msgid "IPv4 prefix"
+msgstr ""
+
 msgid "IPv4 prefix length"
 msgstr ""
 
@@ -1197,6 +1223,11 @@ msgid "Image"
 msgstr "Imagine"
 
 msgid "In"
+msgstr ""
+
+msgid ""
+"In order to prevent unauthorized access to the system, your request has been "
+"blocked. Click \"Continue »\" below to return to the previous page."
 msgstr ""
 
 msgid "Inactivity timeout"
@@ -1468,6 +1499,9 @@ msgstr ""
 msgid "MAC-List"
 msgstr ""
 
+msgid "MAP / LW4over6"
+msgstr ""
+
 msgid "MB/s"
 msgstr ""
 
@@ -1480,6 +1514,9 @@ msgstr ""
 msgid ""
 "Make sure to clone the root filesystem using something like the commands "
 "below:"
+msgstr ""
+
+msgid "Manual"
 msgstr ""
 
 msgid "Maximum Rate"
@@ -1587,6 +1624,9 @@ msgid "Multicast address"
 msgstr ""
 
 msgid "NAS ID"
+msgstr ""
+
+msgid "NAT64 Prefix"
 msgstr ""
 
 msgid "NDP-Proxy"
@@ -1813,6 +1853,12 @@ msgstr ""
 msgid "PPtP"
 msgstr ""
 
+msgid "PSID offset"
+msgstr ""
+
+msgid "PSID-bits length"
+msgstr ""
+
 msgid "Package libiwinfo required!"
 msgstr "Pachetul libiwinfo este necesar !"
 
@@ -1839,9 +1885,6 @@ msgstr "Parola cheii private"
 
 msgid "Password successfully changed!"
 msgstr "Parola schimbata cu succes !"
-
-msgid "Path"
-msgstr ""
 
 msgid "Path to CA-Certificate"
 msgstr "Calea catre certificatul CA"
@@ -1878,9 +1921,6 @@ msgstr "Packete."
 
 msgid "Please enter your username and password."
 msgstr "Introdu utilizatorul si parola."
-
-msgid "Please wait: Device rebooting..."
-msgstr "Asteapta: dispozitivul se restarteaza.."
 
 msgid "Policy"
 msgstr ""
@@ -2256,6 +2296,9 @@ msgstr "Semnal:"
 msgid "Size"
 msgstr "Marime"
 
+msgid "Size (.ipk)"
+msgstr ""
+
 msgid "Skip"
 msgstr ""
 
@@ -2449,6 +2492,9 @@ msgid ""
 "code> and <code>_</code>"
 msgstr ""
 
+msgid "The configuration file could not be loaded due to the following error:"
+msgstr ""
+
 msgid ""
 "The device file of the memory or partition (<abbr title=\"for example\">e.g."
 "</abbr> <code>/dev/sda1</code>)"
@@ -2503,6 +2549,9 @@ msgstr ""
 msgid "The selected protocol needs a device assigned"
 msgstr ""
 
+msgid "The submitted security token is invalid or already expired!"
+msgstr ""
+
 msgid ""
 "The system is erasing the configuration partition now and will reboot itself "
 "when finished."
@@ -2550,6 +2599,12 @@ msgstr ""
 "pentru a proteja interfata web si porni SSH."
 
 msgid "This IPv4 address of the relay"
+msgstr ""
+
+msgid ""
+"This file may contain lines like 'server=/domain/1.2.3.4' or "
+"'server=1.2.3.4' fordomain-specific or full upstream <abbr title=\"Domain "
+"Name System\">DNS</abbr> servers."
 msgstr ""
 
 msgid ""
@@ -2863,11 +2918,14 @@ msgstr ""
 msgid "Waiting for command to complete..."
 msgstr ""
 
+msgid "Waiting for device..."
+msgstr ""
+
 msgid "Warning"
 msgstr "Avertizare"
 
-msgid "Warning: There are unsaved changes that will be lost while rebooting!"
-msgstr "Atentie: exista modificari nesalvate care vor fi pierdute la restart !"
+msgid "Warning: There are unsaved changes that will get lost on reboot!"
+msgstr ""
 
 msgid "Whether to create an IPv6 default route over the tunnel"
 msgstr ""
@@ -3090,6 +3148,14 @@ msgstr "da"
 
 msgid "« Back"
 msgstr "« Inapoi"
+
+#~ msgid "Please wait: Device rebooting..."
+#~ msgstr "Asteapta: dispozitivul se restarteaza.."
+
+#~ msgid ""
+#~ "Warning: There are unsaved changes that will be lost while rebooting!"
+#~ msgstr ""
+#~ "Atentie: exista modificari nesalvate care vor fi pierdute la restart !"
 
 #~ msgid ""
 #~ "Always use 40MHz channels even if the secondary channel overlaps. Using "

@@ -18,6 +18,7 @@ PKG_SOURCE:=v$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/$(PKG_NAME)/$(PKG_NAME)/archive/
 PKG_MD5SUM:=70613669ef00a480e3ebb62e12427cf4
 
+PKG_FIXUP:=autoreconf
 PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
 
@@ -45,9 +46,12 @@ CONFIGURE_VARS += \
 
 CONFIGURE_ARGS += \
 		--with-sysconfsubdir=e2guardian \
-		--with-proxyuser=root \
-		--with-proxygroup=root \
-		--enable-pcre=yes
+		--with-proxyuser=nobody \
+		--with-proxygroup=nogroup \
+		--enable-pcre=yes \
+		--with-piddir=/tmp/e2guardian/ \
+		--enable-sslextralists=no \
+		--enable-sslmitm=no
 
 define Build/Configure
 	( cd $(PKG_BUILD_DIR); ./autogen.sh )

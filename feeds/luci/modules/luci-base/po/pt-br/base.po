@@ -46,6 +46,9 @@ msgstr "Carga 1 Minuto:"
 msgid "15 Minute Load:"
 msgstr "Carga 15 Minutos:"
 
+msgid "464XLAT (CLAT)"
+msgstr ""
+
 msgid "5 Minute Load:"
 msgstr "Carga 5 Minutos:"
 
@@ -215,6 +218,9 @@ msgstr "Adiciona uma nova interface..."
 msgid "Additional Hosts files"
 msgstr "Arquivos adicionais de equipamentos conhecidos (hosts)"
 
+msgid "Additional servers file"
+msgstr ""
+
 msgid "Address"
 msgstr "Endereço"
 
@@ -344,6 +350,9 @@ msgstr "Pacotes disponíveis"
 
 msgid "Average:"
 msgstr "Média:"
+
+msgid "BR / DMR / AFTR"
+msgstr ""
 
 msgid "BSSID"
 msgstr "BSSID"
@@ -691,6 +700,12 @@ msgstr "Dispositivo"
 msgid "Device Configuration"
 msgstr "Configuração do Dispositivo"
 
+msgid "Device is rebooting..."
+msgstr ""
+
+msgid "Device unreachable"
+msgstr ""
+
 msgid "Diagnostics"
 msgstr "Diagnóstico"
 
@@ -814,11 +829,19 @@ msgstr ""
 "Aloca dinamicamente os endereços do DHCP para os clientes. Se desabilitado, "
 "somente os clientes com atribuições estáticas serão servidos. "
 
+msgid "EA-bits length"
+msgstr ""
+
 msgid "EAP-Method"
 msgstr "Método EAP"
 
 msgid "Edit"
 msgstr "Editar"
+
+msgid ""
+"Edit the raw configuration data above to fix any error and hit \"Save\" to "
+"reload the page."
+msgstr ""
 
 msgid "Edit this interface"
 msgstr "Editar esta interface"
@@ -837,9 +860,6 @@ msgstr "Ativar <abbr title=\"Spanning Tree Protocol\">STP</abbr>"
 
 msgid "Enable HE.net dynamic endpoint update"
 msgstr "Ativar a atualização de ponto final dinâmico HE.net"
-
-msgid "Enable IPv6 negotiation on the PPP link"
-msgstr "Ativar a negociação de IPv6 no enlace PPP"
 
 msgid "Enable Jumbo Frame passthrough"
 msgstr "Ativar o encaminhamento de quadros jumbos (Jumbo Frames)"
@@ -998,6 +1018,9 @@ msgstr "Forçar TKIP"
 msgid "Force TKIP and CCMP (AES)"
 msgstr "Forçar TKIP e CCMP (AES)"
 
+msgid "Form token mismatch"
+msgstr ""
+
 msgid "Forward DHCP traffic"
 msgstr "Encaminhar tráfego DHCP"
 
@@ -1155,6 +1178,9 @@ msgstr "Máscara de rede IPv4"
 msgid "IPv4 only"
 msgstr "Somente IPv4"
 
+msgid "IPv4 prefix"
+msgstr ""
+
 msgid "IPv4 prefix length"
 msgstr "Tamanho do prefixo IPv4"
 
@@ -1270,6 +1296,11 @@ msgstr "Imagem"
 
 msgid "In"
 msgstr "Entrada"
+
+msgid ""
+"In order to prevent unauthorized access to the system, your request has been "
+"blocked. Click \"Continue »\" below to return to the previous page."
+msgstr ""
 
 msgid "Inactivity timeout"
 msgstr "Tempo limite de inatividade"
@@ -1559,6 +1590,9 @@ msgstr "Filtro de MAC"
 msgid "MAC-List"
 msgstr "Lista de MAC"
 
+msgid "MAP / LW4over6"
+msgstr ""
+
 msgid "MB/s"
 msgstr "MB/s"
 
@@ -1573,6 +1607,9 @@ msgstr ""
 msgid ""
 "Make sure to clone the root filesystem using something like the commands "
 "below:"
+msgstr ""
+
+msgid "Manual"
 msgstr ""
 
 msgid "Maximum Rate"
@@ -1684,6 +1721,9 @@ msgstr "Endereço de Multicast"
 
 msgid "NAS ID"
 msgstr "NAS ID"
+
+msgid "NAT64 Prefix"
+msgstr ""
 
 msgid "NDP-Proxy"
 msgstr ""
@@ -1919,6 +1959,12 @@ msgstr "PPPoE"
 msgid "PPtP"
 msgstr "PPtP"
 
+msgid "PSID offset"
+msgstr ""
+
+msgid "PSID-bits length"
+msgstr ""
+
 msgid "Package libiwinfo required!"
 msgstr "O pacote libiwinfo é necessário!"
 
@@ -1945,9 +1991,6 @@ msgstr "Senha da Chave Privada"
 
 msgid "Password successfully changed!"
 msgstr "A senha foi alterada com sucesso!"
-
-msgid "Path"
-msgstr "Directório"
 
 msgid "Path to CA-Certificate"
 msgstr "Caminho para o Certificado da AC"
@@ -1984,9 +2027,6 @@ msgstr "Pcts."
 
 msgid "Please enter your username and password."
 msgstr "Entre com o seu usuário e senha."
-
-msgid "Please wait: Device rebooting..."
-msgstr "Por favor aguarde: Equipamento reiniciando..."
 
 msgid "Policy"
 msgstr "Política"
@@ -2383,6 +2423,9 @@ msgstr "Sinal:"
 msgid "Size"
 msgstr "Tamanho"
 
+msgid "Size (.ipk)"
+msgstr ""
+
 msgid "Skip"
 msgstr "Pular"
 
@@ -2600,6 +2643,9 @@ msgstr ""
 "Os caracteres permitidos são: <code>A-Z</code>, <code>a-z</code>, <code>0-9</"
 "code> e <code>_</code>"
 
+msgid "The configuration file could not be loaded due to the following error:"
+msgstr ""
+
 msgid ""
 "The device file of the memory or partition (<abbr title=\"for example\">e.g."
 "</abbr> <code>/dev/sda1</code>)"
@@ -2674,6 +2720,9 @@ msgstr ""
 msgid "The selected protocol needs a device assigned"
 msgstr "O protocolo selecionado necessita estar associado a um dispositivo"
 
+msgid "The submitted security token is invalid or already expired!"
+msgstr ""
+
 msgid ""
 "The system is erasing the configuration partition now and will reboot itself "
 "when finished."
@@ -2733,6 +2782,12 @@ msgstr ""
 
 msgid "This IPv4 address of the relay"
 msgstr "Este endereço IPv4 do repassar"
+
+msgid ""
+"This file may contain lines like 'server=/domain/1.2.3.4' or "
+"'server=1.2.3.4' fordomain-specific or full upstream <abbr title=\"Domain "
+"Name System\">DNS</abbr> servers."
+msgstr ""
 
 msgid ""
 "This is a list of shell glob patterns for matching files and directories to "
@@ -3069,13 +3124,14 @@ msgstr "Esperando a aplicação das mudanças..."
 msgid "Waiting for command to complete..."
 msgstr "Esperando o término do comando..."
 
+msgid "Waiting for device..."
+msgstr ""
+
 msgid "Warning"
 msgstr "Atenção"
 
-msgid "Warning: There are unsaved changes that will be lost while rebooting!"
+msgid "Warning: There are unsaved changes that will get lost on reboot!"
 msgstr ""
-"Aviso: Existem alterações não salvas que serão perdidas durante a "
-"reiniciação!"
 
 msgid "Whether to create an IPv6 default route over the tunnel"
 msgstr ""
@@ -3311,8 +3367,23 @@ msgstr "sim"
 msgid "« Back"
 msgstr "« Voltar"
 
+#~ msgid "Enable IPv6 negotiation on the PPP link"
+#~ msgstr "Ativar a negociação de IPv6 no enlace PPP"
+
 #~ msgid "Ignore Hosts files"
 #~ msgstr "Ignorar arquivos de equipamentos conhecidos (hosts)"
+
+#~ msgid "Path"
+#~ msgstr "Directório"
+
+#~ msgid "Please wait: Device rebooting..."
+#~ msgstr "Por favor aguarde: Equipamento reiniciando..."
+
+#~ msgid ""
+#~ "Warning: There are unsaved changes that will be lost while rebooting!"
+#~ msgstr ""
+#~ "Aviso: Existem alterações não salvas que serão perdidas durante a "
+#~ "reiniciação!"
 
 #~ msgid ""
 #~ "Always use 40MHz channels even if the secondary channel overlaps. Using "

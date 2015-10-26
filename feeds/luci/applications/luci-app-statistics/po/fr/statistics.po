@@ -28,6 +28,9 @@ msgstr ""
 msgid "Add notification command"
 msgstr "Ajoute une commande de notification"
 
+msgid "Aggregate number of connected users"
+msgstr ""
+
 msgid "Base Directory"
 msgstr "Répertoire de base"
 
@@ -151,7 +154,13 @@ msgstr "Vidanger le cache après"
 msgid "Forwarding between listen and server addresses"
 msgstr "Transfert entre les adresses en écoute et du serveur"
 
+msgid "Gather compression statistics"
+msgstr ""
+
 msgid "General plugins"
+msgstr ""
+
+msgid "Generate a separate graph for each logged user"
 msgstr ""
 
 msgid "Graphs"
@@ -183,6 +192,9 @@ msgid ""
 msgstr ""
 "Vous pouvez définir ici les critères variés pour sélectionner les règles "
 "iptables à surveiller."
+
+msgid "Hold Ctrl to select multiple items or to deselect entries."
+msgstr ""
 
 msgid "Host"
 msgstr ""
@@ -247,6 +259,9 @@ msgstr ""
 msgid "Monitor all local listen ports"
 msgstr "Surveiller tous les ports en écoute locaux"
 
+msgid "Monitor all sensors"
+msgstr ""
+
 msgid "Monitor devices"
 msgstr "Périphériques à surveiller"
 
@@ -310,6 +325,15 @@ msgstr ""
 msgid "Only create average RRAs"
 msgstr "Créer seulement des RRAs moyens"
 
+msgid "OpenVPN"
+msgstr ""
+
+msgid "OpenVPN Plugin Configuration"
+msgstr ""
+
+msgid "OpenVPN status files"
+msgstr ""
+
 msgid "Options"
 msgstr "Options"
 
@@ -366,6 +390,15 @@ msgstr ""
 
 msgid "Seconds"
 msgstr "Secondes"
+
+msgid "Sensor list"
+msgstr ""
+
+msgid "Sensors"
+msgstr ""
+
+msgid "Sensors Plugin Configuration"
+msgstr ""
 
 msgid "Server host"
 msgstr "Hôte du serveur"
@@ -445,6 +478,11 @@ msgstr ""
 msgid ""
 "The OLSRd plugin reads information about meshed networks from the txtinfo "
 "plugin of OLSRd."
+msgstr ""
+
+msgid ""
+"The OpenVPN plugin gathers information about the current vpn connection "
+"status."
 msgstr ""
 
 msgid ""
@@ -585,6 +623,11 @@ msgstr ""
 "le matériel inutilisable !</strong>"
 
 msgid ""
+"The sensors plugin uses the Linux Sensors framework to gather environmental "
+"statistics."
+msgstr ""
+
+msgid ""
 "The splash leases plugin uses libuci to collect statistics about splash "
 "leases."
 msgstr ""
@@ -645,6 +688,9 @@ msgid "Uptime"
 msgstr ""
 
 msgid "Uptime Plugin Configuration"
+msgstr ""
+
+msgid "Use improved naming schema"
 msgstr ""
 
 msgid "Used PID file"

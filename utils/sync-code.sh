@@ -32,7 +32,7 @@ update_delete()
     do
         [ "$subdir" = "." -o "$subdir" = ".." -o "$subdir" = ".svn" ] && continue
         [ -L $dest/$curdir/$subdir ] && continue
-        [ ! -e $src/$curdir/$subdir ] && (echo $dest/$curdir/$subdir;svn del $dest/$curdir/$subdir) && continue
+        [ ! -e $src/$curdir/$subdir ] && (echo $dest/$curdir/$subdir;del $dest/$curdir/$subdir) && continue
         [ -d $dest/$curdir/$subdir ] && update_delete $curdir/$subdir
     done <<EOF
 `ls -a $dest/$curdir`
@@ -49,7 +49,7 @@ update_copy()
         [ -f $dest/$curdir/$subdir ] && cp -a $src/$curdir/$subdir $dest/$curdir/$subdir && continue
         [ ! -e $dest/$curdir/$subdir ] && (
             cp -a $src/$curdir/$subdir $dest/$curdir/$subdir;
-            svn add $dest/$curdir/$subdir) && continue
+            add $dest/$curdir/$subdir) && continue
         [ -d $dest/$curdir/$subdir ] && update_copy $curdir/$subdir
     done <<EOF
 `ls -a $src/$curdir`

@@ -19,7 +19,7 @@ del()
     if [ -d .svn ];then
         svn del $1
     elif [ -d .git ];then
-        git rm $1
+        git rm -r $1
     else
         echo "error ... no .git or .svn $1"
         exit 0
